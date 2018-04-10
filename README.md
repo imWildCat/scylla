@@ -6,4 +6,4 @@ A minimal proxy ip crawler.
 
 ## License
 
-The MIT license.
+Apache License 2.0. For more details, please read the [LICENSE](./LICENSE) file.
