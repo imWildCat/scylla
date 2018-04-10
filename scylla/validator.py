@@ -43,11 +43,16 @@ class Validator(object):
     def validate_proxy(self):
         proxy_str = 'http://{}:{}'.format(self._host, self._port)
         r = requests.get(IP_CHECKER_API, proxies={'https': proxy_str, 'http': proxy_str}, verify=False)
-        j = json.loads(r.text)
+        if r.ok:
+            j = json.loads(r.text)
 
-        if j['ip'] != get_current_ip():
-            self._anonymous = True
-        self._valid = True
+            if j['ip'] != get_current_ip():
+                self._anonymous = True
+            self._valid = True
+
+    def validate(self):
+        self.validate_latency()
+        self.validate_proxy()
 
     @property
     def latency(self):
@@ -56,3 +61,11 @@ class Validator(object):
     @property
     def success_rate(self):
         return self._success_rate
+
+    @property
+    def valid(self):
+        return self._valid
+
+    @property
+    def anonymous(self):
+        return self._anonymous

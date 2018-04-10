@@ -112,3 +112,5 @@ venv.bak/
 .vscode
 
 out/
+
+scylla.db

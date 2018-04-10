@@ -9,11 +9,19 @@ class ProxyIP(object):
         :type port: str
         """
 
-        self.ip = ip
-        self.port = int(port)
+        self._ip = ip
+        self._port = int(port)
 
     def __str__(self):
         return '[class scylla.proxy_ip.ProxyIP {}:{}]'.format(self.ip, self.port)
 
     def __repr__(self):
         return self.__str__()
+
+    @property
+    def ip(self) -> str:
+        return self._ip
+
+    @property
+    def port(self) -> int:
+        return self._port
