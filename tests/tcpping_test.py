@@ -16,7 +16,5 @@ def test_ping_class():
 def test_ping_func():
     avg, rate = ping('www.example.com', 80)
 
-    print(avg, rate)
-
     assert avg > 0
     assert rate > 0.0
