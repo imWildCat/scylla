@@ -110,3 +110,5 @@ venv.bak/
 
 # vscode
 .vscode
+
+out/
