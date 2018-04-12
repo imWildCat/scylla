@@ -1,6 +1,6 @@
 from requests_html import HTML
 
-from ..proxy_ip import ProxyIP
+from ..database import ProxyIP
 
 
 class BaseProvider(object):

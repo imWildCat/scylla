@@ -2,7 +2,7 @@ import re
 
 from requests_html import HTML
 
-from scylla.proxy_ip import ProxyIP
+from scylla.database import ProxyIP
 from .base_provider import BaseProvider
 
 
@@ -17,7 +17,7 @@ class CoolProxyProvider(BaseProvider):
             port_element = ip_row.find('td:nth-child(2)', first=True)
 
             if ip_element and port_element:
-                p = ProxyIP(re.sub(r'document\.write\(.+\)', '', ip_element.text), port_element.text)
+                p = ProxyIP(ip=re.sub(r'document\.write\(.+\)', '', ip_element.text), port=port_element.text)
 
                 ip_list.append(p)
 

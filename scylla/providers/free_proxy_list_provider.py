@@ -1,6 +1,6 @@
 from requests_html import HTML
 
-from scylla.proxy_ip import ProxyIP
+from scylla.database import ProxyIP
 from .base_provider import BaseProvider
 
 
@@ -13,7 +13,7 @@ class FreeProxyListProvider(BaseProvider):
             ip_address = ip_row.find('td:nth-child(1)', first=True).text
             port = ip_row.find('td:nth-child(2)', first=True).text
 
-            p = ProxyIP(ip_address, port)
+            p = ProxyIP(ip=ip_address, port=port)
 
             ip_list.append(p)
 

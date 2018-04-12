@@ -3,8 +3,8 @@ import time
 
 import pytest
 
+from scylla.database import ProxyIP
 from scylla.providers import BaseProvider
-from scylla.proxy_ip import ProxyIP
 from scylla.worker import Worker
 
 
@@ -35,7 +35,8 @@ def assert_provider(p: BaseProvider):
         for proxy in proxy_list:
             assert _validate_ip(proxy.ip) is True, 'Provider {} produce a proxy with an invalid ip: {}'.format(
                 p.__class__, proxy.ip)
-            assert 0 < proxy.port <= 65535, 'Provider {} produce a proxy with an invalid port: {}'.format(p.__class__,
-                                                                                                          proxy.port)
+            assert 0 < int(proxy.port) <= 65535, 'Provider {} produce a proxy with an invalid port: {}'.format(
+                p.__class__,
+                proxy.port)
 
         time.sleep(p.sleep_seconds())

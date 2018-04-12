@@ -2,8 +2,8 @@ from concurrent.futures import ThreadPoolExecutor
 from multiprocessing import Queue, Process
 from threading import Thread
 
+from scylla.database import ProxyIP
 from scylla.providers import BaseProvider
-from scylla.proxy_ip import ProxyIP
 from scylla.validator import Validator
 from scylla.worker import Worker
 from .providers import CoolProxyProvider, FreeProxyListProvider, KuaidailiProvider

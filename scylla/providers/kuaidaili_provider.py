@@ -1,7 +1,7 @@
 from requests_html import HTML
 
+from scylla.database import ProxyIP
 from scylla.providers import BaseProvider
-from scylla.proxy_ip import ProxyIP
 
 
 class KuaidailiProvider(BaseProvider):
@@ -20,7 +20,7 @@ class KuaidailiProvider(BaseProvider):
             port_element = ip_row.find('td[data-title="PORT"]', first=True)
 
             if ip_element and port_element:
-                p = ProxyIP(ip_element.text, port_element.text)
+                p = ProxyIP(ip=ip_element.text, port=port_element.text)
                 ip_list.append(p)
 
         return ip_list
