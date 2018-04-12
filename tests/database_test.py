@@ -1,4 +1,11 @@
+import logging
+
 from scylla.database import create_connection, create_db_tables, ProxyIP
+
+# Add logging
+logger = logging.getLogger('peewee')
+logger.setLevel(logging.DEBUG)
+logger.addHandler(logging.StreamHandler())
 
 
 def test_create_connection():
