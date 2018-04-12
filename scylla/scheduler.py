@@ -3,8 +3,8 @@ from multiprocessing import Queue, Process
 from threading import Thread
 
 from scylla.database import ProxyIP
+from scylla.jobs import validate_proxy_ip
 from scylla.providers import BaseProvider
-from scylla.validator import Validator
 from scylla.worker import Worker
 from .providers import CoolProxyProvider, FreeProxyListProvider, KuaidailiProvider
 
@@ -23,18 +23,12 @@ def fetch_ips(q: Queue, validator_queue: Queue):
             validator_queue.put(proxies)
 
 
-def validate_job(v: Validator):
-    v.validate()
-    print('Validated ip[{}]: {}: {}, result: {}, {}'.format(v.valid, v._host, v._port, v.anonymous, v.latency))
-
-
 def validate_ips(q: Queue, validator_pool: ThreadPoolExecutor):
     print('validate_ips...')
     proxies: [ProxyIP] = q.get()
 
     for p in proxies:
-        v = Validator(p.ip, p.port)
-        validator_pool.submit(validate_job, v=v)
+        validator_pool.submit(validate_proxy_ip, p=p)
 
 
 class Scheduler(object):
