@@ -22,8 +22,3 @@ def get_config(key: str, default: str = None) -> Union[str, None]:
 def batch_set_config(**kwargs):
     for k, v in kwargs.items():
         set_config(k, v)
-
-
-def batch_set(configs: dict):
-    for k, v in configs.items():
-        set_config(k, v)
