@@ -4,18 +4,18 @@ from threading import Thread
 
 from scylla.database import ProxyIP
 from scylla.jobs import validate_proxy_ip
-from scylla.providers import BaseProvider
 from scylla.worker import Worker
-from .providers import CoolProxyProvider, FreeProxyListProvider, KuaidailiProvider
+from .loggings import logger
+from .providers import BaseProvider, CoolProxyProvider, FreeProxyListProvider, KuaidailiProvider
 
 
 def fetch_ips(q: Queue, validator_queue: Queue):
-    print('fetch_ips...')
+    logger.debug('fetch_ips...')
     worker = Worker()
 
     while True:
         provider: BaseProvider = q.get()
-        print('get new provider:', provider.__class__.__name__)
+        logger.debug('Get new provider: ' + provider.__class__.__name__)
 
         for url in provider.urls():
             html = worker.get_html(url)
@@ -24,8 +24,9 @@ def fetch_ips(q: Queue, validator_queue: Queue):
 
 
 def validate_ips(q: Queue, validator_pool: ThreadPoolExecutor):
-    print('validate_ips...')
     proxies: [ProxyIP] = q.get()
+
+    logger.debug('Validate ips...')
 
     for p in proxies:
         validator_pool.submit(validate_proxy_ip, p=p)
@@ -41,7 +42,7 @@ class Scheduler(object):
         self.validator_pool = ThreadPoolExecutor(max_workers=5)
 
     def start(self):
-        print('Scheduler starts...')
+        logger.info('Scheduler starts...')
         self.feed_providers()
 
         self.worker_thread = Process(target=fetch_ips, args=(self.worker_queue, self.validator_queue))
@@ -51,7 +52,7 @@ class Scheduler(object):
         self.validator_thread.start()
 
     def feed_providers(self):
-        print('feed_providers...')
+        logger.debug('feed_providers...')
         self.worker_queue.put(CoolProxyProvider())
         self.worker_queue.put(FreeProxyListProvider())
         self.worker_queue.put(KuaidailiProvider())

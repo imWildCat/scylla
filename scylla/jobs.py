@@ -1,5 +1,6 @@
 from scylla.database import ProxyIP
 from scylla.validator import Validator
+from .loggings import logger
 
 
 def save_ip(p: ProxyIP):
@@ -17,4 +18,11 @@ def validate_proxy_ip(p: ProxyIP):
     v = Validator(host=p.ip, port=int(p.port))
     v.validate()
     # save valid ip into database
+    p.latency = v.latency
+    p.stability = v.success_rate
+    p.is_valid = v.valid
+    p.is_anonymous = v.anonymous
+
+    logger.debug('Save valid ip into database: \n' + p.__str__())
+
     save_ip(p)

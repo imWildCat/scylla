@@ -37,6 +37,7 @@ class Timer(object):
         self._stop = timer()
 
     def cost(self, funcs, args):
+        # TODO: handle ConnectionRefusedError
         self.start()
         for func, arg in zip_longest(funcs, args):
             if arg:

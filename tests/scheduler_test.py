@@ -1,20 +1,30 @@
-from scylla.validator import Validator
+import pytest
+
+from scylla.scheduler import Scheduler
 
 
-# def test_validate_job(mocker):
-#     mocker.patch('scylla.validator.Validator.validate')
-#     v = Validator('127.0.0.1', 80)
-#     validate_job(v)
-#     v.validate.assert_called_once()
+@pytest.fixture
+def scheduler():
+    return Scheduler()
 
-# FIXME: cannot patch Queue.get
-# def test_validate_ips(mocker):
-#     with patch.object(Queue, 'get', return_value=None) as mock_get:
-#         validate_ips(Queue(), ThreadPoolExecutor(max_workers=1))
-#
-#     mock_get.assert_called_once()
 
-# mocker.patch('multiprocessing.Queue.get')
-# mocker.patch('concurrent.futures.ThreadPoolExecutor.submit')
-# validate_ips(Queue(), ThreadPoolExecutor(max_workers=1))
-# Queue.get.assert_called_once()
+def test_start(mocker, scheduler):
+    feed_providers = mocker.patch('scylla.scheduler.Scheduler.feed_providers')
+    process_start = mocker.patch('multiprocessing.Process.start')
+    thread_start = mocker.patch('threading.Thread.start')
+
+    scheduler.start()
+
+    feed_providers.assert_called_once()
+    process_start.assert_called_once()
+    thread_start.assert_called_once()
+
+
+def test_feed_providers(mocker, scheduler):
+    pass
+    # TODO: mock Queue.put or find other solutions
+    # queue_put = mocker.patch('multiprocessing.Queue.put')
+    #
+    # scheduler.feed_providers()
+    #
+    # queue_put.assert_called()

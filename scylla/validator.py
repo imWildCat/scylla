@@ -2,6 +2,7 @@ import json
 
 import requests
 
+from .loggings import logger
 from .tcpping import ping
 
 IP_CHECKER_API = 'http://ipinfo.io'
@@ -13,10 +14,10 @@ __CURRENT_IP__ = None
 def get_current_ip():
     global __CURRENT_IP__
     if __CURRENT_IP__:
-        print('get _current_ip')
+        logger.debug('get _current_ip')
         return __CURRENT_IP__
     else:
-        print('fetch _current_ip')
+        logger.debug('fetch _current_ip')
         r = requests.get(IP_CHECKER_API)
         j = json.loads(r.text)
         __CURRENT_IP__ = j['ip']
