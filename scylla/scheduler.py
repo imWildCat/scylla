@@ -15,20 +15,28 @@ def fetch_ips(q: Queue, validator_queue: Queue):
 
     while True:
         provider: BaseProvider = q.get()
-        logger.debug('Get new provider: ' + provider.__class__.__name__)
+
+        provider_name = provider.__class__.__name__
+
+        logger.debug('Get a provider from the provider queue: ' + provider_name)
 
         for url in provider.urls():
             html = worker.get_html(url)
             proxies = provider.parse(html)
+
             validator_queue.put(proxies)
+            logger.info(
+                ' {}: feed {} potential proxies into the validator queue'.format(provider_name, len(proxies))
+            )
 
 
 def validate_ips(q: Queue, validator_pool: ThreadPoolExecutor):
     proxies: [ProxyIP] = q.get()
 
-    logger.debug('Validate ips...')
+    logger.debug('Validating {} ips...'.format(len(proxies)))
 
     for p in proxies:
+        logger.debug('Submit ip: ' + p.__str__())
         validator_pool.submit(validate_proxy_ip, p=p)
 
 
@@ -39,7 +47,7 @@ class Scheduler(object):
         self.validator_queue = Queue()
         self.worker_thread = None
         self.validator_thread = None
-        self.validator_pool = ThreadPoolExecutor(max_workers=5)
+        self.validator_pool = ThreadPoolExecutor(max_workers=20)
 
     def start(self):
         logger.info('Scheduler starts...')
