@@ -25,3 +25,11 @@ def test_proxy(validator):
 
 def test_proxy(validator2):
     validator2.validate_proxy()
+
+
+def test_proxy(validator2, mocker):
+    l = mocker.patch('scylla.validator.Validator.validate_latency')
+    p = mocker.patch('scylla.validator.Validator.validate_proxy')
+    validator2.validate()
+    l.assert_called_once()
+    p.assert_called_once()
