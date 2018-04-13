@@ -33,7 +33,7 @@ class ProxyIP(BaseModel):
 
     ip = CharField(unique=True)
     port = IntegerField()
-    is_valid = BooleanField(default=True)
+    is_valid = BooleanField(default=False)
     created_at = DateTimeField(default=datetime.datetime.now)
     latency = FloatField()
     stability = FloatField()
