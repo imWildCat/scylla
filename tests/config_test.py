@@ -1,4 +1,4 @@
-from scylla.config import set_config, get_config
+from scylla.app_config import set_config, get_config
 
 
 def test_config():

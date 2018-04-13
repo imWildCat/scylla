@@ -1,7 +1,7 @@
 import argparse
 import sys
 
-from scylla.config import batch_set_config
+from scylla.app_config import batch_set_config
 from scylla.scheduler import Scheduler
 
 
