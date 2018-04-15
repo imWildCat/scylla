@@ -13,7 +13,7 @@ def fetch_ips(q: Queue, validator_queue: Queue):
     logger.debug('fetch_ips...')
     worker = Worker()
 
-    while True:
+    while not q.empty():
         provider: BaseProvider = q.get()
 
         provider_name = provider.__class__.__name__
@@ -31,12 +31,14 @@ def fetch_ips(q: Queue, validator_queue: Queue):
             logger.info(
                 ' {}: feed {} potential proxies into the validator queue'.format(provider_name, len(proxies))
             )
+    logger.debug('exit!!!')
 
 
 def validate_ips(q: Queue, validator_pool: ThreadPoolExecutor):
-    proxy: ProxyIP = q.get()
+    while True:
+        proxy: ProxyIP = q.get()
 
-    validator_pool.submit(validate_proxy_ip, p=proxy)
+        validator_pool.submit(validate_proxy_ip, p=proxy)
 
     # Not supported on macOS:
     # q_size = q.qsize()
