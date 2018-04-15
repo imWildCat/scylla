@@ -10,11 +10,7 @@ def save_ip(p: ProxyIP):
     count = basic_query.count()
     if count == 0:
         logger.debug('Creating new ip record: ' + p.__str__())
-        try:
-            p.save()
-        except Exception as e:
-            print('==========ERROR=======')
-            print(e)
+        p.save()
     else:
         logger.debug('Update an existing ip record: ' + p.__str__())
 
@@ -33,9 +29,6 @@ def validate_proxy_ip(p: ProxyIP):
         v.validate()
     except KeyboardInterrupt:
         logger.info('KeyboardInterrupt terminates validate_proxy_ip: ' + p.ip)
-    except Exception as e:
-        print('==========ERROR=======')
-        print(e)
 
     meta = v.meta if v.meta else {}
     validated_ip = ProxyIP(ip=p.ip, port=p.port, **meta)
