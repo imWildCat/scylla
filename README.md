@@ -1,7 +1,20 @@
 Scylla
 ===
 
-A minimal proxy ip crawler.
+A minimal proxy ip crawler, only supports Python 3.6.
+
+## Get started
+
+### Install directly via pip
+
+### Use from source
+
+```bash
+git clone https://github.com/imWildCat/scylla.git
+cd scylla
+python -m scylla
+```
+
 
 
 ## License
