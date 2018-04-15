@@ -5,3 +5,6 @@ from .free_proxy_list_provider import FreeProxyListProvider
 from .kuaidaili_provider import KuaidailiProvider
 from .spys_me_provider import SpyMeProvider
 from .xici_provider import XiciProvider
+
+# Provider references:
+# https://github.com/franklingu/proxypool/issues/2
