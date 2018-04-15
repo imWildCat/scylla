@@ -23,6 +23,7 @@ python -m scylla
 - [ ] Docker integration
 - [ ] Smart web proxy server
 - [ ] More statistical views of proxies
+- [ ] Quality statistics for different providers
 
 ## License
 
