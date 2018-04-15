@@ -38,6 +38,8 @@ class Validator(object):
         self._anonymous = False
         self._valid = False
 
+        self._meta = None
+
     def validate_latency(self):
         (self._latency, self._success_rate) = ping(self._host, self._port)
 
@@ -51,8 +53,23 @@ class Validator(object):
                 if j['ip'] != get_current_ip():
                     self._anonymous = True
                 self._valid = True
+
+                # Load meta data
+                # TODO: better location check
+                meta = {
+                    'location': j['loc'],
+                    'organization': j['org'],
+                    'region': j['region'],
+                    'country': j['country'],
+                    'city': j['city'],
+                }
+                self._meta = meta
+
         except requests.Timeout:
             logger.debug('Catch requests.Timeout for proxy ip: {}'.format(self._host))
+        except requests.RequestException as e:
+            logger.debug('Catch requests.RequestException for proxy ip: {}'.format(self._host))
+            logger.debug(e.__str__())
 
     def validate(self):
         self.validate_latency()
@@ -73,3 +90,7 @@ class Validator(object):
     @property
     def anonymous(self):
         return self._anonymous
+
+    @property
+    def meta(self):
+        return self._meta
