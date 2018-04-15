@@ -26,7 +26,8 @@ class Worker:
         """
 
         try:
-            response: HTMLResponse = self.session.get(url)
+            # TODO: load config for timeout
+            response: HTMLResponse = self.session.get(url, timeout=30)
         except requests.RequestException:
             logger.warning('[Worker] Cannot get this url: ' + url)
             return None

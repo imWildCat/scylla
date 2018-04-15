@@ -84,12 +84,12 @@ class Scheduler(object):
 
     def feed_providers(self):
         logger.debug('feed_providers...')
+        self.worker_queue.put(SpyMeProvider())
         self.worker_queue.put(CoolProxyProvider())
         self.worker_queue.put(FreeProxyListProvider())
         self.worker_queue.put(KuaidailiProvider())
         self.worker_queue.put(XiciProvider())
         self.worker_queue.put(Data5uProvider())
-        self.worker_queue.put(SpyMeProvider())
 
     def stop(self):
         self.worker_queue.close()
