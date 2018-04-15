@@ -14,6 +14,12 @@ def main(args) -> int:
     create_db_tables()
 
     s = Scheduler()
-    s.start()
+
+    try:
+        s.start()
+    except KeyboardInterrupt:
+        print('catch KeyboardInterrupt')
+        s.stop()
+        return 0
 
     return 0

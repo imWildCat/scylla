@@ -100,6 +100,8 @@ class Ping(object):
                 self._conn_times.append(s_runtime)
             except socket.timeout:
                 self._failed += 1
+            except ConnectionResetError:
+                self._failed += 1
             else:
                 self._successes += 1
 
@@ -107,7 +109,7 @@ class Ping(object):
                 s.close()
 
 
-def ping(host: str, port: int, count: int = 10, sleep: float = 0.3) -> (int, float):
+def ping(host: str, port: int, count: int = 10, sleep: float = 0.2) -> (int, float):
     """
     Ping a server and port with tcp socket
     :param host: the hostname

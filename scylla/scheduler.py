@@ -26,6 +26,7 @@ def fetch_ips(q: Queue, validator_queue: Queue):
 
             for p in proxies:
                 validator_queue.put(p)
+                logger.debug('Put new proxy ip into queue: {}'.format(p.__str__()))
 
             logger.info(
                 ' {}: feed {} potential proxies into the validator queue'.format(provider_name, len(proxies))
@@ -61,8 +62,14 @@ class Scheduler(object):
         self.worker_process = Process(target=fetch_ips, args=(self.worker_queue, self.validator_queue))
         self.validator_thread = Thread(target=validate_ips, args=(self.validator_queue, self.validator_pool))
 
-        self.worker_process.start()
-        self.validator_thread.start()
+        try:
+            self.worker_process.start()  # Python will wait for all process finished
+            print('worker_process started')
+            self.validator_thread.start()
+            print('validator_thread started')
+        except KeyboardInterrupt:
+            self.worker_process.terminate()
+            # self.validator_thread.
 
     def feed_providers(self):
         logger.debug('feed_providers...')
