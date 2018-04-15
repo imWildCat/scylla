@@ -35,9 +35,15 @@ class ProxyIP(BaseModel):
     port = IntegerField()
     is_valid = BooleanField(default=False)
     created_at = DateTimeField(default=datetime.datetime.now)
+    updated_at = DateTimeField(default=datetime.datetime.now)
     latency = FloatField()
     stability = FloatField()
     is_anonymous = BooleanField(default=False)
+    location = CharField(null=True)
+    organization = CharField(null=True)
+    region = CharField(null=True)
+    country = CharField(null=True)
+    city = CharField(null=True)
 
     def __str__(self):
         return '[database.ProxyIP ip: {}, port: {}, is_valid: {}, latency: {}]' \

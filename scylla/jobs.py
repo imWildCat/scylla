@@ -1,3 +1,5 @@
+import datetime
+
 from scylla.database import ProxyIP
 from scylla.validator import Validator
 from .loggings import logger
@@ -12,8 +14,9 @@ def save_ip(p: ProxyIP):
     else:
         logger.debug('Update an existing ip record: ' + p.__str__())
 
-        ProxyIP.update(latency=p.latency, stability=p.stability, is_valid=p.is_valid, \
-                       is_anonymous=p.is_anonymous).where(ProxyIP.ip == p.ip).execute()
+        ProxyIP.update(latency=p.latency, stability=p.stability, is_valid=p.is_valid,
+                       is_anonymous=p.is_anonymous, updated_at=datetime.datetime.now()).where(
+            ProxyIP.ip == p.ip).execute()
 
         logger.debug('Saved: ' + p.__str__())
 
