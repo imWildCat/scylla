@@ -21,7 +21,12 @@ def save_ip(p: ProxyIP):
 def validate_proxy_ip(p: ProxyIP):
     logger.debug('Validating ip: {}'.format(p.ip))
     v = Validator(host=p.ip, port=int(p.port))
-    v.validate()
+
+    try:
+        v.validate()
+    except KeyboardInterrupt:
+        logger.info('KeyboardInterrupt terminates validate_proxy_ip: ' + p.ip)
+
     # save valid ip into database
     p.latency = v.latency
     p.stability = v.success_rate

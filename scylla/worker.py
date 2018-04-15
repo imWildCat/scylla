@@ -1,6 +1,9 @@
 from typing import Union
 
+import requests
 from requests_html import HTMLSession, HTMLResponse, HTML
+
+from scylla.loggings import logger
 
 
 class Worker:
@@ -22,7 +25,12 @@ class Worker:
         :rtype: str
         """
 
-        response: HTMLResponse = self.session.get(url)
+        try:
+            response: HTMLResponse = self.session.get(url)
+        except requests.RequestException:
+            logger.warning('[Worker] Cannot get this url: ' + url)
+            return None
+
         if response.ok:
             if render_js:
                 response.html.render()

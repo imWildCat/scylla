@@ -4,6 +4,7 @@ from threading import Thread
 
 from scylla.database import ProxyIP
 from scylla.jobs import validate_proxy_ip
+from scylla.providers import XiciProvider
 from scylla.worker import Worker
 from .loggings import logger
 from .providers import BaseProvider, CoolProxyProvider, FreeProxyListProvider, KuaidailiProvider
@@ -21,7 +22,13 @@ def fetch_ips(q: Queue, validator_queue: Queue):
         logger.debug('Get a provider from the provider queue: ' + provider_name)
 
         for url in provider.urls():
-            html = worker.get_html(url)
+
+            try:
+                html = worker.get_html(url)
+            except KeyboardInterrupt:
+                logger.info('KeyboardInterrupt terminates fetch_ips')
+                return
+
             proxies = provider.parse(html)
 
             for p in proxies:
@@ -31,14 +38,17 @@ def fetch_ips(q: Queue, validator_queue: Queue):
             logger.info(
                 ' {}: feed {} potential proxies into the validator queue'.format(provider_name, len(proxies))
             )
-    logger.debug('exit!!!')
+    logger.info('worker_process exited.')
 
 
 def validate_ips(q: Queue, validator_pool: ThreadPoolExecutor):
     while True:
-        proxy: ProxyIP = q.get()
+        try:
+            proxy: ProxyIP = q.get()
 
-        validator_pool.submit(validate_proxy_ip, p=proxy)
+            validator_pool.submit(validate_proxy_ip, p=proxy)
+        except KeyboardInterrupt:
+            break
 
     # Not supported on macOS:
     # q_size = q.qsize()
@@ -55,7 +65,7 @@ class Scheduler(object):
         self.validator_queue = Queue()
         self.worker_process = None
         self.validator_thread = None
-        self.validator_pool = ThreadPoolExecutor(max_workers=2)
+        self.validator_pool = ThreadPoolExecutor(max_workers=20)
 
     def start(self):
         logger.info('Scheduler starts...')
@@ -66,9 +76,9 @@ class Scheduler(object):
 
         try:
             self.worker_process.start()  # Python will wait for all process finished
-            print('worker_process started')
+            logger.info('worker_process started')
             self.validator_thread.start()
-            print('validator_thread started')
+            logger.info('validator_thread started')
         except KeyboardInterrupt:
             self.worker_process.terminate()
             # self.validator_thread.
@@ -78,8 +88,10 @@ class Scheduler(object):
         self.worker_queue.put(CoolProxyProvider())
         self.worker_queue.put(FreeProxyListProvider())
         self.worker_queue.put(KuaidailiProvider())
+        self.worker_queue.put(XiciProvider())
 
     def stop(self):
         self.worker_queue.close()
         self.worker_process.terminate()
         self.validator_thread.terminate()
+        self.validator_pool.shutdown(wait=False)

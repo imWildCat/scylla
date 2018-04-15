@@ -44,7 +44,7 @@ class Validator(object):
     def validate_proxy(self):
         proxy_str = 'http://{}:{}'.format(self._host, self._port)
         try:
-            r = requests.get(IP_CHECKER_API, proxies={'https': proxy_str, 'http': proxy_str}, verify=False, timeout=5.5)
+            r = requests.get(IP_CHECKER_API, proxies={'https': proxy_str, 'http': proxy_str}, verify=False, timeout=15)
             if r.ok:
                 j = json.loads(r.text)
 
