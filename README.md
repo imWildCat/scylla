@@ -15,7 +15,14 @@ cd scylla
 python -m scylla
 ```
 
+## Roadmap
 
+- [ ] RESTFul API
+- [ ] Programmable API
+- [ ] Geographical distribution map for proxies
+- [ ] Docker integration
+- [ ] Smart web proxy server
+- [ ] More statistical views of proxies
 
 ## License
 
