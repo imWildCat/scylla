@@ -15,6 +15,7 @@ def save_ip(p: ProxyIP):
 
 
 def validate_proxy_ip(p: ProxyIP):
+    logger.debug('Validating ip: {}'.format(p.ip))
     v = Validator(host=p.ip, port=int(p.port))
     v.validate()
     # save valid ip into database
@@ -26,3 +27,5 @@ def validate_proxy_ip(p: ProxyIP):
     logger.debug('Save valid ip into database: \n' + p.__str__())
 
     save_ip(p)
+
+    logger.debug('Finish validating ip: {}'.format(p.ip))

@@ -24,20 +24,25 @@ def fetch_ips(q: Queue, validator_queue: Queue):
             html = worker.get_html(url)
             proxies = provider.parse(html)
 
-            validator_queue.put(proxies)
+            for p in proxies:
+                validator_queue.put(p)
+
             logger.info(
                 ' {}: feed {} potential proxies into the validator queue'.format(provider_name, len(proxies))
             )
 
 
 def validate_ips(q: Queue, validator_pool: ThreadPoolExecutor):
-    proxies: [ProxyIP] = q.get()
+    proxy: ProxyIP = q.get()
 
-    logger.debug('Validating {} ips...'.format(len(proxies)))
+    validator_pool.submit(validate_proxy_ip, p=proxy)
 
-    for p in proxies:
-        logger.debug('Submit ip: ' + p.__str__())
-        validator_pool.submit(validate_proxy_ip, p=p)
+    # Not supported on macOS:
+    # q_size = q.qsize()
+    # if q_size == 0:
+    #     logger.debug('There is no ip left to be validated temporarily.')
+    # else:
+    #     logger.debug('There are/is {} ip(s) left to be validated.'.format(q_size))
 
 
 class Scheduler(object):
@@ -45,18 +50,18 @@ class Scheduler(object):
     def __init__(self):
         self.worker_queue = Queue()
         self.validator_queue = Queue()
-        self.worker_thread = None
+        self.worker_process = None
         self.validator_thread = None
-        self.validator_pool = ThreadPoolExecutor(max_workers=20)
+        self.validator_pool = ThreadPoolExecutor(max_workers=2)
 
     def start(self):
         logger.info('Scheduler starts...')
         self.feed_providers()
 
-        self.worker_thread = Process(target=fetch_ips, args=(self.worker_queue, self.validator_queue))
+        self.worker_process = Process(target=fetch_ips, args=(self.worker_queue, self.validator_queue))
         self.validator_thread = Thread(target=validate_ips, args=(self.validator_queue, self.validator_pool))
 
-        self.worker_thread.start()
+        self.worker_process.start()
         self.validator_thread.start()
 
     def feed_providers(self):
@@ -64,3 +69,8 @@ class Scheduler(object):
         self.worker_queue.put(CoolProxyProvider())
         self.worker_queue.put(FreeProxyListProvider())
         self.worker_queue.put(KuaidailiProvider())
+
+    def stop(self):
+        self.worker_queue.close()
+        self.worker_process.terminate()
+        self.validator_thread.terminate()

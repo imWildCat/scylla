@@ -7,9 +7,9 @@ _ch = logging.StreamHandler(sys.stdout)
 _ch.setLevel(logging.DEBUG)
 _ch.setFormatter(_formatter)
 
-_fh = logging.FileHandler("mylog.log", "w")
-_fh.setLevel(logging.DEBUG)
-_fh.setFormatter(_formatter)
+# _fh = logging.FileHandler("mylog.log", "w")
+# _fh.setLevel(logging.DEBUG)
+# _fh.setFormatter(_formatter)
 
 logger = logging.getLogger('scylla')
 logger.setLevel(logging.DEBUG)
