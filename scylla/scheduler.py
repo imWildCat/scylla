@@ -4,10 +4,9 @@ from threading import Thread
 
 from scylla.database import ProxyIP
 from scylla.jobs import validate_proxy_ip
-from scylla.providers import XiciProvider
 from scylla.worker import Worker
 from .loggings import logger
-from .providers import BaseProvider, CoolProxyProvider, FreeProxyListProvider, KuaidailiProvider
+from .providers import *
 
 
 def fetch_ips(q: Queue, validator_queue: Queue):
@@ -89,6 +88,8 @@ class Scheduler(object):
         self.worker_queue.put(FreeProxyListProvider())
         self.worker_queue.put(KuaidailiProvider())
         self.worker_queue.put(XiciProvider())
+        self.worker_queue.put(Data5uProvider())
+        self.worker_queue.put(SpyMeProvider())
 
     def stop(self):
         self.worker_queue.close()
