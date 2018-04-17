@@ -1,4 +1,4 @@
-Scylla
+Scylla [![Documentation Status](https://readthedocs.org/projects/scylla-py/badge/?version=latest)](http://scylla.wildcat.io/en/latest/?badge=latest)
 ===
 
 A minimal proxy ip crawler, only supports Python 3.6.
