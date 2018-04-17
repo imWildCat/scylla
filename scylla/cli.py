@@ -18,8 +18,9 @@ def main(args) -> int:
 
     try:
         s.start()
+        s.join()
     except KeyboardInterrupt:
-        logger.info('catch KeyboardInterrupt')
+        logger.info('catch KeyboardInterrupt, exiting...')
         s.stop()
         return 0
 

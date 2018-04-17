@@ -73,14 +73,18 @@ class Scheduler(object):
         self.worker_process = Process(target=fetch_ips, args=(self.worker_queue, self.validator_queue))
         self.validator_thread = Thread(target=validate_ips, args=(self.validator_queue, self.validator_pool))
 
-        try:
-            self.worker_process.start()  # Python will wait for all process finished
-            logger.info('worker_process started')
-            self.validator_thread.start()
-            logger.info('validator_thread started')
-        except KeyboardInterrupt:
-            self.worker_process.terminate()
-            # self.validator_thread.
+        self.worker_process.daemon = True
+        self.validator_thread.daemon = True
+
+        self.worker_process.start()  # Python will wait for all process finished
+        logger.info('worker_process started')
+        self.validator_thread.start()
+        logger.info('validator_thread started')
+
+    def join(self):
+        while self.worker_process.is_alive() or self.validator_thread.is_alive():
+            self.worker_process.join()
+            self.validator_thread.join()
 
     def feed_providers(self):
         logger.debug('feed_providers...')
