@@ -8,6 +8,10 @@ _db = None
 
 
 def create_connection() -> SqliteDatabase:
+    """
+    create a database connection
+    :rtype: SqliteDatabase
+    """
     global _db
     if _db:
         return _db
