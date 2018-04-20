@@ -3,6 +3,8 @@ Scylla [![Documentation Status](https://readthedocs.org/projects/scylla-py/badge
 
 A minimal proxy ip crawler, only supports Python 3.6.
 
+
+
 ## Get started
 
 ### Install directly via pip
@@ -14,6 +16,14 @@ git clone https://github.com/imWildCat/scylla.git
 cd scylla
 python -m scylla
 ```
+
+## Usage
+
+### Standalone
+
+### Programmatically
+
+For more details, please read the [API Documentation](http://scylla.wildcat.io/en/latest/py-modindex.html).
 
 ## Roadmap
 
