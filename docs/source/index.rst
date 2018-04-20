@@ -9,8 +9,7 @@ Welcome to scylla's documentation!
 .. toctree::
    :maxdepth: 3
    :caption: Contents:
-
-       modules
+   modules
 
       For more details, please go to :ref:`modindex`
 
