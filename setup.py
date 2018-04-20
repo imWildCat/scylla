@@ -9,7 +9,7 @@ with io.open(os.path.join(here, 'README.rst'), encoding='utf-8') as f:
     long_description = '\n' + f.read()
 
 setup(
-    name='setup.py',
+    name='scylla',
     python_requires='>=3.6.0',
     # If your package is a single module, use this instead of 'packages':
     packages=['scylla'],
