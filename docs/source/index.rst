@@ -10,7 +10,7 @@ Welcome to scylla's documentation!
    :maxdepth: 3
    :caption: Contents:
 
-         modules
+       modules
 
       For more details, please go to :ref:`modindex`
 
