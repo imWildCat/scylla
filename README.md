@@ -21,7 +21,6 @@ python -m scylla
 
 ### Standalone
 
-### Programmatically
 
 For more details, please read the [API Documentation](http://scylla.wildcat.io/en/latest/py-modindex.html).
 

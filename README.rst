@@ -18,6 +18,15 @@ Use from source
     cd scylla
     python -m scylla
 
+Usage
+-----
+
+Standalone
+~~~~~~~~~~
+
+For more details, please read the `API
+Documentation <http://scylla.wildcat.io/en/latest/py-modindex.html>`__.
+
 Roadmap
 -------
 
