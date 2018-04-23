@@ -6,7 +6,7 @@ def test_cli(mocker):
     scheduler_start = mocker.patch('scylla.scheduler.Scheduler.start')
     # create_db_tables = mocker.patch('scylla.database.create_db_tables')
 
-    ret = main([])
+    ret = main(['-no-ws'])
 
     assert 0 == ret
 

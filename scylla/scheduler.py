@@ -28,15 +28,16 @@ def fetch_ips(q: Queue, validator_queue: Queue):
                 logger.info('KeyboardInterrupt terminates fetch_ips')
                 return
 
-            proxies = provider.parse(html)
+            if html:
+                proxies = provider.parse(html)
 
-            for p in proxies:
-                validator_queue.put(p)
-                logger.debug('Put new proxy ip into queue: {}'.format(p.__str__()))
+                for p in proxies:
+                    validator_queue.put(p)
+                    logger.debug('Put new proxy ip into queue: {}'.format(p.__str__()))
 
-            logger.info(
-                ' {}: feed {} potential proxies into the validator queue'.format(provider_name, len(proxies))
-            )
+                logger.info(
+                    ' {}: feed {} potential proxies into the validator queue'.format(provider_name, len(proxies))
+                )
     logger.info('worker_process exited.')
 
 
@@ -99,5 +100,5 @@ class Scheduler(object):
     def stop(self):
         self.worker_queue.close()
         self.worker_process.terminate()
-        self.validator_thread.terminate()
+        # self.validator_thread.terminate() # TODO: 'terminate' the thread using a flag
         self.validator_pool.shutdown(wait=False)
