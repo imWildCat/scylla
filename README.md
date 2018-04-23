@@ -1,4 +1,4 @@
-Scylla [![Documentation Status](https://readthedocs.org/projects/scylla-py/badge/?version=latest)](http://scylla.wildcat.io/en/latest/?badge=latest)
+Scylla [![Documentation Status](https://readthedocs.org/projects/scylla-py/badge/?version=latest)](http://scylla.wildcat.io/en/latest/?badge=latest) [![PyPI version](https://badge.fury.io/py/scylla.svg)](https://badge.fury.io/py/scylla)
 ===
 
 A minimal proxy ip crawler, only supports Python 3.6.
@@ -26,7 +26,8 @@ For more details, please read the [API Documentation](http://scylla.wildcat.io/e
 
 ## Roadmap
 
-- [ ] RESTFul API
+- [x] Basic RESTFul API
+- [ ] Advanced RESTFul API (Sorting, paging, conditions)
 - [ ] Programmable API
 - [ ] Geographical distribution map for proxies
 - [ ] Docker integration

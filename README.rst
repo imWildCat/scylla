@@ -1,5 +1,5 @@
-Scylla |Documentation Status|
-=============================
+Scylla |Documentation Status| |PyPI version|
+============================================
 
 A minimal proxy ip crawler, only supports Python 3.6.
 
@@ -30,7 +30,8 @@ Documentation <http://scylla.wildcat.io/en/latest/py-modindex.html>`__.
 Roadmap
 -------
 
--  [ ] RESTFul API
+-  [x] Basic RESTFul API
+-  [ ] Advanced RESTFul API (Sorting, paging, conditions)
 -  [ ] Programmable API
 -  [ ] Geographical distribution map for proxies
 -  [ ] Docker integration
@@ -45,4 +46,6 @@ Apache License 2.0. For more details, please read the
 `LICENSE <./LICENSE>`__ file.
 
 .. |Documentation Status| image:: https://readthedocs.org/projects/scylla-py/badge/?version=latest
-    :target: http://scylla.wildcat.io/en/latest/?badge=latest
+   :target: http://scylla.wildcat.io/en/latest/?badge=latest
+.. |PyPI version| image:: https://badge.fury.io/py/scylla.svg
+   :target: https://badge.fury.io/py/scylla
