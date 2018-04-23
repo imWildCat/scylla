@@ -3,6 +3,8 @@ import os
 
 from setuptools import setup
 
+import scylla
+
 here = os.path.abspath(os.path.dirname(__file__))
 # Import the README and use it as the long-description.
 with io.open(os.path.join(here, 'README.rst'), encoding='utf-8') as f:
@@ -13,13 +15,13 @@ setup(
     python_requires='>=3.6.0',
     # If your package is a single module, use this instead of 'packages':
     packages=['scylla'],
-    version='0.1.0',
+    version=scylla.__version__,
     description='A powerful proxy IP pool',
     long_description=long_description,
-    author='WildCat',
+    author=scylla.__author__,
     author_email='wildcat.name@gmail.com',
     url='https://github.com/imWildCat/scylla',
-    download_url='https://github.com/imWildCat/scylla/archive/0.1.0.tar.gz',
+    # download_url='https://github.com/imWildCat/scylla/archive/0.1.0.tar.gz',
     keywords=['proxy', 'api', 'scylla'],
     classifiers=[
         # Trove classifiers
