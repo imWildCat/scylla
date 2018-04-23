@@ -9,7 +9,7 @@ logger.addHandler(logging.StreamHandler())
 
 
 def create_test_ip():
-    ip = ProxyIP(ip='127.0.0.1', port=3306, latency=200.00, stability=100.0)
+    ip = ProxyIP(ip='127.0.0.1', port=3306, latency=200.00, stability=100.0, is_valid=True)
     ip.save()
 
 
@@ -27,10 +27,11 @@ def test_create_db_tables():
 
 
 def test_create_ip():
+    delete_test_ip()
     create_test_ip()
 
     count = ProxyIP.select().count()
-    assert count >= 1
+    assert count > 0
 
     delete_test_ip()
 
