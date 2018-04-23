@@ -10,7 +10,7 @@ class SpyMeProvider(BaseProvider):
 
     def urls(self) -> [str]:
         return [
-            'http://spys.me/proxy.txt',
+            'https://raw.githubusercontent.com/clarketm/proxy-list/master/proxy-list.txt',
         ]
 
     def parse(self, html: HTML) -> [ProxyIP]:
