@@ -82,7 +82,8 @@ class Scheduler(object):
         logger.info('validator_thread started')
 
     def join(self):
-        while self.worker_process.is_alive() or self.validator_thread.is_alive():
+        while (self.worker_process and self.worker_process.is_alive()) or (
+                self.validator_thread and self.validator_thread.is_alive()):
             self.worker_process.join()
             self.validator_thread.join()
 
