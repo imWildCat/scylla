@@ -17,4 +17,5 @@ def pytest_sessionstart(session):
 
 def pytest_sessionfinish(session, exitstatus):
     """ whole test run finishes. """
-    _delete_db_file()
+    pass
+    # _delete_db_file()
