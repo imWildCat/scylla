@@ -1,5 +1,5 @@
-Scylla |Build Status| |Documentation Status| |PyPI version|
-===========================================================
+Scylla |Build Status| |codecov| |Documentation Status| |PyPI version|
+=====================================================================
 
 A minimal proxy ip crawler, only supports Python 3.6.
 
@@ -52,6 +52,8 @@ Apache License 2.0. For more details, please read the
 
 .. |Build Status| image:: https://travis-ci.org/imWildCat/scylla.svg?branch=master
     :target: https://travis-ci.org/imWildCat/scylla
+.. |codecov| image:: https://codecov.io/gh/imWildCat/scylla/branch/master/graph/badge.svg
+    :target: https://codecov.io/gh/imWildCat/scylla
 .. |Documentation Status| image:: https://readthedocs.org/projects/scylla-py/badge/?version=latest
    :target: http://scylla.wildcat.io/en/latest/?badge=latest
 .. |PyPI version| image:: https://badge.fury.io/py/scylla.svg
