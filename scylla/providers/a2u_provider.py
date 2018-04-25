@@ -3,7 +3,7 @@ import re
 from requests_html import HTML
 
 from scylla.database import ProxyIP
-from scylla.providers import BaseProvider
+from .base_provider import BaseProvider
 
 
 class A2uProvider(BaseProvider):
