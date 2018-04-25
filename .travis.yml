@@ -1,0 +1,9 @@
+language: python
+python:
+  - "3.6"
+install:
+  - pip install -r tests/requirements-test.txt
+script:
+  - pytest -n 10 --cov=./
+after_success:
+  - codecov
