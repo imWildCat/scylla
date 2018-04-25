@@ -1,5 +1,5 @@
-Scylla |Documentation Status| |PyPI version|
-============================================
+Scylla |Build Status| |Documentation Status| |PyPI version|
+===========================================================
 
 A minimal proxy ip crawler, only supports Python 3.6.
 
@@ -8,6 +8,11 @@ Get started
 
 Install directly via pip
 ~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code:: bash
+
+    pip install scylla
+    scylla # Run the cralwer and web server for JSON API
 
 Use from source
 ~~~~~~~~~~~~~~~
@@ -45,6 +50,8 @@ License
 Apache License 2.0. For more details, please read the
 `LICENSE <./LICENSE>`__ file.
 
+.. |Build Status| image:: https://travis-ci.org/imWildCat/scylla.svg?branch=master
+    :target: https://travis-ci.org/imWildCat/scylla
 .. |Documentation Status| image:: https://readthedocs.org/projects/scylla-py/badge/?version=latest
    :target: http://scylla.wildcat.io/en/latest/?badge=latest
 .. |PyPI version| image:: https://badge.fury.io/py/scylla.svg
