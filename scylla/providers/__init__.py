@@ -1,3 +1,4 @@
+from .a2u_provider import A2uProvider
 from .base_provider import BaseProvider
 from .cool_proxy_provider import CoolProxyProvider
 from .data5u_provider import Data5uProvider
