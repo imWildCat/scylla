@@ -9,6 +9,11 @@ A minimal proxy ip crawler, only supports Python 3.6.
 
 ### Install directly via pip
 
+```bash
+pip install scylla
+scylla # Run the cralwer and web server for JSON API
+```
+
 ### Use from source
 
 ```bash
