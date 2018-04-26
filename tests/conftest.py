@@ -12,7 +12,6 @@ def _delete_db_file():
 def pytest_sessionstart(session):
     """ before session.main() is called. """
     _create_db_file()
-    print("\n ===setup=== \n")
 
 
 def pytest_sessionfinish(session, exitstatus):

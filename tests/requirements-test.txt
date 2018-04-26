@@ -1,3 +1,4 @@
+codecov==2.0.15
 peewee==3.2.2
 setuptools==39.0.1
 six==1.11.0
