@@ -1,0 +1,31 @@
+{
+  "name": "scylla",
+  "version": "0.1.2",
+  "description": "A small but powerful proxy ip crawler",
+  "main": "null",
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "null"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/imWildCat/scylla.git"
+  },
+  "keywords": [
+    "proxy",
+    "crawler"
+  ],
+  "author": "imWildCat",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/imWildCat/scylla/issues"
+  },
+  "homepage": "https://github.com/imWildCat/scylla#readme",
+  "devDependencies": {
+    "parcel-bundler": "^1.7.1",
+    "typescript": "^2.8.3"
+  }
+}
