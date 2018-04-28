@@ -5,6 +5,7 @@ from .data5u_provider import Data5uProvider
 from .free_proxy_list_provider import FreeProxyListProvider
 from .kuaidaili_provider import KuaidailiProvider
 from .spys_me_provider import SpyMeProvider
+from .spys_one_provider import SpysOneProvider
 from .xici_provider import XiciProvider
 
 # Provider references:
