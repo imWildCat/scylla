@@ -66,7 +66,7 @@ class Ping(object):
     def _success_rate(self):
         count = self._successes + self._failed
         try:
-            rate = (float(self._successes) / count) * 100
+            rate = float(self._successes) / count
             rate = '{0:.2f}'.format(rate)
         except ZeroDivisionError:
             rate = '0.00'
