@@ -7,6 +7,7 @@ Subpackages
 .. toctree::
 
     scylla.providers
+    scylla.web
 
 Submodules
 ----------

@@ -4,6 +4,14 @@ scylla.providers package
 Submodules
 ----------
 
+scylla.providers.a2u\_provider module
+-------------------------------------
+
+.. automodule:: scylla.providers.a2u_provider
+:members:
+        :undoc-members:
+        :show-inheritance:
+
 scylla.providers.base\_provider module
 --------------------------------------
 
@@ -51,6 +59,14 @@ scylla.providers.spys\_me\_provider module
     :members:
     :undoc-members:
     :show-inheritance:
+
+scylla.providers.spys\_one\_provider module
+-------------------------------------------
+
+.. automodule:: scylla.providers.spys_one_provider
+:members:
+        :undoc-members:
+        :show-inheritance:
 
 scylla.providers.xici\_provider module
 --------------------------------------
