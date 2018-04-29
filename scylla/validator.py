@@ -1,4 +1,5 @@
 import json
+import math
 
 import requests
 
@@ -41,7 +42,10 @@ class Validator(object):
         self._meta = None
 
     def validate_latency(self):
-        (self._latency, self._success_rate) = ping(self._host, self._port)
+        try:
+            (self._latency, self._success_rate) = ping(self._host, self._port)
+        except ConnectionRefusedError:
+            self._latency, self._success_rate = math.inf, 0.0
 
     def validate_proxy(self):
         proxy_str = 'http://{}:{}'.format(self._host, self._port)
