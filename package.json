@@ -8,6 +8,10 @@
     "test": "tests"
   },
   "scripts": {
+    "start": "parcel serve frontend/src/index.html",
+    "build": "cross-env NODE_ENV=production parcel build src/index.html --public-url .",
+    "watch": "parcel watch src/index.html",
+    "predeploy": "npm run build",
     "test": "null"
   },
   "repository": {
@@ -25,7 +29,16 @@
   },
   "homepage": "https://github.com/imWildCat/scylla#readme",
   "devDependencies": {
+    "@types/react": "^16.3.13",
+    "@types/react-dom": "^16.0.5",
+    "cross-env": "^5.1.4",
     "parcel-bundler": "^1.7.1",
     "typescript": "^2.8.3"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "node-sass": "^4.9.0",
+    "react": "^16.0.0",
+    "react-dom": "^16.3.2"
   }
 }

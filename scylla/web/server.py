@@ -2,12 +2,14 @@ from playhouse.shortcuts import model_to_dict
 from sanic import Sanic
 from sanic.request import Request
 from sanic.response import json
+from sanic_cors import CORS
 
 from scylla.database import ProxyIP
 from scylla.loggings import logger
 
 app = Sanic()
 
+CORS(app)
 
 # @app.route('/')
 # async def test(request: Request):
