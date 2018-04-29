@@ -14,7 +14,11 @@ setup(
     name='scylla',
     python_requires='>=3.6.0',
     # If your package is a single module, use this instead of 'packages':
-    packages=['scylla'],
+    packages=[
+        'scylla',
+        'scylla.providers',
+        'scylla.web'
+    ],
     entry_points={
         'console_scripts': ['scylla = scylla.cli:app_main']
     },
