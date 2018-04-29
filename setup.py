@@ -15,8 +15,11 @@ setup(
     python_requires='>=3.6.0',
     # If your package is a single module, use this instead of 'packages':
     packages=['scylla'],
+    entry_points={
+        'console_scripts': ['scylla = scylla.cli:app_main']
+    },
     version=scylla.__version__,
-    description='A powerful proxy IP pool',
+    description='Intelligent proxy pool for Humans™',
     long_description=long_description,
     author=scylla.__author__,
     author_email='wildcat.name@gmail.com',

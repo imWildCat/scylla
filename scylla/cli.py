@@ -1,4 +1,5 @@
 import argparse
+import sys
 
 from scylla.config import batch_set_config
 from scylla.database import create_db_tables
@@ -38,7 +39,8 @@ def main(args) -> int:
         # web server
         if not parsed_args_dict['no_webserver']:
             logger.info('Start the web server')
-            start_web_server(host=parsed_args_dict['web_host'], port=parsed_args_dict['web_port'])
+            start_web_server(
+                host=parsed_args_dict['web_host'], port=parsed_args_dict['web_port'])
 
         s.join()
     except (KeyboardInterrupt, SystemExit):
@@ -47,3 +49,7 @@ def main(args) -> int:
         return 0
 
     return 0
+
+
+def app_main():
+    sys.exit(main(sys.argv[1:]))

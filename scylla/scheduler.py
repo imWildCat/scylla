@@ -5,8 +5,8 @@ from threading import Thread
 from scylla.database import ProxyIP
 from scylla.jobs import validate_proxy_ip
 from scylla.worker import Worker
-from .loggings import logger
-from .providers import *
+from scylla.loggings import logger
+from scylla.providers import *
 
 
 def fetch_ips(q: Queue, validator_queue: Queue):

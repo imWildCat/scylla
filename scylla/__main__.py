@@ -1,5 +1,4 @@
-import sys
+from scylla.cli import app_main
 
-from scylla.cli import main
 
-sys.exit(main(sys.argv[1:]))
+app_main()
