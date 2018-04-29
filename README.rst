@@ -1,10 +1,23 @@
 Scylla |Build Status| |codecov| |Documentation Status| |PyPI version|
 =====================================================================
 
-A minimal proxy ip crawler, only supports Python 3.6.
+An intelligent proxy pool for humanities, only supports Python 3.6. Key
+features:
+
+-  Automatic proxy ip crawling and validation
+-  Easy-to-use JSON API
+-  Simple but beautiful web-based user interface (eg. geographical
+   distribution of proxies)
+-  Could get started with only 2 commands minimally
+-  Straightforward programmable API
 
 Get started
 -----------
+
+Install with Docker (highly recommended)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code:: bash
 
 Install directly via pip
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -21,6 +34,11 @@ Use from source
 
     git clone https://github.com/imWildCat/scylla.git
     cd scylla
+
+    pip install -r requirements.txt
+
+    npm install # or yarn install
+
     python -m scylla
 
 Usage
@@ -43,6 +61,9 @@ Roadmap
 -  [ ] Smart web proxy server
 -  [ ] More statistical views of proxies
 -  [ ] Quality statistics for different providers
+
+Contribution
+------------
 
 License
 -------
