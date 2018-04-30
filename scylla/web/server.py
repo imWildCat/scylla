@@ -11,6 +11,7 @@ app = Sanic()
 
 CORS(app)
 
+
 # @app.route('/')
 # async def test(request: Request):
 #     return json({'hello': 'world', 'args': request.raw_args})
@@ -18,7 +19,8 @@ CORS(app)
 
 @app.route('/api/v1/proxies')
 async def api_v1_proxies(request: Request):
-    proxies = ProxyIP.select().where(ProxyIP.latency > 0).where(ProxyIP.is_valid == True) \
+    proxies = ProxyIP.select().where(ProxyIP.latency > 0).where(ProxyIP.latency < 9999) \
+        .where(ProxyIP.is_valid == True) \
         .order_by(ProxyIP.updated_at.desc(), ProxyIP.latency).limit(20)
 
     logger.debug('Perform SQL query: ', proxies.sql())

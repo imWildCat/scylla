@@ -2,12 +2,11 @@ import * as React from "react";
 import axios from 'axios';
 
 export interface AppState {
-    timesClicked: number;
-    on: boolean;
+    proxies: Array<any>,
 }
 
 export default class ProxyIPList extends React.Component<{}, AppState> {
-    private initialState: AppState = {timesClicked: 0, on: false};
+    private initialState: AppState = {proxies: []};
 
     constructor(props: {}) {
         super(props);
@@ -19,12 +18,35 @@ export default class ProxyIPList extends React.Component<{}, AppState> {
         return (
             <div>
                 proxy ip list
+
+                {this.renderList()}
+            </div>
+        );
+    }
+
+    renderList(): JSX.Element {
+        return (
+            <div>
+                {this.state.proxies.map(p => {
+                    return (
+                        <div key={'proxy-' + p.id}>
+                            <p>{p.ip}</p>
+                        </div>
+                    )
+                })}
             </div>
         );
     }
 
     componentDidMount() {
-        axios.get('http://localhost:8000/api/v1/proxies')
+        this.loadData();
+    }
+
+    async loadData() {
+        const response = await axios.get('http://localhost:8000/api/v1/proxies');
+        const proxies: [any] = response.data.proxies;
+        console.log(proxies);
+        this.setState({proxies: proxies})
     }
 
 }
