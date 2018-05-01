@@ -1,5 +1,6 @@
 import * as React from "react";
 import axios from 'axios';
+import {AutoSizer, Column, Table} from 'react-virtualized';
 
 export interface AppState {
     proxies: Array<any>,
@@ -25,16 +26,47 @@ export default class ProxyIPList extends React.Component<{}, AppState> {
     }
 
     renderList(): JSX.Element {
+
+        const list = this.state.proxies;
+
         return (
-            <div>
-                {this.state.proxies.map(p => {
-                    return (
-                        <div key={'proxy-' + p.id}>
-                            <p>{p.ip}</p>
-                        </div>
-                    )
-                })}
-            </div>
+            <AutoSizer disableHeight={true}>
+                {({width}) => (
+                    <Table
+                        width={width}
+                        height={500}
+                        headerHeight={20}
+                        rowHeight={30}
+                        rowCount={list.length}
+                        rowGetter={({index}) => list[index]}
+                    >
+                        <Column
+                            label='IP'
+                            dataKey='ip'
+                            width={200}
+                        />
+                        <Column
+                            width={50}
+                            label='Port'
+                            dataKey='port'
+                        />
+                        <Column
+                            width={150}
+                            label='Anonymous'
+                            dataKey='is_anonymous'
+                        />
+                        <Column
+                            width={100}
+                            label='Latency'
+                            dataKey='latency'
+                            cellRenderer={({cellData}) => {
+                                const d = Math.round(cellData);
+                                return d + ' ms';
+                            }}
+                        />
+                    </Table>
+                )}
+            </AutoSizer>
         );
     }
 
