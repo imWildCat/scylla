@@ -2,6 +2,9 @@ import * as React from "react";
 import axios from 'axios';
 import {AutoSizer, Column, Table} from 'react-virtualized';
 
+// import * as moment from 'moment';
+const moment = require('moment')['default'];
+
 export interface AppState {
     proxies: Array<any>,
 }
@@ -62,6 +65,15 @@ export default class ProxyIPList extends React.Component<{}, AppState> {
                             cellRenderer={({cellData}) => {
                                 const d = Math.round(cellData);
                                 return d + ' ms';
+                            }}
+                        />
+                        <Column
+                            width={150}
+                            label='Time'
+                            dataKey='updated_at'
+                            cellRenderer={({cellData}) => {
+                                const d = moment.unix(cellData).format('YYYYMMDD HH:mm:ss');
+                                return d;
                             }}
                         />
                     </Table>
