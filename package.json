@@ -31,6 +31,7 @@
   "devDependencies": {
     "@types/react": "^16.3.13",
     "@types/react-dom": "^16.0.5",
+    "@types/react-router-dom": "^4.2.6",
     "@types/react-virtualized": "^9.18.3",
     "cross-env": "^5.1.4",
     "parcel-bundler": "^1.7.1",
@@ -44,6 +45,7 @@
     "node-sass": "^4.9.0",
     "react": "^16.0.0",
     "react-dom": "^16.3.2",
+    "react-router-dom": "^4.2.2",
     "react-virtualized": "^9.18.5"
   }
 }
