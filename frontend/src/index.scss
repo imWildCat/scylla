@@ -1,2 +1,24 @@
 body {
 }
+
+.navigation {
+  min-width: 696px;
+  list-style: none;
+  padding-top: 20px;
+  li {
+    display: inline;
+    font-weight: bold;
+
+    a {
+      color: gray;
+      &.active {
+        color: #000000;
+        font-weight: bolder;
+      }
+    }
+  }
+
+  li + li {
+    margin-left: 25px;
+  }
+}

@@ -21,7 +21,7 @@ export default class ProxyIPList extends React.Component<{}, AppState> {
         // const { timesClicked, on } = this.state;
         return (
             <div>
-                proxy ip list
+                <h1>Proxy IP list</h1>
 
                 {this.renderList()}
             </div>

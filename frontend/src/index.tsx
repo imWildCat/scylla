@@ -3,7 +3,7 @@ import * as ReactDOM from "react-dom";
 import 'react-virtualized/styles.css';
 import 'milligram';
 import "./index.scss";
-import {BrowserRouter as Router, Link, Route} from 'react-router-dom';
+import {BrowserRouter as Router, NavLink, Route} from 'react-router-dom';
 
 import ProxyIPList from "./components/ProxyList";
 import GeoDistribution from "./components/GeoDistribution";
@@ -14,9 +14,9 @@ import GeoDistribution from "./components/GeoDistribution";
 const AppRoute = () => (
     <Router>
         <div>
-            <ul>
-                <li><Link to="/">ProxyIPList</Link></li>
-                <li><Link to="/geo">GeoDistribution</Link></li>
+            <ul className="navigation">
+                <li><NavLink exact={true} to="/">ProxyIPList</NavLink></li>
+                <li><NavLink to="/geo">GeoDistribution</NavLink></li>
             </ul>
 
             <Route exact path="/" component={ProxyIPList}/>
