@@ -50,7 +50,6 @@ For more details, please read the [API Documentation](http://scylla.wildcat.io/e
 - [x] Basic RESTFul API
 - [ ] Advanced RESTFul API (Sorting, paging, conditions)
 - [ ] Programmable API
-- [ ] Geographical distribution map for proxies
 - [ ] Docker integration
 - [ ] Smart web proxy server
 - [ ] More statistical views of proxies
