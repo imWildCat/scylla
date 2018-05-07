@@ -48,7 +48,7 @@ For more details, please read the [API Documentation](http://scylla.wildcat.io/e
 ## Roadmap
 
 - [x] Basic RESTFul API
-- [ ] Advanced RESTFul API (Sorting, paging, conditions)
+- [x] Advanced RESTFul API (Sorting, paging, conditions)
 - [ ] Programmable API
 - [ ] Docker integration
 - [ ] Smart web proxy server

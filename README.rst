@@ -54,9 +54,8 @@ Roadmap
 -------
 
 -  [x] Basic RESTFul API
--  [ ] Advanced RESTFul API (Sorting, paging, conditions)
+-  [x] Advanced RESTFul API (Sorting, paging, conditions)
 -  [ ] Programmable API
--  [ ] Geographical distribution map for proxies
 -  [ ] Docker integration
 -  [ ] Smart web proxy server
 -  [ ] More statistical views of proxies
