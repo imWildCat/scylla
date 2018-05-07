@@ -21,7 +21,7 @@ async def test_fixture_test_client_get(test_cli):
 
 
 async def test_get_proxies(test_cli):
-    create_test_ip()
+    ip_str = create_test_ip()
 
     resp = await test_cli.get('/api/v1/proxies')
     assert resp.status == 200
@@ -31,4 +31,4 @@ async def test_get_proxies(test_cli):
     proxies = resp_json['proxies']
     assert (len(proxies) > 0)
 
-    delete_test_ip()
+    delete_test_ip(ip_str)
