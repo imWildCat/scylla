@@ -8,6 +8,7 @@ An intelligent proxy pool for humanities, only supports Python 3.6. Key features
 - Simple but beautiful web-based user interface (eg. geographical distribution of proxies)
 - Could get started with only 2 commands minimally
 - Straightforward programmable API
+- (Additional) Headless browser crawling
 
 
 ## Get started
@@ -34,13 +35,12 @@ cd scylla
 pip install -r requirements.txt
 
 npm install # or yarn install
+npm build # or yarn build
 
 python -m scylla
 ```
 
-## Usage
-
-### Standalone
+### Programmatically
 
 
 For more details, please read the [API Documentation](http://scylla.wildcat.io/en/latest/py-modindex.html).
@@ -55,8 +55,23 @@ For more details, please read the [API Documentation](http://scylla.wildcat.io/e
 - [ ] More statistical views of proxies
 - [ ] Quality statistics for different providers
 
-## Contribution
+## Development and Contribution
 
+```bash
+git clone https://github.com/imWildCat/scylla.git
+cd scylla
+
+pip install -r requirements.txt
+
+npm install # or yarn install
+```
+
+## Testing
+
+```bash
+pip install -r tests/requirements-test.txt
+pytest -n 10 tests
+```
 
 ## License
 
