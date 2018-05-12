@@ -1,5 +1,5 @@
-Scylla |Build Status| |codecov| |Documentation Status| |PyPI version|
-=====================================================================
+Scylla |Build Status| |codecov| |Documentation Status| |PyPI version| |Docker Build Status|
+===========================================================================================
 
 An intelligent proxy pool for humanities, only supports Python 3.6. Key
 features:
@@ -10,6 +10,7 @@ features:
    distribution of proxies)
 -  Could get started with only 2 commands minimally
 -  Straightforward programmable API
+-  (Additional) Headless browser crawling
 
 Get started
 -----------
@@ -38,14 +39,12 @@ Use from source
     pip install -r requirements.txt
 
     npm install # or yarn install
+    npm build # or yarn build
 
     python -m scylla
 
-Usage
------
-
-Standalone
-~~~~~~~~~~
+Programmatically
+~~~~~~~~~~~~~~~~
 
 For more details, please read the `API
 Documentation <http://scylla.wildcat.io/en/latest/py-modindex.html>`__.
@@ -56,13 +55,31 @@ Roadmap
 -  [x] Basic RESTFul API
 -  [x] Advanced RESTFul API (Sorting, paging, conditions)
 -  [ ] Programmable API
--  [ ] Docker integration
+-  [x] Docker integration
 -  [ ] Smart web proxy server
 -  [ ] More statistical views of proxies
 -  [ ] Quality statistics for different providers
+-  [ ] Over 20 data sources
 
-Contribution
-------------
+Development and Contribution
+----------------------------
+
+.. code:: bash
+
+    git clone https://github.com/imWildCat/scylla.git
+    cd scylla
+
+    pip install -r requirements.txt
+
+    npm install # or yarn install
+
+Testing
+-------
+
+.. code:: bash
+
+    pip install -r tests/requirements-test.txt
+    pytest -n 10 tests
 
 License
 -------
@@ -78,3 +95,5 @@ Apache License 2.0. For more details, please read the
     :target: https://scylla.wildcat.io/en/latest/?badge=latest
 .. |PyPI version| image:: https://badge.fury.io/py/scylla.svg
    :target: https://badge.fury.io/py/scylla
+.. |Docker Build Status| image:: https://img.shields.io/docker/build/wildcat/scylla.svg
+    :target: https://hub.docker.com/r/wildcat/scylla/
