@@ -1,0 +1,13 @@
+ignore:
+  - ".gitignore"
+  - ".readthedocs.yml"
+  - ".travis.yml"
+  - "Dockerfile"
+  - "LICENSE"
+  - "Makefile"
+  - "MANIFEST.in"
+  - "package.json"
+  - "README.md"
+  - "README.rst"
+  - "requirements.txt"
+  - "*_test.py"
