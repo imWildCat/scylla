@@ -1,4 +1,6 @@
 ignore:
+  - "docs/"
+  - "frontend/"
   - ".gitignore"
   - ".readthedocs.yml"
   - ".travis.yml"
