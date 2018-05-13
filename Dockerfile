@@ -7,4 +7,4 @@ WORKDIR /var/www/scylla
 
 RUN pip install scylla
 
-CMD scylla
+CMD python -m scylla
