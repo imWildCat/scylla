@@ -4,9 +4,9 @@ from threading import Thread
 
 from scylla.database import ProxyIP
 from scylla.jobs import validate_proxy_ip
-from scylla.worker import Worker
 from scylla.loggings import logger
 from scylla.providers import *
+from scylla.worker import Worker
 
 
 def fetch_ips(q: Queue, validator_queue: Queue):
@@ -68,6 +68,11 @@ class Scheduler(object):
         self.validator_pool = ThreadPoolExecutor(max_workers=20)
 
     def start(self):
+        """
+        Start the scheduler with processes for worker (fetching candidate proxies from different providers),
+        and validator threads for checking whether the fetched proxies are able to use.
+
+        """
         logger.info('Scheduler starts...')
         self.feed_providers()
 
@@ -83,6 +88,10 @@ class Scheduler(object):
         logger.info('validator_thread started')
 
     def join(self):
+        """
+        Wait for worker processes and validator threads
+
+        """
         while (self.worker_process and self.worker_process.is_alive()) or (
                 self.validator_thread and self.validator_thread.is_alive()):
             self.worker_process.join()
