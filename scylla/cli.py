@@ -8,7 +8,8 @@ from scylla.scheduler import Scheduler
 from scylla.web import start_web_server
 
 CMD_DESCRIPTION = """Scylla command line mode
-
+This command could start a scheduler for crawling and validating proxies.
+In addition, a web server with APIs can also be launched.
 
 """
 
