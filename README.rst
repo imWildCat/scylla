@@ -92,8 +92,8 @@ Apache License 2.0. For more details, please read the
 .. |codecov| image:: https://codecov.io/gh/imWildCat/scylla/branch/master/graph/badge.svg
    :target: https://codecov.io/gh/imWildCat/scylla
 .. |Documentation Status| image:: https://readthedocs.org/projects/scylla-py/badge/?version=latest
-    :target: https://scylla.wildcat.io/en/latest/?badge=latest
+   :target: https://scylla.wildcat.io/en/latest/?badge=latest
 .. |PyPI version| image:: https://badge.fury.io/py/scylla.svg
    :target: https://badge.fury.io/py/scylla
 .. |Docker Build Status| image:: https://img.shields.io/docker/build/wildcat/scylla.svg
-    :target: https://hub.docker.com/r/wildcat/scylla/
+   :target: https://hub.docker.com/r/wildcat/scylla/
