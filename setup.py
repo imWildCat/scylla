@@ -42,6 +42,8 @@ setup(
     install_requires=[
         'requests',
         'requests-html',
+        'sanic',
+        'sanic-cors',
         'six',
         'peewee',
     ]
