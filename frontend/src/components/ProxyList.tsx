@@ -1,6 +1,5 @@
 import * as React from "react";
 import axios from 'axios';
-import {AutoSizer, Column, Table} from 'react-virtualized';
 
 // import * as moment from 'moment';
 const moment = require('moment')['default'];
@@ -23,62 +22,38 @@ export default class ProxyIPList extends React.Component<{}, AppState> {
             <div>
                 <h1>Proxy IP list</h1>
 
-                {this.renderList()}
+                {this.renderList2()}
             </div>
         );
     }
 
-    renderList(): JSX.Element {
-
+    renderList2(): JSX.Element {
         const list = this.state.proxies;
-
         return (
-            <AutoSizer disableHeight={true}>
-                {({width}) => (
-                    <Table
-                        width={width}
-                        height={500}
-                        headerHeight={20}
-                        rowHeight={30}
-                        rowCount={list.length}
-                        rowGetter={({index}) => list[index]}
-                    >
-                        <Column
-                            label='IP'
-                            dataKey='ip'
-                            width={200}
-                        />
-                        <Column
-                            width={50}
-                            label='Port'
-                            dataKey='port'
-                        />
-                        <Column
-                            width={150}
-                            label='Anonymous'
-                            dataKey='is_anonymous'
-                        />
-                        <Column
-                            width={100}
-                            label='Latency'
-                            dataKey='latency'
-                            cellRenderer={({cellData}) => {
-                                const d = Math.round(cellData);
-                                return d + ' ms';
-                            }}
-                        />
-                        <Column
-                            width={150}
-                            label='Time'
-                            dataKey='updated_at'
-                            cellRenderer={({cellData}) => {
-                                const d = moment.unix(cellData).format('YYYYMMDD HH:mm:ss');
-                                return d;
-                            }}
-                        />
-                    </Table>
-                )}
-            </AutoSizer>
+            <div>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>IP</th>
+                        <th>Port</th>
+                        <th>Anonymous</th>
+                        <th>Latency</th>
+                        <th>Updated at</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {list.map(r =>
+                        <tr key={`ip-` + r.ip}>
+                            <td>{r.ip}</td>
+                            <td>{r.port}</td>
+                            <td>{r.is_anonymous ? 'Yes' : 'No'}</td>
+                            <td>{r.latency.toFixed(0)} ms</td>
+                            <td>{moment.unix(r.updated_at).format('YYYYMMDD HH:mm:ss')}</td>
+                        </tr>
+                    )}
+                    </tbody>
+                </table>
+            </div>
         );
     }
 
