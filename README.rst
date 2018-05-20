@@ -20,6 +20,8 @@ Install with Docker (highly recommended)
 
 .. code:: bash
 
+    docker run -it --name scylla wildcat/scylla
+
 Install directly via pip
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
