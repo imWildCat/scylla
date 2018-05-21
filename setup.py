@@ -44,6 +44,7 @@ setup(
         'requests-html',
         'sanic',
         'sanic-cors',
+        'schedule',
         'six',
         'peewee',
     ]
