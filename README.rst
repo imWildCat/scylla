@@ -8,7 +8,7 @@ features:
 -  Easy-to-use JSON API
 -  Simple but beautiful web-based user interface (eg. geographical
    distribution of proxies)
--  Could get started with only 2 commands minimally
+-  Get started with only **1 command** minimally
 -  Straightforward programmable API
 -  (Additional) Headless browser crawling
 
