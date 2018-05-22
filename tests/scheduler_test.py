@@ -1,6 +1,6 @@
 import pytest
 
-from scylla.scheduler import Scheduler
+from scylla.scheduler import Scheduler, cron_schedule
 
 
 @pytest.fixture
@@ -9,15 +9,19 @@ def scheduler():
 
 
 def test_start(mocker, scheduler):
-    feed_providers = mocker.patch('scylla.scheduler.Scheduler.feed_providers')
     process_start = mocker.patch('multiprocessing.Process.start')
     thread_start = mocker.patch('threading.Thread.start')
 
     scheduler.start()
 
-    feed_providers.assert_called_once()
     process_start.assert_called_once()
-    thread_start.assert_called_once()
+    thread_start.assert_called()
+
+
+def test_cron_schedule(mocker, scheduler):
+    feed_providers = mocker.patch('scylla.scheduler.Scheduler.feed_providers')
+    cron_schedule(scheduler)
+    feed_providers.assert_called_once()
 
 
 def test_feed_providers(mocker, scheduler):
