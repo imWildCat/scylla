@@ -54,7 +54,7 @@ For more details, please read the [API Documentation](http://scylla.wildcat.io/e
 - [ ] Smart web proxy server
 - [ ] More statistical views of proxies
 - [ ] Quality statistics for different providers
-- [ ] Over 20 data sources
+- [x] Over 10 data sources
 
 ## Development and Contribution
 
