@@ -20,7 +20,7 @@ def test_start(mocker, scheduler):
 
 def test_cron_schedule(mocker, scheduler):
     feed_providers = mocker.patch('scylla.scheduler.Scheduler.feed_providers')
-    cron_schedule(scheduler)
+    cron_schedule(scheduler, only_once=True)
     feed_providers.assert_called_once()
 
 

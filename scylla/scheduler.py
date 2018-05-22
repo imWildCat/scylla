@@ -53,7 +53,12 @@ def validate_ips(q: Queue, validator_pool: ThreadPoolExecutor):
             break
 
 
-def cron_schedule(scheduler):
+def cron_schedule(scheduler, only_once=False):
+    """
+
+    :param scheduler: the Scheduler instance
+    :param only_once: flag for testing
+    """
     def feed():
         scheduler.feed_providers()
 
@@ -64,10 +69,16 @@ def cron_schedule(scheduler):
 
     logger.info('Start python scheduler')
 
-    while True:
+    flag = True
+
+    while flag:
         try:
             schedule.run_pending()
-            time.sleep(60)
+
+            if only_once:
+                flag = False
+            else:
+                time.sleep(60)
         except (KeyboardInterrupt, InterruptedError):
             logger.info('Stopping python scheduler')
             break
