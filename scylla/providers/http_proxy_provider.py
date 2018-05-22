@@ -1,3 +1,5 @@
+import re
+
 from requests_html import HTML
 
 from scylla.database import ProxyIP
@@ -14,10 +16,15 @@ class HttpProxyProvider(BaseProvider):
             ip_element = ip_row.find('td:nth-child(1)', first=True)
             port_element = ip_row.find('td:nth-child(2)', first=True)
 
-            if ip_element and port_element:
-                p = ProxyIP(ip=ip_element.text, port=port_element.text)
+            try:
+                if ip_element and port_element:
+                    port_str = re.search(r'//]]> (\d+)', port_element.text).group(1)
 
-                ip_list.append(p)
+                    p = ProxyIP(ip=ip_element.text, port=port_str)
+
+                    ip_list.append(p)
+            except AttributeError:
+                pass
 
         return ip_list
 
@@ -30,4 +37,4 @@ class HttpProxyProvider(BaseProvider):
 
     @staticmethod
     def should_render_js() -> bool:
-        return False
+        return True
