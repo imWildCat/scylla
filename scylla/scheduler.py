@@ -1,6 +1,9 @@
+import time
 from concurrent.futures import ThreadPoolExecutor
 from multiprocessing import Queue, Process
 from threading import Thread
+
+import schedule
 
 from scylla.database import ProxyIP
 from scylla.jobs import validate_proxy_ip
@@ -13,32 +16,31 @@ def fetch_ips(q: Queue, validator_queue: Queue):
     logger.debug('fetch_ips...')
     worker = Worker()
 
-    while not q.empty():
-        provider: BaseProvider = q.get()
+    while True:
+        try:
+            provider: BaseProvider = q.get()
 
-        provider_name = provider.__class__.__name__
+            provider_name = provider.__class__.__name__
 
-        logger.debug('Get a provider from the provider queue: ' + provider_name)
+            logger.debug('Get a provider from the provider queue: ' + provider_name)
 
-        for url in provider.urls():
+            for url in provider.urls():
 
-            try:
                 html = worker.get_html(url)
-            except KeyboardInterrupt:
-                logger.info('KeyboardInterrupt terminates fetch_ips')
-                return
 
-            if html:
-                proxies = provider.parse(html)
+                if html:
+                    proxies = provider.parse(html)
 
-                for p in proxies:
-                    validator_queue.put(p)
-                    logger.debug('Put new proxy ip into queue: {}'.format(p.__str__()))
+                    for p in proxies:
+                        validator_queue.put(p)
+                        logger.debug('Put new proxy ip into queue: {}'.format(p.__str__()))
 
-                logger.info(
-                    ' {}: feed {} potential proxies into the validator queue'.format(provider_name, len(proxies))
-                )
-    logger.info('worker_process exited.')
+                    logger.info(
+                        ' {}: feed {} potential proxies into the validator queue'.format(provider_name, len(proxies))
+                    )
+        except (KeyboardInterrupt, InterruptedError, SystemExit):
+            logger.info('worker_process exited.')
+            break
 
 
 def validate_ips(q: Queue, validator_pool: ThreadPoolExecutor):
@@ -50,12 +52,25 @@ def validate_ips(q: Queue, validator_pool: ThreadPoolExecutor):
         except KeyboardInterrupt:
             break
 
-    # Not supported on macOS:
-    # q_size = q.qsize()
-    # if q_size == 0:
-    #     logger.debug('There is no ip left to be validated temporarily.')
-    # else:
-    #     logger.debug('There are/is {} ip(s) left to be validated.'.format(q_size))
+
+def cron_schedule(scheduler):
+    def feed():
+        scheduler.feed_providers()
+
+    # feed providers at the very beginning
+    scheduler.feed_providers()
+
+    schedule.every(10).minutes.do(feed)
+
+    logger.info('Start python scheduler')
+
+    while True:
+        try:
+            schedule.run_pending()
+            time.sleep(60)
+        except (KeyboardInterrupt, InterruptedError):
+            logger.info('Stopping python scheduler')
+            break
 
 
 class Scheduler(object):
@@ -65,6 +80,7 @@ class Scheduler(object):
         self.validator_queue = Queue()
         self.worker_process = None
         self.validator_thread = None
+        self.cron_thread = None
         self.validator_pool = ThreadPoolExecutor(max_workers=20)
 
     def start(self):
@@ -74,14 +90,16 @@ class Scheduler(object):
 
         """
         logger.info('Scheduler starts...')
-        self.feed_providers()
 
+        self.cron_thread = Thread(target=cron_schedule, args=(self,), daemon=True)
         self.worker_process = Process(target=fetch_ips, args=(self.worker_queue, self.validator_queue))
         self.validator_thread = Thread(target=validate_ips, args=(self.validator_queue, self.validator_pool))
 
+        self.cron_thread.daemon = True
         self.worker_process.daemon = True
         self.validator_thread.daemon = True
 
+        self.cron_thread.start()
         self.worker_process.start()  # Python will wait for all process finished
         logger.info('worker_process started')
         self.validator_thread.start()
