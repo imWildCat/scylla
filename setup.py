@@ -10,6 +10,9 @@ here = os.path.abspath(os.path.dirname(__file__))
 with io.open(os.path.join(here, 'README.rst'), encoding='utf-8') as f:
     long_description = '\n' + f.read()
 
+with open('requirements.txt') as f:
+    required = f.read().splitlines()
+
 setup(
     name='scylla',
     python_requires='>=3.6.0',
@@ -39,13 +42,5 @@ setup(
         'Programming Language :: Python :: Implementation :: PyPy',
         'License :: OSI Approved :: Apache Software License'
     ],
-    install_requires=[
-        'requests',
-        'requests-html',
-        'sanic',
-        'sanic-cors',
-        'schedule',
-        'six',
-        'peewee',
-    ]
+    install_requires=required,
 )
