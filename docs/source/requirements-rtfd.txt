@@ -1,6 +1,0 @@
-sanic==0.7.0
-sanic-cors==0.9.3
-six==1.11.0
-requests==2.18.4
-requests-html
-peewee==3.2.2
