@@ -64,7 +64,7 @@ async def api_v1_proxies(request: Request):
         elif is_anonymous == 0:
             proxies = proxies.where(ProxyIP.is_anonymous == False)
 
-    proxies = proxies.order_by(ProxyIP.updated_at.desc(), ProxyIP.latency).offset(page - 1).limit(limit)
+    proxies = proxies.order_by(ProxyIP.updated_at.desc(), ProxyIP.latency).offset((page - 1) * limit).limit(limit)
 
     count = ProxyIP.select().count()
 
