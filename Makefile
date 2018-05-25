@@ -15,6 +15,7 @@ delete-tag:
 gen-rst:
 	pandoc -s README.md -o README.rst
 assets-build:
+	rm -rf scylla/assets
 	NODE_ENV=production parcel build --public-url='/assets' -d scylla/assets frontend/src/index.html
 assets-dev:
 	parcel --public-url='/assets' frontend/src/index.html
