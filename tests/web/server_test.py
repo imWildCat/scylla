@@ -34,6 +34,48 @@ async def test_get_proxies(test_cli):
     delete_test_ip(ip_str)
 
 
+async def test_get_proxies_limit(test_cli):
+    ip_str = create_test_ip()
+
+    resp = await test_cli.get('/api/v1/proxies?limit=10')
+    assert resp.status == 200
+
+    resp_json = await resp.json()
+
+    proxies = resp_json['proxies']
+    assert (len(proxies) > 0)
+
+    delete_test_ip(ip_str)
+
+
+async def test_get_proxies_anonymous_true(test_cli):
+    ip_str = create_test_ip()
+
+    resp = await test_cli.get('/api/v1/proxies?anonymous=true')
+    assert resp.status == 200
+
+    resp_json = await resp.json()
+
+    proxies = resp_json['proxies']
+    assert (len(proxies) > 0)
+
+    delete_test_ip(ip_str)
+
+
+async def test_get_proxies_anonymous_false(test_cli):
+    ip_str = create_test_ip()
+
+    resp = await test_cli.get('/api/v1/proxies?anonymous=false')
+    assert resp.status == 200
+
+    resp_json = await resp.json()
+
+    proxies = resp_json['proxies']
+    assert (len(proxies) > 0)
+
+    delete_test_ip(ip_str)
+
+
 async def test_get_stats(test_cli):
     ip_str = create_test_ip()
 
