@@ -3,6 +3,7 @@ from concurrent.futures import ThreadPoolExecutor
 from multiprocessing import Queue, Process
 from threading import Thread
 
+import pyppeteer
 import schedule
 
 from scylla.database import ProxyIP
@@ -41,6 +42,12 @@ def fetch_ips(q: Queue, validator_queue: Queue):
         except (KeyboardInterrupt, InterruptedError, SystemExit):
             logger.info('worker_process exited.')
             break
+        except pyppeteer.errors.PyppeteerError as e:
+            logger.debug('pyppeteer.errors.PyppeteerError detected: {}\n'
+                         + 'Please make sure you have installed all the dependencies for chromium correctly'.format(e))
+        except Exception as e:
+            worker = Worker()  # reset worker
+            logger.warning('Unhandled exception is detected: {}'.format(e))
 
 
 def validate_ips(q: Queue, validator_pool: ThreadPoolExecutor):
