@@ -1,9 +1,9 @@
 default:
 	make gen-rst
-	make build-assets
-	make build-package
+	make assets-build
+	make package-build
 	make upload
-build-package:
+package-build:
 	rm -rf dist
 	python setup.py bdist_wheel --universal
 upload:
@@ -14,7 +14,7 @@ delete-tag:
 	git tag --delete $(TAG); git push --delete origin $(TAG)
 gen-rst:
 	pandoc -s README.md -o README.rst
-build-assets:
-	parcel build --public-url='/assets' -d scylla/assets frontend/src/index.html
+assets-build:
+	NODE_ENV=production parcel build --public-url='/assets' -d scylla/assets frontend/src/index.html
 assets-dev:
 	parcel --public-url='/assets' frontend/src/index.html
