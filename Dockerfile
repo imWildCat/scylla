@@ -15,6 +15,9 @@ RUN apk add --update --no-cache libxslt-dev
 
 COPY --from=build /usr/local/lib/python3.6/site-packages/ /usr/local/lib/python3.6/site-packages/
 
+WORKDIR /var/www/scylla
+VOLUME /var/www/scylla
+
 EXPOSE 8000
 
 CMD python -m scylla
