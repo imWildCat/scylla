@@ -28,6 +28,11 @@ def _parse_str_to_int(s: str) -> int:
         return 0
 
 
+def _get_valid_proxies_query():
+    return ProxyIP.select().where(ProxyIP.latency > 0).where(ProxyIP.latency < 9999) \
+        .where(ProxyIP.is_valid == True)
+
+
 @app.route('/api/v1/proxies')
 async def api_v1_proxies(request: Request):
     args = request.raw_args
@@ -55,8 +60,7 @@ async def api_v1_proxies(request: Request):
         else:
             is_anonymous = 2
 
-    proxy_initial_query = ProxyIP.select().where(ProxyIP.latency > 0).where(ProxyIP.latency < 9999) \
-        .where(ProxyIP.is_valid == True)
+    proxy_initial_query = _get_valid_proxies_query()
 
     proxy_query = proxy_initial_query
 
@@ -83,6 +87,35 @@ async def api_v1_proxies(request: Request):
         'per_page': limit,
         'page': page,
         'total_page': math.ceil(count / limit),
+    })
+
+
+@app.route('/api/v1/stats')
+async def api_v1_stats(request: Request):
+    median_query: ProxyIP = ProxyIP.raw("""SELECT latency
+                                FROM proxy_ips
+                                WHERE is_valid = 1
+                                ORDER BY latency
+                                LIMIT 1
+                                OFFSET (
+                                  SELECT COUNT(*) FROM proxy_ips WHERE is_valid = 1
+                                ) / 2""").get()
+    median = median_query.latency
+
+    mean_query: ProxyIP = ProxyIP.raw("""SELECT AVG(latency) as latency
+                                    FROM proxy_ips
+                                    WHERE is_valid = 1 AND latency < 9999""").get()
+    mean = mean_query.latency
+
+    valid_count = _get_valid_proxies_query().count()
+
+    total_count = ProxyIP.select().count()
+
+    return json({
+        'median': median,
+        'valid_count': valid_count,
+        'total_count': total_count,
+        'mean': mean,
     })
 
 

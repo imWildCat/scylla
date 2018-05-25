@@ -32,3 +32,19 @@ async def test_get_proxies(test_cli):
     assert (len(proxies) > 0)
 
     delete_test_ip(ip_str)
+
+
+async def test_get_stats(test_cli):
+    ip_str = create_test_ip()
+
+    resp = await test_cli.get('/api/v1/stats')
+    assert resp.status == 200
+
+    resp_json = await resp.json()
+
+    assert resp_json['median']
+    assert resp_json['mean']
+    assert resp_json['valid_count']
+    assert resp_json['total_count']
+
+    delete_test_ip(ip_str)

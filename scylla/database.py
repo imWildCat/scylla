@@ -18,7 +18,7 @@ def create_connection() -> SqliteDatabase:
         return _db
     else:
         logger.debug('create new connection')
-        _db = SqliteDatabase(get_config('db_path'))
+        _db = SqliteDatabase(get_config('db_path', './scylla.db'))
         return _db
 
 
