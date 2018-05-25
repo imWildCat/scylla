@@ -54,14 +54,7 @@ Documentation <http://scylla.wildcat.io/en/latest/py-modindex.html>`__.
 Roadmap
 -------
 
--  [x] Basic RESTFul API
--  [x] Advanced RESTFul API (Sorting, paging, conditions)
--  [ ] Programmable API
--  [x] Docker integration
--  [ ] Smart web proxy server
--  [ ] More statistical views of proxies
--  [ ] Quality statistics for different providers
--  [x] Over 10 data sources
+Please see `Projects <https://github.com/imWildCat/scylla/projects>`__.
 
 Development and Contribution
 ----------------------------
