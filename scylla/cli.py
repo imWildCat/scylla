@@ -6,6 +6,7 @@ from scylla.database import create_db_tables
 from scylla.loggings import logger
 from scylla.scheduler import Scheduler
 from scylla.web import start_web_server
+from ._version import __version__
 
 CMD_DESCRIPTION = """Scylla command line mode
 This command could start a scheduler for crawling and validating proxies.
@@ -23,12 +24,16 @@ def main(args) -> int:
                         help='The port number for the web server')
     parser.add_argument('--web-host', '-wh', type=str, default='0.0.0.0',
                         help='The hostname for the web server')
+    parser.add_argument('--version', '-v', action='store_true',
+                        help='Print the version of Scylla')
 
     parsed_args = parser.parse_args(args)
 
     parsed_args_dict = vars(parsed_args)
 
     batch_set_config(**vars(parsed_args))
+
+    handle_special_flags(parsed_args_dict)
 
     create_db_tables()
 
@@ -50,6 +55,12 @@ def main(args) -> int:
         return 0
 
     return 0
+
+
+def handle_special_flags(args: dict):
+    if args['version']:
+        print('v{}'.format(__version__))
+        sys.exit(0)
 
 
 def app_main():

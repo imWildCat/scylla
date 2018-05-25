@@ -5,8 +5,7 @@ default:
 	make upload
 build-package:
 	rm -rf dist
-	python setup.py sdist
-	# python setup.py bdist_wheel --universal
+	python setup.py sdist bdist_wheel --universal
 upload:
 	twine upload dist/*
 tag:
