@@ -59,6 +59,7 @@ def cron_schedule(scheduler, only_once=False):
     :param scheduler: the Scheduler instance
     :param only_once: flag for testing
     """
+
     def feed():
         scheduler.feed_providers()
 
@@ -127,13 +128,10 @@ class Scheduler(object):
             self.validator_thread.join()
 
     def feed_providers(self):
-        logger.debug('feed_providers...')
-        self.worker_queue.put(SpyMeProvider())
-        self.worker_queue.put(CoolProxyProvider())
-        self.worker_queue.put(FreeProxyListProvider())
-        self.worker_queue.put(KuaidailiProvider())
-        self.worker_queue.put(XiciProvider())
-        self.worker_queue.put(Data5uProvider())
+        logger.debug('feed {} providers...'.format(len(all_providers)))
+
+        for provider in all_providers:
+            self.worker_queue.put(provider())
 
     def stop(self):
         self.worker_queue.close()

@@ -9,5 +9,17 @@ from .spys_me_provider import SpyMeProvider
 from .spys_one_provider import SpysOneProvider
 from .xici_provider import XiciProvider
 
+all_providers = [
+    A2uProvider,
+    CoolProxyProvider,
+    Data5uProvider,
+    FreeProxyListProvider,
+    HttpProxyProvider,
+    KuaidailiProvider,
+    SpyMeProvider,
+    SpysOneProvider,
+    XiciProvider
+]
+
 # Provider references:
 # https://github.com/franklingu/proxypool/issues/2
