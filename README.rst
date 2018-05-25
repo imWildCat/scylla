@@ -73,7 +73,7 @@ Development and Contribution
 
     pip install -r requirements.txt
 
-    npm install # or yarn install
+    make build-assets
 
 Testing
 -------

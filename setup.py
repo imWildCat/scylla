@@ -44,4 +44,5 @@ setup(
     ],
     install_requires=required,
     include_package_data=True,
+    python_requires='>=3.6',
 )
