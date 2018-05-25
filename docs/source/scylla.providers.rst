@@ -44,6 +44,14 @@ scylla.providers.free\_proxy\_list\_provider module
     :undoc-members:
     :show-inheritance:
 
+scylla.providers.http\_proxy\_provider module
+---------------------------------------------
+
+.. automodule:: scylla.providers.http_proxy_provider
+:members:
+        :undoc-members:
+        :show-inheritance:
+
 scylla.providers.kuaidaili\_provider module
 -------------------------------------------
 
