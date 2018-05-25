@@ -8,7 +8,8 @@ class KuaidailiProvider(BaseProvider):
 
     def urls(self) -> [str]:
         return [
-            'https://www.kuaidaili.com/free/inha/1/',
+            'https://www.kuaidaili.com/free/',
+            'https://www.kuaidaili.com/free/inha/2/',
         ]
 
     def parse(self, html: HTML) -> [ProxyIP]:
@@ -27,4 +28,4 @@ class KuaidailiProvider(BaseProvider):
 
     @staticmethod
     def should_render_js() -> bool:
-        return False
+        return True
