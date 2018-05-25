@@ -1,3 +1,4 @@
+import math
 import os
 
 from playhouse.shortcuts import model_to_dict
@@ -71,6 +72,8 @@ async def api_v1_proxies(request: Request):
 
     proxies = proxies.order_by(ProxyIP.updated_at.desc(), ProxyIP.latency).offset(page - 1).limit(limit)
 
+    count = ProxyIP.select().count()
+
     logger.debug('Perform SQL query: {}'.format(proxies.sql()))
 
     proxy_list = []
@@ -80,6 +83,10 @@ async def api_v1_proxies(request: Request):
 
     return json({
         'proxies': proxy_list,
+        'count': count,
+        'per_page': limit,
+        'page': page,
+        'total_page': math.ceil(count / limit),
     })
 
 

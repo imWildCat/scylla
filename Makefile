@@ -16,3 +16,5 @@ gen-rst:
 	pandoc -s README.md -o README.rst
 build-assets:
 	parcel build -d scylla/assets frontend/src/index.html
+assets-dev:
+	parcel frontend/src/index.html

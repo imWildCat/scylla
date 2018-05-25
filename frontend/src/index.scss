@@ -1,5 +1,4 @@
-body {
-}
+body {}
 
 .navigation {
   min-width: 696px;
@@ -8,7 +7,6 @@ body {
   li {
     display: inline;
     font-weight: bold;
-
     a {
       color: gray;
       &.active {
@@ -17,8 +15,20 @@ body {
       }
     }
   }
+  li+li {
+    margin-left: 25px;
+  }
+}
 
-  li + li {
+ul.pagination {
+  min-width: 360px;
+  list-style: none;
+  padding-top: 5px;
+  li {
+    display: inline;
+  }
+
+  li+li {
     margin-left: 25px;
   }
 }
