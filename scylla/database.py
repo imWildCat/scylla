@@ -2,6 +2,7 @@ import datetime
 
 from peewee import Model, CharField, DateTimeField, BooleanField, FloatField, IntegerField, SqliteDatabase
 
+from scylla.config import get_config
 from scylla.loggings import logger
 
 _db = None
@@ -17,7 +18,7 @@ def create_connection() -> SqliteDatabase:
         return _db
     else:
         logger.debug('create new connection')
-        _db = SqliteDatabase('scylla.db')
+        _db = SqliteDatabase(get_config('db_path'))
         return _db
 
 

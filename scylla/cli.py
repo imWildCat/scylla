@@ -2,10 +2,6 @@ import argparse
 import sys
 
 from scylla.config import batch_set_config, get_config
-from scylla.database import create_db_tables
-from scylla.loggings import logger
-from scylla.scheduler import Scheduler
-from scylla.web import start_web_server
 from ._version import __version__
 
 CMD_DESCRIPTION = """Scylla command line mode
@@ -28,6 +24,8 @@ def main(args) -> int:
                         help='Prevent the scheduler from crawling')
     parser.add_argument('--version', '-v', action='store_true',
                         help='Print the version of Scylla')
+    parser.add_argument('--db-path', type=str, default='./scylla.db',
+                        help='The sqlite database file location')
 
     parsed_args = parser.parse_args(args)
 
@@ -36,6 +34,11 @@ def main(args) -> int:
     batch_set_config(**vars(parsed_args))
 
     handle_special_flags(parsed_args_dict)
+
+    from scylla.database import create_db_tables
+    from scylla.loggings import logger
+    from scylla.scheduler import Scheduler
+    from scylla.web import start_web_server
 
     create_db_tables()
 
