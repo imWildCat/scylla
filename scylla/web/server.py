@@ -16,16 +16,10 @@ CORS(app)
 
 base_path = os.path.abspath(os.path.join(__file__, os.pardir, os.pardir))
 
+app.static('/assets/*', base_path + '/assets')
 app.static('/', base_path + '/assets/index.html')
-app.static('/*', base_path + '/assets')
+app.static('/*', base_path + '/assets/index.html')
 
-
-# app.url_for('', filename='index.html')
-
-
-# @app.route('/')
-# async def test(request: Request):
-#     return json({'hello': 'world', 'args': request.raw_args})
 
 def _parse_str_to_int(s: str) -> int:
     try:
