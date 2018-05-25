@@ -55,20 +55,22 @@ async def api_v1_proxies(request: Request):
         else:
             is_anonymous = 2
 
-    proxies = ProxyIP.select().where(ProxyIP.latency > 0).where(ProxyIP.latency < 9999) \
+    proxy_initial_query = ProxyIP.select().where(ProxyIP.latency > 0).where(ProxyIP.latency < 9999) \
         .where(ProxyIP.is_valid == True)
+
+    proxy_query = proxy_initial_query
 
     if is_anonymous != 2:
         if is_anonymous == 1:
-            proxies = proxies.where(ProxyIP.is_anonymous == True)
+            proxy_query = proxy_initial_query.where(ProxyIP.is_anonymous == True)
         elif is_anonymous == 0:
-            proxies = proxies.where(ProxyIP.is_anonymous == False)
+            proxy_query = proxy_initial_query.where(ProxyIP.is_anonymous == False)
 
-    proxies = proxies.order_by(ProxyIP.updated_at.desc(), ProxyIP.latency).offset((page - 1) * limit).limit(limit)
+    proxies = proxy_query.order_by(ProxyIP.updated_at.desc(), ProxyIP.latency).offset((page - 1) * limit).limit(limit)
 
-    count = ProxyIP.select().count()
+    count = proxy_initial_query.count()
 
-    logger.debug('Perform SQL query: {}'.format(proxies.sql()))
+    logger.debug('Perform SQL query: {}'.format(proxy_query.sql()))
 
     proxy_list = []
 
