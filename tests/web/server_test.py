@@ -57,7 +57,7 @@ async def test_get_proxies_anonymous_true(test_cli):
     resp_json = await resp.json()
 
     proxies = resp_json['proxies']
-    assert (len(proxies) > 0)
+    assert len(proxies) == 0
 
     delete_test_ip(ip_str)
 
@@ -71,7 +71,35 @@ async def test_get_proxies_anonymous_false(test_cli):
     resp_json = await resp.json()
 
     proxies = resp_json['proxies']
-    assert (len(proxies) > 0)
+    assert len(proxies) > 0
+
+    delete_test_ip(ip_str)
+
+
+async def test_get_proxies_page(test_cli):
+    ip_str = create_test_ip()
+
+    resp = await test_cli.get('/api/v1/proxies?page=2')
+    assert resp.status == 200
+
+    resp_json = await resp.json()
+
+    proxies = resp_json['proxies']
+    assert len(proxies) == 0
+
+    delete_test_ip(ip_str)
+
+
+async def test_get_proxies_page_invalid(test_cli):
+    ip_str = create_test_ip()
+
+    resp = await test_cli.get('/api/v1/proxies?page=invalid')
+    assert resp.status == 200
+
+    resp_json = await resp.json()
+
+    proxies = resp_json['proxies']
+    assert len(proxies) > 0
 
     delete_test_ip(ip_str)
 
