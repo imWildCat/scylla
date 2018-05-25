@@ -27,7 +27,7 @@ def fetch_ips(q: Queue, validator_queue: Queue):
 
             for url in provider.urls():
 
-                html = worker.get_html(url)
+                html = worker.get_html(url, render_js=provider.should_render_js())
 
                 if html:
                     proxies = provider.parse(html)
@@ -43,8 +43,8 @@ def fetch_ips(q: Queue, validator_queue: Queue):
             logger.info('worker_process exited.')
             break
         except pyppeteer.errors.PyppeteerError as e:
-            logger.debug('pyppeteer.errors.PyppeteerError detected: {}\n'
-                         + 'Please make sure you have installed all the dependencies for chromium correctly'.format(e))
+            logger.debug('pyppeteer.errors.PyppeteerError detected: {}\n'.format(e)
+                         + 'Please make sure you have installed all the dependencies for chromium correctly')
         except Exception as e:
             worker = Worker()  # reset worker
             logger.warning('Unhandled exception is detected: {}'.format(e))
