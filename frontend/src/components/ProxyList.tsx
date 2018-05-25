@@ -1,37 +1,14 @@
 import * as React from "react";
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
-import { getBaseURL } from '../utils';
+import {getBaseURL, Proxy, ResponseJSON} from '../utils';
 import * as queryString from "query-string";
 
 // import * as moment from 'moment';
 const moment = require('moment')['default'];
 
-export interface Proxy {
-    id: number;
-    ip: string;
-    port: number;
-    is_valid: boolean;
-    created_at: number;
-    updated_at: number;
-    latency: number;
-    stability: number;
-    is_anonymous: boolean;
-    location: string;
-    organization: string;
-    region: string;
-    country: string;
-    city: string;
-}
 
-interface ResponseJSON {
-    proxies: Proxy[];
-    count: number;
-    per_page: number;
-    page: number;
-    total_page: number;
-}
 
 export interface AppState {
     proxies: Proxy[];
@@ -76,24 +53,24 @@ export default class ProxyIPList extends React.Component<Props, AppState> {
             <div>
                 <table>
                     <thead>
-                        <tr>
-                            <th>IP</th>
-                            <th>Port</th>
-                            <th>Anonymous</th>
-                            <th>Latency</th>
-                            <th>Updated at</th>
-                        </tr>
+                    <tr>
+                        <th>IP</th>
+                        <th>Port</th>
+                        <th>Anonymous</th>
+                        <th>Latency</th>
+                        <th>Updated at</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        {list.map(r =>
-                            <tr key={`ip-` + r.ip}>
-                                <td>{r.ip}</td>
-                                <td>{r.port}</td>
-                                <td>{r.is_anonymous ? 'Yes' : 'No'}</td>
-                                <td>{r.latency.toFixed(0)} ms</td>
-                                <td>{moment.unix(r.updated_at).format('YYYYMMDD HH:mm:ss')}</td>
-                            </tr>
-                        )}
+                    {list.map(r =>
+                        <tr key={`ip-` + r.ip}>
+                            <td>{r.ip}</td>
+                            <td>{r.port}</td>
+                            <td>{r.is_anonymous ? 'Yes' : 'No'}</td>
+                            <td>{r.latency.toFixed(0)} ms</td>
+                            <td>{moment.unix(r.updated_at).format('YYYYMMDD HH:mm:ss')}</td>
+                        </tr>
+                    )}
                     </tbody>
                 </table>
             </div>
@@ -104,7 +81,7 @@ export default class ProxyIPList extends React.Component<Props, AppState> {
         this.loadData(this.props);
     }
 
-    componentWillReceiveProps(nextProp) {
+    componentWillReceiveProps(nextProp: any) {
         this.loadData(nextProp)
     }
 
@@ -127,7 +104,7 @@ export default class ProxyIPList extends React.Component<Props, AppState> {
     }
 
     renderPagination(): JSX.Element {
-        const { total_page, page } = this.state;
+        const {total_page, page} = this.state;
 
         const pagination = [];
 

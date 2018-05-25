@@ -1,35 +1,112 @@
 import * as React from 'react';
-import {GoogleMap, Marker, withGoogleMap, withScriptjs} from 'react-google-maps';
+import axios from "axios";
+import {getBaseURL, Proxy, ResponseJSON} from "../utils";
+
+const {
+    ComposableMap,
+    ZoomableGroup,
+    Geographies,
+    Geography,
+    Markers,
+    Marker,
+} = require('react-simple-maps');
+
 
 export interface GeoDistributionProps {
 }
 
-const MapWithAMarker = withScriptjs(withGoogleMap(_ =>
-    <GoogleMap
-        defaultZoom={8}
-        defaultCenter={{lat: -34.397, lng: 150.644}}
-    >
-        <Marker
-            position={{lat: -34.397, lng: 150.644}}
-        />
-    </GoogleMap>
-));
+export interface GeoDistributionState {
+    proxies: Proxy[],
+}
 
+export default class GeoDistribution extends React.Component<GeoDistributionProps, GeoDistributionState> {
 
-export default class GeoDistribution extends React.Component<GeoDistributionProps, any> {
+    constructor(props: GeoDistributionProps) {
+        super(props);
+        this.state = {
+            proxies: [],
+        };
+    }
 
+    componentDidMount() {
+        this.loadData();
+    }
 
     render() {
+        // const position = [this.state.lat, this.state.lng];
         return (
             <div>
-                <MapWithAMarker
-                    googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyC4R6AN7SmujjPUIGKdyao2Kqitzr1kiRg&v=3.exp&libraries=geometry,drawing,places"
-                    loadingElement={<div style={{height: `100%`}}/>}
-                    containerElement={<div style={{height: `400px`}}/>}
-                    mapElement={<div style={{height: `100%`}}/>}
-                />
+                <ComposableMap>
+                    <ZoomableGroup>
+                        <Geographies
+                            geography={'https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-50m-simplified.json'}>
+                            {(geographies: any, projection: any) => geographies.map((geography: any) => {
+                                    return (
+                                        <Geography
+                                            key={geography.properties.ISO_A3 + '_' + geography.properties.NAME}
+                                            geography={geography}
+                                            projection={projection}
+                                            style={{
+                                                default: {fill: "#D8D8D8"},
+                                                hover: {fill: "#D8D8D8"},
+                                                pressed: {fill: "#D8D8D8"},
+                                            }}
+                                        />
+                                    );
+                                }
+                            )}
+                        </Geographies>
+                        <Markers>
+                            {this.state.proxies.map(p => this.renderMarker(p))}
+                        </Markers>
+                    </ZoomableGroup>
+                </ComposableMap>
             </div>
         );
+    }
+
+    renderMarker(proxy: Proxy): JSX.Element | null {
+        const locationStr = proxy.location;
+        if (locationStr) {
+            const locations = locationStr.split(',');
+
+            return (
+                <Marker
+                    key={proxy.id}
+                    marker={{coordinates: [locations[1], locations[0]]}}
+                    style={{
+                        default: {fill: this.mapProxyColor(proxy)},
+                        hover: {fill: "#999"},
+                        pressed: {fill: "#000"},
+                    }}
+                >
+                    <circle cx={0} cy={0} r={2}/>
+                </Marker>
+            );
+        } else {
+            return null;
+        }
+    }
+
+    mapProxyColor(proxy: Proxy): string {
+        if (proxy.latency < 180 && proxy.stability >= 0.6) {
+            return '#417505';
+        } else if (proxy.latency < 300 && proxy.stability >= 0.4) {
+            return '#F8E71C';
+        } else if (proxy.latency < 500 && proxy.stability > 0.0) {
+            return '#FF3824';
+        } else {
+            return '#000';
+        }
+    }
+
+    async loadData() {
+        const response = await axios.get(`${getBaseURL()}/api/v1/proxies?limit=4095`);
+        const res: ResponseJSON = response.data;
+        const proxies: Proxy[] = res.proxies;
+        this.setState({
+            proxies: proxies,
+        });
     }
 }
 

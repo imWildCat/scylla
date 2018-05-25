@@ -47,8 +47,8 @@
     "query-string": "^6.1.0",
     "react": "^15.3.0 || ^16.0.0-alpha",
     "react-dom": "^15.3.0 || ^16.0.0-alpha",
-    "react-google-maps": "^9.4.5",
     "react-router-dom": "^4.2.2",
+    "react-simple-maps": "^0.12.1",
     "react-virtualized": "^9.19.0"
   }
 }

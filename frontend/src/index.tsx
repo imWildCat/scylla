@@ -15,8 +15,8 @@ const AppRoute = () => (
     <Router>
         <div>
             <ul className="navigation">
-                <li><NavLink exact={true} to="/">ProxyIPList</NavLink></li>
-                <li><NavLink to="/geo">GeoDistribution</NavLink></li>
+                <li><NavLink exact={true} to="/">Proxy IP List</NavLink></li>
+                <li><NavLink to="/geo">Geometric Distribution</NavLink></li>
             </ul>
 
             <Route exact path="/" component={ProxyIPList}/>
