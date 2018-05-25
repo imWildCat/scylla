@@ -43,4 +43,5 @@ setup(
         'License :: OSI Approved :: Apache Software License'
     ],
     install_requires=required,
+    include_package_data=True,
 )

@@ -1,3 +1,5 @@
+import os
+
 from playhouse.shortcuts import model_to_dict
 from sanic import Sanic
 from sanic.request import Request
@@ -10,6 +12,14 @@ from scylla.loggings import logger
 app = Sanic()
 
 CORS(app)
+
+base_path = os.path.abspath(os.path.join(__file__, os.pardir, os.pardir))
+
+app.static('/', base_path + '/assets/index.html')
+app.static('/*', base_path + '/assets')
+
+
+# app.url_for('', filename='index.html')
 
 
 # @app.route('/')

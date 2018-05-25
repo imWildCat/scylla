@@ -3,3 +3,9 @@ include *.md
 
 # Include the license file
 include LICENSE
+
+# requirements.txt
+include requirements.txt
+
+# Include the assets
+recursive-include scylla/assets *

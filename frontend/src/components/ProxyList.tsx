@@ -1,6 +1,8 @@
 import * as React from "react";
 import axios from 'axios';
 
+import {getBaseURL} from '../utils';
+
 // import * as moment from 'moment';
 const moment = require('moment')['default'];
 
@@ -62,7 +64,7 @@ export default class ProxyIPList extends React.Component<{}, AppState> {
     }
 
     async loadData() {
-        const response = await axios.get('http://localhost:8000/api/v1/proxies');
+        const response = await axios.get(`${getBaseURL()}/api/v1/proxies`);
         const proxies: [any] = response.data.proxies;
         console.log(proxies);
         this.setState({proxies: proxies})

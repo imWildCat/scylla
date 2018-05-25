@@ -12,6 +12,7 @@ __pycache__/
 build/
 develop-eggs/
 dist/
+scylla/assets/
 downloads/
 eggs/
 .eggs/
