@@ -33,3 +33,10 @@ export interface ResponseJSON {
     page: number;
     total_page: number;
 }
+
+export interface StatsResponseJSON {
+    mean: number;
+    median: number;
+    total_count: number;
+    valid_count: number;
+}
