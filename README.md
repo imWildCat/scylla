@@ -16,7 +16,7 @@ An intelligent proxy pool for humanities, only supports Python 3.6. Key features
 ### Install with Docker (highly recommended)
 
 ```bash
-docker run -it --name scylla wildcat/scylla
+docker run -d -p 8000:8000 -v /var/www/scylla:/var/www/scylla --name scylla wildcat/scylla
 ```
 
 ### Install directly via pip
