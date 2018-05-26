@@ -17,6 +17,8 @@ features:
 -  Straightforward programmable API
 -  Headless browser crawling
 
+对于偏好中文的用户，请阅读 `中文文档`_\ 。For those who prefer to use Chinese, please read the `Chinese Documentation`_
+
 
 Get started
 -----------
@@ -222,6 +224,8 @@ Apache License 2.0. For more details, please read the
 .. _Travis CI: https://travis-ci.org/imWildCat/scylla
 .. _Scylla: http://prisonbreak.wikia.com/wiki/Scylla
 .. _Prison Break: https://en.wikipedia.org/wiki/Prison_Break
+.. _中文文档: https://scylla.wildcat.io/zh/latest/
+.. _Chinese Documentation: https://scylla.wildcat.io/zh/latest/
 
 .. |screenshot-geo-distribution| image:: https://user-images.githubusercontent.com/2396817/40578442-13a8491c-610c-11e8-8340-50097f29fdad.png
 .. |screenshot-proxy-list| image:: https://user-images.githubusercontent.com/2396817/40578443-13bcbbd6-610c-11e8-85d5-1a11b66bf5d4.png
