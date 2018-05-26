@@ -1,5 +1,5 @@
 |Scylla Banner| |Build Status| |codecov| |Documentation Status| |PyPI version| |Docker Build Status|
-===========================================================================================
+==============================================================================================================================================
 
 An intelligent proxy pool for humanities, only supports Python 3.6. Key
 features:

@@ -1,5 +1,4 @@
 default:
-	make gen-rst
 	make assets-build
 	make package-build
 	make upload
@@ -12,8 +11,6 @@ tag:
 	git tag $(TAG) -m '$(MSG)' && git push --tags origin master
 delete-tag:
 	git tag --delete $(TAG); git push --delete origin $(TAG)
-gen-rst:
-	pandoc -s README.md -o README.rst
 assets-build:
 	make assets-clean
 	NODE_ENV=production parcel build --public-url='/assets' -d scylla/assets frontend/src/index.html
