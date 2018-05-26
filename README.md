@@ -57,6 +57,7 @@ cd scylla
 
 pip install -r requirements.txt
 
+npm install # or `yarn install`
 make build-assets
 ```
 
@@ -64,7 +65,7 @@ make build-assets
 
 ```bash
 pip install -r tests/requirements-test.txt
-pytest -n 10 tests
+pytest -n 15 tests
 ```
 
 ## License
