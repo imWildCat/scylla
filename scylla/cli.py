@@ -16,7 +16,7 @@ def main(args) -> int:
                                      formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('--no-webserver', '-no-ws', action='store_true',
                         help='Prevent starting a web server for JSON API')
-    parser.add_argument('--web-port', '-wp', type=int, default=8000,
+    parser.add_argument('--web-port', '-wp', type=int, default=8899,
                         help='The port number for the web server')
     parser.add_argument('--web-host', '-wh', type=str, default='0.0.0.0',
                         help='The hostname for the web server')

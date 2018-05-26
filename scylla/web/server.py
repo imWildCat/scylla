@@ -119,5 +119,5 @@ async def api_v1_stats(request: Request):
     })
 
 
-def start_web_server(host='0.0.0.0', port=8000):
+def start_web_server(host='0.0.0.0', port=8899):
     app.run(host=host, port=port)
