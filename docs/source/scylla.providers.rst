@@ -8,9 +8,9 @@ scylla.providers.a2u\_provider module
 -------------------------------------
 
 .. automodule:: scylla.providers.a2u_provider
-:members:
-        :undoc-members:
-        :show-inheritance:
+    :members:
+    :undoc-members:
+    :show-inheritance:
 
 scylla.providers.base\_provider module
 --------------------------------------
@@ -48,9 +48,9 @@ scylla.providers.http\_proxy\_provider module
 ---------------------------------------------
 
 .. automodule:: scylla.providers.http_proxy_provider
-:members:
-        :undoc-members:
-        :show-inheritance:
+    :members:
+    :undoc-members:
+    :show-inheritance:
 
 scylla.providers.kuaidaili\_provider module
 -------------------------------------------
@@ -72,9 +72,9 @@ scylla.providers.spys\_one\_provider module
 -------------------------------------------
 
 .. automodule:: scylla.providers.spys_one_provider
-:members:
-        :undoc-members:
-        :show-inheritance:
+    :members:
+    :undoc-members:
+    :show-inheritance:
 
 scylla.providers.xici\_provider module
 --------------------------------------
