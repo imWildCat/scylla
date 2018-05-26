@@ -20,7 +20,7 @@ Install with Docker (highly recommended)
 
 .. code:: bash
 
-    docker run -it --name scylla wildcat/scylla
+    docker run -d -p 8899:8899 -v /var/www/scylla:/var/www/scylla --name scylla wildcat/scylla
 
 Install directly via pip
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -66,6 +66,7 @@ Development and Contribution
 
     pip install -r requirements.txt
 
+    npm install # or `yarn install`
     make build-assets
 
 Testing
@@ -74,7 +75,7 @@ Testing
 .. code:: bash
 
     pip install -r tests/requirements-test.txt
-    pytest -n 10 tests
+    pytest -n 15 tests
 
 License
 -------
