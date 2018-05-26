@@ -37,8 +37,8 @@ export default class Statistics extends React.Component<StatisticsProps, Statist
                     <li>
                         <b>{valid_count}</b> of them are valid.
                     </li>
-                    <li>The mean latency of them is: <b>{mean.toFixed(2)}</b></li>
-                    <li>The median latency of them is: <b>{median.toFixed(2)}</b></li>
+                    <li>The mean latency of them is: <b>{mean.toFixed(2)}</b> ms</li>
+                    <li>The median latency of them is: <b>{median.toFixed(2)}</b> ms</li>
                 </ul>
             </div>
         );
