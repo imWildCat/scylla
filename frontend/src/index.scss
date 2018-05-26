@@ -1,4 +1,8 @@
-body {}
+.banner {
+  &, img {
+    height: 60px;
+  }
+}
 
 .navigation {
   min-width: 696px;
@@ -30,5 +34,12 @@ ul.pagination {
 
   li+li {
     margin-left: 25px;
+  }
+}
+
+footer {
+  div {
+    text-align: center;
+    font-size: 13px;
   }
 }
