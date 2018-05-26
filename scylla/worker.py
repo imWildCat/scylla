@@ -34,9 +34,9 @@ class Worker:
 
         if response.ok:
             if render_js:
-                print('starting render js...')
+                logger.debug('starting render js...')
                 response.html.render(wait=1.5, timeout=10.0)
-                print('end render js...')
+                logger.debug('end render js...')
             return response.html
         else:
             return None
