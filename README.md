@@ -78,7 +78,7 @@ Optional URL parameters:
 
 Sample result:
 
-``` {.sourceCode .json}
+```json
 {
     "proxies": [{
         "id": 3661,
@@ -128,7 +128,7 @@ http://localhost:8899/api/v1/stats
 
 Sample result:
 
-``` {.sourceCode .json}
+```json
 {
     "median": 181.2566407083,
     "valid_count": 1780,
