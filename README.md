@@ -144,7 +144,7 @@ project.
 
 #### Proxy IP List
 
-```bash
+```
 http://localhost:8899/
 ```
 
@@ -154,7 +154,7 @@ Screenshot:
 
 #### Globally Geographical Distribution Map
 
-```bash
+```
 http://localhost:8899/#/geo
 ```
 
