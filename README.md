@@ -4,18 +4,18 @@ Scylla [![Build Status](https://travis-ci.org/imWildCat/scylla.svg?branch=master
 An intelligent proxy pool for humanities, only supports Python 3.6. Key
 features:
 
--   Automatic proxy ip crawling and validation
--   Easy-to-use JSON API
--   Simple but beautiful web-based user interface (eg. geographical
+- Automatic proxy ip crawling and validation
+- Easy-to-use JSON API
+- Simple but beautiful web-based user interface (eg. geographical
     distribution of proxies)
--   Get started with only **1 command** minimally
--   Straightforward programmable API
--   Headless browser crawling
+- Get started with only **1 command** minimally
+- Straightforward programmable API
+- Headless browser crawling
 
 对于偏好中文的用户，请阅读
 [中文文档](https://scylla.wildcat.io/zh/latest/)。For those who prefer
 to use Chinese, please read the [Chinese
-Documentation](https://scylla.wildcat.io/zh/latest/)
+Documentation](https://scylla.wildcat.io/zh/latest/).
 
 Get started
 ===========
