@@ -25,7 +25,7 @@ Install with Docker (highly recommended)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. code-block:: shell
 
-  $ docker run -d -p 8899:8899 -v /var/www/scylla:/var/www/scylla --name scylla wildcat/scylla:latest
+  docker run -d -p 8899:8899 -v /var/www/scylla:/var/www/scylla --name scylla wildcat/scylla:latest
 
 Install directly via pip
 ^^^^^^^^^^^^^^^^^^^^^^^^^
