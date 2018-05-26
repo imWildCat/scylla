@@ -26,7 +26,7 @@ Installation
 ### Install with Docker (highly recommended)
 
 ```bash
-$ docker run -d -p 8899:8899 -v /var/www/scylla:/var/www/scylla --name scylla wildcat/scylla 
+$ docker run -d -p 8899:8899 -v /var/www/scylla:/var/www/scylla --name scylla wildcat/scylla:latest
 ```
 
 ### Install directly via pip

@@ -26,7 +26,7 @@ Docker 安装（推荐）
 ^^^^^^^^^^^^^^^^^^^^^^^
 .. code-block:: shell
 
-  $ docker run -d -p 8899:8899 -v /var/www/scylla:/var/www/scylla --name scylla wildcat/scylla 
+  $ docker run -d -p 8899:8899 -v /var/www/scylla:/var/www/scylla --name scylla wildcat/scylla:latest
 
 使用 pip 直接安装
 ^^^^^^^^^^^^^^^^^^^^^^^
