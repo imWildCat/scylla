@@ -70,11 +70,11 @@ http://localhost:8899/api/v1/proxies
 
 Optional URL parameters:
 
-  Parameters   Default value   Description
-  ------------ --------------- -------------------------------------------------------------------------------------------------------------------
-  page         `1`             The page number
-  limit        `20`            The number of proxies shown on each page
-  anonymous    `any`           Show anonymous proxies or not. Possible values：`true`, only anonymous proxies; `false`, only transparent proxies
+| Parameters | Default value | Description                                                                                                       |
+|------------|---------------|-------------------------------------------------------------------------------------------------------------------|
+| page       | `1`           | The page number                                                                                                   |
+| limit      | `20`          | The number of proxies shown on each page                                                                          |
+| anonymous  | `any`         | Show anonymous proxies or not. Possible values：`true`, only anonymous proxies; `false`, only transparent proxies |
 
 Sample result:
 

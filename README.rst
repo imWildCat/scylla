@@ -188,7 +188,7 @@ Development and Contribution
 
    pip install -r requirements.txt
 
-   npm install # 或 `yarn install`
+   npm install # or `yarn install`
    make build-assets
 
 Testing
