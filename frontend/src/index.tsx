@@ -2,7 +2,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import 'milligram';
 import "./index.scss";
-import {BrowserRouter as Router, NavLink, Route} from 'react-router-dom';
+import {HashRouter as Router, NavLink, Route} from 'react-router-dom';
 
 import ProxyIPList from "./components/ProxyList";
 import GeoDistribution from "./components/GeoDistribution";
