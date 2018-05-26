@@ -161,7 +161,7 @@ Web 界面
 
 .. code:: shell
 
-    http://localhost:8899/#geo
+    http://localhost:8899/#/geo
 
 截图：
 
