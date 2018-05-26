@@ -1,4 +1,4 @@
-Scylla |Build Status| |codecov| |Documentation Status| |PyPI version| |Docker Build Status|
+|Scylla Banner| |Build Status| |codecov| |Documentation Status| |PyPI version| |Docker Build Status|
 ===========================================================================================
 
 An intelligent proxy pool for humanities, only supports Python 3.6. Key
@@ -225,7 +225,7 @@ Apache License 2.0. For more details, please read the
 .. |screenshot-geo-distribution| image:: https://user-images.githubusercontent.com/2396817/40578442-13a8491c-610c-11e8-8340-50097f29fdad.png
 .. |screenshot-proxy-list| image:: https://user-images.githubusercontent.com/2396817/40578443-13bcbbd6-610c-11e8-85d5-1a11b66bf5d4.png
 
-
+.. |Scylla Banner| image:: https://user-images.githubusercontent.com/2396817/40580444-13fa1b46-6136-11e8-877d-94231f480624.png
 .. |Build Status| image:: https://travis-ci.org/imWildCat/scylla.svg?branch=master
    :target: https://travis-ci.org/imWildCat/scylla
 .. |codecov| image:: https://codecov.io/gh/imWildCat/scylla/branch/master/graph/badge.svg
