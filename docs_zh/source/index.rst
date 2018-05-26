@@ -48,7 +48,7 @@ Docker 安装（推荐）
    pip install -r requirements.txt
 
    npm install # 或 yarn install
-   make build-assets # 或 yarn build
+   make build-assets
 
    python -m scylla
 

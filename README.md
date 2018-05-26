@@ -46,7 +46,7 @@ cd scylla
 pip install -r requirements.txt
 
 npm install # or yarn install
-make build-assets # or yarn build
+make build-assets
 
 python -m scylla
 ```
