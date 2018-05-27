@@ -1,6 +1,8 @@
 import datetime
+import math
 
-from peewee import Model, CharField, DateTimeField, BooleanField, FloatField, IntegerField, SqliteDatabase
+from peewee import CharField, DateTimeField, BooleanField, FloatField, IntegerField, SqliteDatabase
+from playhouse.signals import pre_save, Model
 
 from scylla.config import get_config
 from scylla.loggings import logger
@@ -56,3 +58,9 @@ class ProxyIP(BaseModel):
 
     def __repr__(self):
         return self.__str__()
+
+
+@pre_save(sender=ProxyIP)
+def proxy_ip_on_pre_save_handler(model_class, instance: ProxyIP, created):
+    print("#proxy_ip_on_pre_save_handler")
+    instance.latency = math.floor(instance.latency)

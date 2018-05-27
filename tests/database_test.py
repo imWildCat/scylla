@@ -56,3 +56,13 @@ def test_create_ip():
 def test_delete_ip():
     ret = ProxyIP.delete().execute()
     print(ret)
+
+
+def test_create_ip_floor_latency():
+    ip_str = gen_random_ip()
+    ip = ProxyIP(ip=ip_str, port=3306, latency=100.66, stability=100.0, is_valid=True)
+    ip.save()
+
+    assert ip.latency == 100.0
+
+    delete_test_ip(ip_str)
