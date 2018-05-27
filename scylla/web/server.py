@@ -37,6 +37,8 @@ def _get_valid_proxies_query():
 async def api_v1_proxies(request: Request):
     args = request.raw_args
 
+    print('#args:', args)
+
     limit = 20
 
     page = 1
@@ -60,6 +62,13 @@ async def api_v1_proxies(request: Request):
         else:
             is_anonymous = 2
 
+    country_list = []
+    if 'countries' in args:
+        countries = args['countries']
+        country_list = countries.split(',')
+        print('#country_list:', country_list)
+        print('#countries:', countries)
+
     proxy_initial_query = _get_valid_proxies_query()
 
     proxy_query = proxy_initial_query
@@ -70,9 +79,14 @@ async def api_v1_proxies(request: Request):
         elif is_anonymous == 0:
             proxy_query = proxy_initial_query.where(ProxyIP.is_anonymous == False)
 
-    proxies = proxy_query.order_by(ProxyIP.updated_at.desc(), ProxyIP.latency).offset((page - 1) * limit).limit(limit)
+    print('##country_list:', country_list)
+    if country_list and len(country_list) > 0:
+        print('append...country_list')
+        proxy_query = proxy_query.where(ProxyIP.country << country_list)
 
-    count = proxy_initial_query.count()
+    count = proxy_query.count()  # count before sorting
+
+    proxies = proxy_query.order_by(ProxyIP.updated_at.desc(), ProxyIP.latency).offset((page - 1) * limit).limit(limit)
 
     logger.debug('Perform SQL query: {}'.format(proxy_query.sql()))
 

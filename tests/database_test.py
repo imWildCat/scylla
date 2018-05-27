@@ -11,7 +11,7 @@ logger.setLevel(logging.DEBUG)
 logger.addHandler(logging.StreamHandler())
 
 
-def _gen_random_ip() -> str:
+def gen_random_ip() -> str:
     """
     Generate random ip
     From: https://stackoverflow.com/questions/21014618/python-randomly-generated-ip-address-of-the-string
@@ -20,7 +20,7 @@ def _gen_random_ip() -> str:
 
 
 def create_test_ip() -> str:
-    ip_str = _gen_random_ip()
+    ip_str = gen_random_ip()
     ip = ProxyIP(ip=ip_str, port=3306, latency=200.00, stability=100.0, is_valid=True)
     ip.save()
     return ip_str
@@ -28,6 +28,11 @@ def create_test_ip() -> str:
 
 def delete_test_ip(ip_str: str):
     ProxyIP.delete().where(ProxyIP.ip == ip_str).execute()
+
+
+def delete_test_ips(ip_strs: [str]):
+    for ip in ip_strs:
+        delete_test_ip(ip)
 
 
 def test_create_connection():
