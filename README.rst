@@ -1,8 +1,7 @@
-|Scylla Banner| |Build Status| |codecov| |Documentation Status| |PyPI version| |Docker Build Status| [PayPal Donation|
+|Scylla Banner| |Build Status| |codecov| |Documentation Status| |PyPI version| |Docker Build Status| |PayPal Donation|
 ==============================================================================================================================================
 
-An intelligent proxy pool for humanities, only supports Python 3.6. Key
-features:
+An intelligent proxy pool for humanities, only supports Python 3.6. Key features:
 
 -  Automatic proxy ip crawling and validation
 -  Easy-to-use JSON API
@@ -222,13 +221,9 @@ PayPal
 """"""
 |PayPal Donation Official|
 
-Alipay
-""""""
-|Alipay Donation|
-
-WeChat Pay
-""""""""""
-|WeChat Pay Donation|
+Alipay or WeChat Pay
+""""""""""""""""""""
+|Alipay and WeChat Donation|
 
 
 License
@@ -264,7 +259,5 @@ Apache License 2.0. For more details, please read the
    :target: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5DXFA7WGWPZBN
 .. |PayPal Donation Official| image:: https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif
    :target: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5DXFA7WGWPZBN
-.. |Alipay Donation| image:: https://user-images.githubusercontent.com/2396817/40589073-2cc3441e-61df-11e8-93c6-305844aa6905.png
-   :target: https://user-images.githubusercontent.com/2396817/40589073-2cc3441e-61df-11e8-93c6-305844aa6905.png
-.. |WeChat Pay Donation| image:: https://user-images.githubusercontent.com/2396817/40589130-f9bbfbe6-61df-11e8-9e63-1d3424697858.png
-   :target: https://user-images.githubusercontent.com/2396817/40589130-f9bbfbe6-61df-11e8-9e63-1d3424697858.png  
+.. |Alipay and WeChat Donation| image:: https://user-images.githubusercontent.com/2396817/40589594-cfb0e49e-61e7-11e8-8f7d-c55a29676c40.png
+   :target: https://user-images.githubusercontent.com/2396817/40589594-cfb0e49e-61e7-11e8-8f7d-c55a29676c40.png  

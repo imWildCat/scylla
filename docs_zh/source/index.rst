@@ -221,13 +221,9 @@ PayPal
 """"""
 |PayPal Donation Official|
 
-支付宝
-""""""""
-|Alipay Donation|
-
-微信
-""""""""""
-|WeChat Pay Donation|
+支付宝或微信
+""""""""""""""""""""
+|Alipay and WeChat Donation|
 
 协议
 -------
@@ -253,7 +249,5 @@ Apache License 2.0. 如需了解详情，请阅读 `LICENSE`_ 这个文件。
 
 .. |PayPal Donation Official| image:: https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif
    :target: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5DXFA7WGWPZBN
-.. |Alipay Donation| image:: https://user-images.githubusercontent.com/2396817/40589073-2cc3441e-61df-11e8-93c6-305844aa6905.png
-   :target: https://user-images.githubusercontent.com/2396817/40589073-2cc3441e-61df-11e8-93c6-305844aa6905.png
-.. |WeChat Pay Donation| image:: https://user-images.githubusercontent.com/2396817/40589130-f9bbfbe6-61df-11e8-9e63-1d3424697858.png
-   :target: https://user-images.githubusercontent.com/2396817/40589130-f9bbfbe6-61df-11e8-9e63-1d3424697858.png  
+.. |Alipay and WeChat Donation| image:: https://user-images.githubusercontent.com/2396817/40589594-cfb0e49e-61e7-11e8-8f7d-c55a29676c40.png
+   :target: https://user-images.githubusercontent.com/2396817/40589594-cfb0e49e-61e7-11e8-8f7d-c55a29676c40.png  

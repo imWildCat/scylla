@@ -228,15 +228,10 @@ PayPal
 
 [![paypal_donation](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5DXFA7WGWPZBN)
 
-Alipay
-------
+Alipay or WeChat Pay
+--------------------
 
-[![Alipay Donation]][Alipay Donation]
-
-WeChat Pay
-----------
-
-[![WeChat Pay Donation]][WeChat Pay Donation]
+[![Alipay And WeChat Donation]][Alipay and WeChat Donation]
 
 License
 =======
@@ -244,6 +239,4 @@ License
 Apache License 2.0. For more details, please read the
 [LICENSE](https://github.com/imWildCat/scylla/blob/master/LICENSE) file.
 
-[Alipay Donation]: https://user-images.githubusercontent.com/2396817/40589073-2cc3441e-61df-11e8-93c6-305844aa6905.png
-
-[WeChat Pay Donation]: https://user-images.githubusercontent.com/2396817/40589130-f9bbfbe6-61df-11e8-9e63-1d3424697858.png
+[Alipay and WeChat Donation]: https://user-images.githubusercontent.com/2396817/40589594-cfb0e49e-61e7-11e8-8f7d-c55a29676c40.png
