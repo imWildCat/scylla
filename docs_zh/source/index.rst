@@ -7,7 +7,7 @@ Scylla 中文文档
 
 
 
-Scylla 是一款高质量的免费代理 IP 池工具，有着如下特性：
+Scylla 是一款高质量的免费代理 IP 池工具，仅支持 Python 3.6。特性如下：
 
 -  自动化的代理 IP 爬取与验证
 -  易用的 JSON API
