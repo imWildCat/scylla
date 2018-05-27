@@ -1,4 +1,9 @@
-![banner_scylla](https://user-images.githubusercontent.com/2396817/40580477-f15a15b8-6136-11e8-9f4b-1f012e90712c.png) [![Build Status](https://travis-ci.org/imWildCat/scylla.svg?branch=master)](https://travis-ci.org/imWildCat/scylla) [![codecov](https://codecov.io/gh/imWildCat/scylla/branch/master/graph/badge.svg)](https://codecov.io/gh/imWildCat/scylla) [![Documentation Status](https://readthedocs.org/projects/scylla-py/badge/?version=latest)](https://scylla.wildcat.io/en/latest/?badge=latest) [![PyPI version](https://badge.fury.io/py/scylla.svg)](https://badge.fury.io/py/scylla) [![Docker Build Status](https://img.shields.io/docker/build/wildcat/scylla.svg)](https://hub.docker.com/r/wildcat/scylla/) 
+![banner_scylla](https://user-images.githubusercontent.com/2396817/40580477-f15a15b8-6136-11e8-9f4b-1f012e90712c.png) [![Build Status](https://travis-ci.org/imWildCat/scylla.svg?branch=master)](https://travis-ci.org/imWildCat/scylla)
+[![codecov](https://codecov.io/gh/imWildCat/scylla/branch/master/graph/badge.svg)](https://codecov.io/gh/imWildCat/scylla)
+[![Documentation Status](https://readthedocs.org/projects/scylla-py/badge/?version=latest)](https://scylla.wildcat.io/en/latest/?badge=latest)
+[![PyPI version](https://badge.fury.io/py/scylla.svg)](https://badge.fury.io/py/scylla)
+[![Docker Build Status](https://img.shields.io/docker/build/wildcat/scylla.svg)](https://hub.docker.com/r/wildcat/scylla/)
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5DXFA7WGWPZBN)
 ===
 
 An intelligent proxy pool for humanities, only supports Python 3.6. Key
@@ -207,8 +212,38 @@ name of a group of memory chips in the American TV series, [Prison
 Break](https://en.wikipedia.org/wiki/Prison_Break). This project was
 named after this American TV series to pay tribute to it.
 
+Donation
+========
+
+If you find this project useful, could you please donate some money to
+it?
+
+No matter how much the money is, Your donation will encourage the author
+to develop new features continuously! 🎉 Thank you!
+
+The ways for donation are shown below:
+
+PayPal
+------
+
+[![paypal_donation](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5DXFA7WGWPZBN)
+
+Alipay
+------
+
+[![Alipay Donation]][Alipay Donation]
+
+WeChat Pay
+----------
+
+[![WeChat Pay Donation]][WeChat Pay Donation]
+
 License
 =======
 
 Apache License 2.0. For more details, please read the
 [LICENSE](https://github.com/imWildCat/scylla/blob/master/LICENSE) file.
+
+[Alipay Donation]: https://user-images.githubusercontent.com/2396817/40589073-2cc3441e-61df-11e8-93c6-305844aa6905.png
+
+[WeChat Pay Donation]: https://user-images.githubusercontent.com/2396817/40589130-f9bbfbe6-61df-11e8-9e63-1d3424697858.png

@@ -207,6 +207,28 @@ API 文档
 --------------
 `Scylla`_，或被称为“锡拉”（中文里），源自于美剧《`越狱`_》中的一组记忆芯片的名字。本项目以此命名，是为了致敬这部美剧。
 
+捐助
+----------------------
+如果您认为这个项目有帮助，不妨为它捐助一点钱？
+
+不管钱有多少，您的捐助将会鼓励作者持续开发新功能！🎉
+
+感谢您的支持！
+
+捐助方法如下：
+
+PayPal
+""""""
+|PayPal Donation Official|
+
+支付宝
+""""""""
+|Alipay Donation|
+
+微信
+""""""""""
+|WeChat Pay Donation|
+
 协议
 -------
 
@@ -228,3 +250,10 @@ Apache License 2.0. 如需了解详情，请阅读 `LICENSE`_ 这个文件。
 
 .. |screenshot-geo-distribution| image:: https://user-images.githubusercontent.com/2396817/40578442-13a8491c-610c-11e8-8340-50097f29fdad.png
 .. |screenshot-proxy-list| image:: https://user-images.githubusercontent.com/2396817/40578443-13bcbbd6-610c-11e8-85d5-1a11b66bf5d4.png
+
+.. |PayPal Donation Official| image:: https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif
+   :target: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5DXFA7WGWPZBN
+.. |Alipay Donation| image:: https://user-images.githubusercontent.com/2396817/40589073-2cc3441e-61df-11e8-93c6-305844aa6905.png
+   :target: https://user-images.githubusercontent.com/2396817/40589073-2cc3441e-61df-11e8-93c6-305844aa6905.png
+.. |WeChat Pay Donation| image:: https://user-images.githubusercontent.com/2396817/40589130-f9bbfbe6-61df-11e8-9e63-1d3424697858.png
+   :target: https://user-images.githubusercontent.com/2396817/40589130-f9bbfbe6-61df-11e8-9e63-1d3424697858.png  
