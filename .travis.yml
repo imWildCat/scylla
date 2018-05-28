@@ -9,6 +9,6 @@ install:
   - pip install -r requirements.txt
 script:
   - python setup.py install
-  - pytest -n 5 --cov=./scylla tests
+  - pytest -n 2 --cov=./scylla tests
 after_success:
   - codecov
