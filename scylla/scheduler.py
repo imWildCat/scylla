@@ -1,16 +1,20 @@
 import time
 from concurrent.futures import ThreadPoolExecutor
+from datetime import datetime, timedelta
 from multiprocessing import Queue, Process
 from threading import Thread
 
 import pyppeteer
 import schedule
 
+from scylla.config import get_config
 from scylla.database import ProxyIP
 from scylla.jobs import validate_proxy_ip
 from scylla.loggings import logger
 from scylla.providers import *
 from scylla.worker import Worker
+
+FEED_FROM_DB_INTERVAL_MINUTES = 30
 
 
 def fetch_ips(q: Queue, validator_queue: Queue):
@@ -34,7 +38,7 @@ def fetch_ips(q: Queue, validator_queue: Queue):
 
                     for p in proxies:
                         validator_queue.put(p)
-                        logger.debug('Put new proxy ip into queue: {}'.format(p.__str__()))
+                        # logger.debug('Put new proxy ip into queue: {}'.format(p.__str__()))
 
                     logger.info(
                         ' {}: feed {} potential proxies into the validator queue'.format(provider_name, len(proxies))
@@ -50,10 +54,10 @@ def fetch_ips(q: Queue, validator_queue: Queue):
             logger.warning('Unhandled exception is detected: {}'.format(e))
 
 
-def validate_ips(q: Queue, validator_pool: ThreadPoolExecutor):
+def validate_ips(validator_queue: Queue, validator_pool: ThreadPoolExecutor):
     while True:
         try:
-            proxy: ProxyIP = q.get()
+            proxy: ProxyIP = validator_queue.get()
 
             validator_pool.submit(validate_proxy_ip, p=proxy)
         except KeyboardInterrupt:
@@ -70,14 +74,29 @@ def cron_schedule(scheduler, only_once=False):
     def feed():
         scheduler.feed_providers()
 
+    def feed_from_db():
+
+        # TODO: better query (order by attempts)
+        proxies = ProxyIP.select().where(ProxyIP.updated_at > datetime.now() - timedelta(days=14))
+        for p in proxies:
+            scheduler.validator_queue.put(p)
+
+        logger.debug('Feed {} proxies from the database for a second time validation'.format(len(proxies)))
+
     # feed providers at the very beginning
     scheduler.feed_providers()
 
     schedule.every(10).minutes.do(feed)
+    schedule.every(FEED_FROM_DB_INTERVAL_MINUTES).minutes.do(feed_from_db)
 
     logger.info('Start python scheduler')
 
     flag = True
+
+    # After 1 minute, try feed_from_db() for the first time
+    wait_time_for_feed_from_db = 1 if only_once else 60
+    time.sleep(wait_time_for_feed_from_db)
+    feed_from_db()
 
     while flag:
         try:
@@ -100,7 +119,7 @@ class Scheduler(object):
         self.worker_process = None
         self.validator_thread = None
         self.cron_thread = None
-        self.validator_pool = ThreadPoolExecutor(max_workers=20)
+        self.validator_pool = ThreadPoolExecutor(max_workers=int(get_config('validation_pool', default='31')))
 
     def start(self):
         """

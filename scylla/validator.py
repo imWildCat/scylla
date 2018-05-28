@@ -15,10 +15,10 @@ __CURRENT_IP__ = None
 def get_current_ip():
     global __CURRENT_IP__
     if __CURRENT_IP__:
-        logger.debug('get _current_ip')
+        # logger.debug('get_current_ip from cache')
         return __CURRENT_IP__
     else:
-        logger.debug('fetch _current_ip')
+        # logger.debug('fetch current_ip')
         r = requests.get(IP_CHECKER_API)
         j = json.loads(r.text)
         __CURRENT_IP__ = j['ip']
@@ -26,11 +26,11 @@ def get_current_ip():
 
 
 class Validator(object):
-    def __init__(self, host: str, port: int, using_ssl: bool = False):
+    def __init__(self, host: str, port: int, using_https: bool = False):
         self._host = host
         self._port = port
 
-        self._checking_api = IP_CHECKER_API_SSL if using_ssl else IP_CHECKER_API
+        self._using_https = using_https
 
         # default values
         self._success_rate = 0.0
@@ -48,9 +48,12 @@ class Validator(object):
             self._latency, self._success_rate = math.inf, 0.0
 
     def validate_proxy(self):
-        proxy_str = 'http://{}:{}'.format(self._host, self._port)
+        protocol = 'https' if self._using_https else 'http'
+        proxy_str = '{}://{}:{}'.format(protocol, self._host, self._port)
         try:
-            r = requests.get(IP_CHECKER_API, proxies={'https': proxy_str, 'http': proxy_str}, verify=False, timeout=15)
+            checking_api = IP_CHECKER_API_SSL if self._using_https else IP_CHECKER_API
+
+            r = requests.get(checking_api, proxies={'https': proxy_str, 'http': proxy_str}, verify=False, timeout=15)
             if r.ok:
                 j = json.loads(r.text)
 
@@ -98,3 +101,7 @@ class Validator(object):
     @property
     def meta(self):
         return self._meta
+
+    @property
+    def using_https(self):
+        return self._using_https
