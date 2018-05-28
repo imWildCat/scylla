@@ -1,7 +1,12 @@
 language: python
 python:
   - '3.6'
+addons:
+  chrome: stable
 before_install:
+  # start your web application and listen on `localhost`
+  # Reference: https://docs.travis-ci.com/user/gui-and-headless-browsers/#Using-the-Chrome-addon-in-the-headless-mode
+  - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
   # Magic fix
   - rm -rf /home/travis/.pyppeteer/
   # Install dependencies according to: https://github.com/miyakogi/pyppeteer/issues/60#issuecomment-385858294
