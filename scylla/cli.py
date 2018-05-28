@@ -26,6 +26,8 @@ def main(args) -> int:
                         help='Print the version of Scylla')
     parser.add_argument('--db-path', type=str, default='./scylla.db',
                         help='The sqlite database file location')
+    parser.add_argument('--validation-pool', type=int, default=31,
+                        help='The validation pool size (i.e. the limit of concurrent validation tasks for proxies)')
 
     parsed_args = parser.parse_args(args)
 
