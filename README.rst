@@ -218,7 +218,7 @@ Donation
 ----------------------
 If you find this project useful, could you please donate some money to it?
 
-No matter how much the money is, Your donation will encourage the author to develop new features continuously! 🎉
+No matter how much the money is, Your donation will inspire the author to develop new features continuously! 🎉
 Thank you!
 
 The ways for donation are shown below:
