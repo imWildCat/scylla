@@ -17,10 +17,7 @@ features:
 - Straightforward programmable API
 - Headless browser crawling
 
-对于偏好中文的用户，请阅读
-[中文文档](https://scylla.wildcat.io/zh/latest/)。For those who prefer
-to use Chinese, please read the [Chinese
-Documentation](https://scylla.wildcat.io/zh/latest/).
+对于偏好中文的用户，请阅读 [中文文档](https://scylla.wildcat.io/zh/latest/)。For those who prefer to use Chinese, please read the [Chinese Documentation](https://scylla.wildcat.io/zh/latest/).
 
 Get started
 ===========
@@ -62,8 +59,7 @@ Usage
 This is an example of running a service locally (`localhost`), using
 port `8899`.
 
-Note: You might have to wait for 1 to 2 minutes in order to wait for the
-crawler get some proxy ips for the first time you use Scylla.
+Note: You might have to wait for 1 to 2 minutes in order to get some proxy ips populated in the database for the first time you use Scylla.
 
 ### JSON API
 
@@ -198,7 +194,7 @@ If you wish to run tests locally, the commands are shown below:
 
 ```bash
 pip install -r tests/requirements-test.txt
-pytest -n 15 tests
+pytest tests/
 ```
 
 You are welcomed to add more test cases to this project, increasing the
