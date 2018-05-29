@@ -199,7 +199,7 @@ API 文档
 .. code:: bash
 
    pip install -r tests/requirements-test.txt
-   pytest -n 15 tests
+   pytest tests/
 
 十分欢迎您添加更多的测试用力以增强本项目的鲁棒性。
 
