@@ -7,6 +7,7 @@ Subpackages
 .. toctree::
 
     scylla.providers
+    scylla.proxy
     scylla.web
 
 Submodules
@@ -64,6 +65,14 @@ scylla.tcpping module
 ---------------------
 
 .. automodule:: scylla.tcpping
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+scylla.validation\_policy module
+--------------------------------
+
+.. automodule:: scylla.validation_policy
     :members:
     :undoc-members:
     :show-inheritance:
