@@ -197,6 +197,16 @@ Web 界面
 
 |screenshot-geo-distribution|
 
+
+其他示例
+-----------------
+
+.. toctree::
+    :maxdepth: 1
+
+    requests_integration
+
+
 API 文档
 --------------
 

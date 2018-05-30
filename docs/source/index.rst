@@ -1,11 +1,6 @@
 Scylla: An Intelligent Proxy Pool for Humanities™
 ==================================================
 
-.. toctree::
-    :maxdepth: 3
-    :caption: Contents:
-           modules
-
 An intelligent proxy pool for humanities, only supports Python 3.6. Key
 features:
 
@@ -201,6 +196,15 @@ Globally Geographical Distribution Map
 Screenshot:
 
 |screenshot-geo-distribution|
+
+Other Examples
+--------------
+
+.. toctree::
+    :maxdepth: 1
+
+    requests_integration
+
 
 API Documentation
 -----------------
