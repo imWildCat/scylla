@@ -14,7 +14,9 @@ features:
 - Simple but beautiful web-based user interface (eg. geographical
     distribution of proxies)
 - Get started with only **1 command** minimally
-- Straightforward programmable API
+- Simple HTTP Forward proxy server
+- [Scrapy] and [requests] integration with only 1 line of code
+    minimally
 - Headless browser crawling
 
 对于偏好中文的用户，请阅读 [中文文档](https://scylla.wildcat.io/zh/latest/)。For those who prefer to use Chinese, please read the [Chinese Documentation](https://scylla.wildcat.io/zh/latest/).
@@ -28,7 +30,7 @@ Installation
 ### Install with Docker (highly recommended)
 
 ```bash
-docker run -d -p 8899:8899 -v /var/www/scylla:/var/www/scylla --name scylla wildcat/scylla:latest
+docker run -d -p 8899:8899 -p 8081:8081 -v /var/www/scylla:/var/www/scylla --name scylla wildcat/scylla:latest
 ```
 
 ### Install directly via pip
@@ -146,6 +148,27 @@ Sample result:
 }
 ```
 
+### HTTP Forward Proxy Server
+
+By default, Scylla will start a HTTP Forward Proxy Server on port
+`8081`. This server will select one proxy updated recently from the
+database and it will be used for forward proxy. Whenever an HTTP request
+comes, the proxy server will select a proxy randomly.
+
+Note: HTTPS requests are not supported at present.
+
+The example for `curl` using this proxy server is shown below:
+
+```bash
+curl http://api.ipify.org -x http://127.0.0.1:8081
+```
+
+You could also use this feature with [requests][]:
+
+```python
+requests.get('http://api.ipify.org', proxies={'http': 'http://127.0.0.1:8081'})
+```
+
 ### Web UI
 
 Open `http://localhost:8899` in your browser to see the Web UI of this
@@ -244,3 +267,7 @@ Apache License 2.0. For more details, please read the
 [LICENSE](https://github.com/imWildCat/scylla/blob/master/LICENSE) file.
 
 [Alipay and WeChat Donation]: https://user-images.githubusercontent.com/2396817/40589594-cfb0e49e-61e7-11e8-8f7d-c55a29676c40.png
+
+
+  [Scrapy]: https://scrapy.org
+  [requests]: http://docs.python-requests.org/

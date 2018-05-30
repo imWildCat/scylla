@@ -15,6 +15,12 @@ class Worker:
 
         self.session = HTMLSession()
 
+    def stop():
+        """Clean the session
+        """
+
+        self.session.close()
+
     def get_html(self, url: str, render_js: bool = True) -> Union[HTML, None]:
         """Get html from a specific URL
 
@@ -30,6 +36,9 @@ class Worker:
             response: HTMLResponse = self.session.get(url, timeout=30)
         except requests.RequestException:
             logger.warning('[Worker] Cannot get this url: ' + url)
+            return None
+        except (KeyboardInterrupt, SystemExit, InterruptedError):
+            self.stop()
             return None
 
         if response.ok:

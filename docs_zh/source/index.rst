@@ -14,6 +14,7 @@ Scylla 是一款高质量的免费代理 IP 池工具，仅支持 Python 3.6。�
 -  简单但美观的 web 用户界面，基于 TypeScript 和 React（例如，代理的地理分布）
 -  最少仅用\ **一条命令**\ 即可启动
 -  简明直接的编程 API（将在 1.1 版本中加入）
+-  最少仅用一行代码即可与 `Scrapy`_ 和 `requests`_ 进行集成
 -  无头浏览器（headless browser crawling）爬虫
 
 快速开始
@@ -26,7 +27,7 @@ Docker 安装（推荐）
 ^^^^^^^^^^^^^^^^^^^^^^^
 .. code-block:: shell
 
-  docker run -d -p 8899:8899 -v /var/www/scylla:/var/www/scylla --name scylla wildcat/scylla:latest
+  docker run -d -p 8899:8899 -p 8081:8081 -v /var/www/scylla:/var/www/scylla --name scylla wildcat/scylla:latest
 
 使用 pip 直接安装
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -148,6 +149,27 @@ countries 无        只选取特定国家的代理，格式示例：``US``，�
         "mean": 174.3290085201
     }
 
+HTTP 正向代理服务器
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+默认情况下，Scylla 会在端口 ``8081`` 启动一个 HTTP 正向代理服务器（Forward Proxy Server）。
+这个服务器会从数据库中选择一个刚更新过的代理，并将其用作正向代理。
+每当发出 HTTP 请求时，代理服务器将随机选择一个代理。
+
+注意：目前不支持 HTTPS 请求。
+
+使用此代理服务器的 “curl” 示例如下：
+
+.. code:: shell
+
+    curl http://api.ipify.org -x http://127.0.0.1:8081
+
+你也可以在 `requests`_ 中使用这个特性：
+
+.. code:: python
+
+    requests.get('http://api.ipify.org', proxies={'http': 'http://127.0.0.1:8081'})
+
 Web 界面
 ^^^^^^^^^^^^^^^^^^
 
@@ -250,6 +272,8 @@ Apache License 2.0. 如需了解详情，请阅读 `LICENSE`_ 这个文件。
 .. _Travis CI: https://travis-ci.org/imWildCat/scylla
 .. _Scylla: http://prisonbreak.wikia.com/wiki/Scylla
 .. _越狱: https://zh.wikipedia.org/zh-hans/%E8%B6%8A%E7%8B%B1_(%E7%94%B5%E8%A7%86%E5%89%A7)
+.. _Scrapy: https://scrapy.org
+.. _requests: http://docs.python-requests.org/
 
 .. |screenshot-geo-distribution| image:: https://user-images.githubusercontent.com/2396817/40653599-9458b6b8-6333-11e8-8e6e-1d90271fc083.png
 .. |screenshot-proxy-list| image:: https://user-images.githubusercontent.com/2396817/40653600-946eae6e-6333-11e8-8bbd-9d2f347c5461.png

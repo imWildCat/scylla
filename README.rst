@@ -8,7 +8,8 @@ An intelligent proxy pool for humanities, only supports Python 3.6. Key features
 -  Simple but beautiful web-based user interface (eg. geographical
    distribution of proxies)
 -  Get started with only **1 command** minimally
--  Straightforward programmable API
+-  Simple HTTP Forward proxy server
+-  `Scrapy`_ and `requests`_ integration with only 1 line of code minimally
 -  Headless browser crawling
 
 对于偏好中文的用户，请阅读 `中文文档`_\ 。For those who prefer to use Chinese, please read the `Chinese Documentation`_
@@ -24,7 +25,7 @@ Install with Docker (highly recommended)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. code-block:: shell
 
-  docker run -d -p 8899:8899 -v /var/www/scylla:/var/www/scylla --name scylla wildcat/scylla:latest
+  docker run -d -p 8899:8899 -p 8081:8081 -v /var/www/scylla:/var/www/scylla --name scylla wildcat/scylla:latest
 
 Install directly via pip
 ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -147,6 +148,27 @@ Sample result:
         "mean": 174.3290085201
     }
 
+HTTP Forward Proxy Server
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+By default, Scylla will start a HTTP Forward Proxy Server on port ``8081``.
+This server will select one proxy updated recently from the database and it will be used for forward proxy.
+Whenever an HTTP request comes, the proxy server will select a proxy randomly.
+
+Note: HTTPS requests are not supported at present.
+
+The example for ``curl`` using this proxy server is shown below:
+
+.. code:: shell
+
+    curl http://api.ipify.org -x http://127.0.0.1:8081
+
+You could also use this feature with `requests`_:
+
+.. code:: python
+
+    requests.get('http://api.ipify.org', proxies={'http': 'http://127.0.0.1:8081'})
+
 Web UI
 ^^^^^^^^^^^^^^^^^^
 
@@ -246,6 +268,8 @@ Apache License 2.0. For more details, please read the
 .. _Prison Break: https://en.wikipedia.org/wiki/Prison_Break
 .. _中文文档: https://scylla.wildcat.io/zh/latest/
 .. _Chinese Documentation: https://scylla.wildcat.io/zh/latest/
+.. _Scrapy: https://scrapy.org
+.. _requests: http://docs.python-requests.org/
 
 .. |screenshot-geo-distribution| image:: https://user-images.githubusercontent.com/2396817/40653599-9458b6b8-6333-11e8-8e6e-1d90271fc083.png
 .. |screenshot-proxy-list| image:: https://user-images.githubusercontent.com/2396817/40653600-946eae6e-6333-11e8-8bbd-9d2f347c5461.png

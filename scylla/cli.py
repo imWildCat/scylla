@@ -28,6 +28,10 @@ def main(args) -> int:
                         help='The sqlite database file location')
     parser.add_argument('--validation-pool', type=int, default=31,
                         help='The validation pool size (i.e. the limit of concurrent validation tasks for proxies)')
+    parser.add_argument('--no-forward-proxy-server', action='store_true',
+                        help='Disable the forward proxy server')
+    parser.add_argument('--proxy-port', '-pp', type=int, default=8081,
+                        help='The port number for the forward proxy')
 
     parsed_args = parser.parse_args(args)
 
@@ -41,6 +45,7 @@ def main(args) -> int:
     from scylla.loggings import logger
     from scylla.scheduler import Scheduler
     from scylla.web import start_web_server
+    from scylla.proxy import start_forward_proxy_server_non_blocking
 
     create_db_tables()
 
@@ -49,6 +54,10 @@ def main(args) -> int:
     try:
         if not get_config('skip_scheduler'):
             s.start()
+
+        # forward proxy serveer
+        if not get_config('no_forward_proxy_server'):
+            start_forward_proxy_server_non_blocking()
 
         # web server
         if not get_config('no_webserver'):
@@ -60,7 +69,7 @@ def main(args) -> int:
     except (KeyboardInterrupt, SystemExit):
         logger.info('catch KeyboardInterrupt, exiting...')
         s.stop()
-        return 0
+        sys.exit(0)
 
     return 0
 
