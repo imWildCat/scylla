@@ -205,6 +205,13 @@ Other Examples
 
     requests_integration
 
+System Design
+-------------
+
+.. toctree::
+    :maxdepth: 1
+
+    validation_policy
 
 API Documentation
 -----------------

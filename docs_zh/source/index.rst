@@ -206,6 +206,13 @@ Web 界面
 
     requests_integration
 
+系统设计
+-------------
+
+.. toctree::
+    :maxdepth: 1
+
+    validation_policy
 
 API 文档
 --------------
