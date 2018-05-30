@@ -13,9 +13,9 @@
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
 # import os
-# import sys
 # sys.path.insert(0, os.path.abspath('.'))
-
+import sys
+from mock import Mock as MagicMock
 
 # -- Project information -----------------------------------------------------
 
@@ -177,3 +177,15 @@ epub_copyright = copyright
 epub_exclude_files = ['search.html']
 
 # -- Extension configuration -------------------------------------------------
+
+# Re: https://github.com/dabercro/OpsSpace/blob/880c58f6a6172924ca03145916f6a27cf6633684/docs/conf.py
+
+
+class Mock(MagicMock):
+    @classmethod
+    def __getattr__(cls, name):
+        return Mock()
+
+
+MOCK_MODULES = ['pycurl', ]
+sys.modules.update((mod_name, Mock()) for mod_name in MOCK_MODULES)

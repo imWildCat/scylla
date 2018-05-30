@@ -1,8 +1,5 @@
 import io
 import os
-import sys
-from mock import Mock as MagicMock
-
 
 from setuptools import setup
 
@@ -16,16 +13,6 @@ with io.open(os.path.join(here, 'README.rst'), encoding='utf-8') as f:
 with open('requirements.txt') as f:
     required = f.read().splitlines()
 
-
-# Re: https://github.com/dabercro/OpsSpace/blob/880c58f6a6172924ca03145916f6a27cf6633684/docs/conf.py
-class Mock(MagicMock):
-    @classmethod
-    def __getattr__(cls, name):
-        return Mock()
-
-
-MOCK_MODULES = ['pycurl', ]
-sys.modules.update((mod_name, Mock()) for mod_name in MOCK_MODULES)
 
 setup(
     name='scylla',
