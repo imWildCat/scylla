@@ -14,6 +14,7 @@ Scylla 是一款高质量的免费代理 IP 池工具，仅支持 Python 3.6。�
 -  简单但美观的 web 用户界面，基于 TypeScript 和 React（例如，代理的地理分布）
 -  最少仅用\ **一条命令**\ 即可启动
 -  简明直接的编程 API（将在 1.1 版本中加入）
+-  最少仅用一行代码即可与 `Scrapy`_ 和 `requests`_ 进行集成
 -  无头浏览器（headless browser crawling）爬虫
 
 快速开始
@@ -26,7 +27,7 @@ Docker 安装（推荐）
 ^^^^^^^^^^^^^^^^^^^^^^^
 .. code-block:: shell
 
-  docker run -d -p 8899:8899 -v /var/www/scylla:/var/www/scylla --name scylla wildcat/scylla:latest
+  docker run -d -p 8899:8899 -p 8081:8081 -v /var/www/scylla:/var/www/scylla --name scylla wildcat/scylla:latest
 
 使用 pip 直接安装
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -76,6 +77,7 @@ JSON API
 page      ``1``     页码
 limit     ``20``    每页显示代理 IP 的数量
 anonymous ``any``   是否显示匿名代理。可选值：``true``，只显示匿名代理；``false``，只显示透明代理。
+https     ``any``   是否显示 HTTPS 代理。可选值：``true``，只显示 HTTPS 代理；``false``，只显示 HTTP 代理。
 countries 无        只选取特定国家的代理，格式示例：``US``，或者多国家：``US,GB``
 ========= ======== ================================================================
 
@@ -85,35 +87,41 @@ countries 无        只选取特定国家的代理，格式示例：``US``，�
 
     {
         "proxies": [{
-            "id": 3661,
-            "ip": "118.114.77.47",
-            "port": 8080,
+            "id": 599,
+            "ip": "91.229.222.163",
+            "port": 53281,
             "is_valid": true,
-            "created_at": 1527312259,
-            "updated_at": 1527351023,
-            "latency": 250.9789636882,
-            "stability": 1.0,
+            "created_at": 1527590947,
+            "updated_at": 1527593751,
+            "latency": 23.0,
+            "stability": 0.1,
             "is_anonymous": true,
-            "location": "29.3416,104.7770",
-            "organization": "AS4134 CHINANET-BACKBONE",
-            "region": "Sichuan",
-            "country": "CN",
-            "city": "Zigong"
+            "is_https": true,
+            "attempts": 1,
+            "https_attempts": 0,
+            "location": "54.0451,-0.8053",
+            "organization": "AS57099 Boundless Networks Limited",
+            "region": "England",
+            "country": "GB",
+            "city": "Malton"
         }, {
-            "id": 3657,
-            "ip": "39.104.57.121",
+            "id": 75,
+            "ip": "75.151.213.85",
             "port": 8080,
             "is_valid": true,
-            "created_at": 1527312253,
-            "updated_at": 1527351021,
-            "latency": 189.1011954867,
-            "stability": 0.2,
+            "created_at": 1527590676,
+            "updated_at": 1527593702,
+            "latency": 268.0,
+            "stability": 0.3,
             "is_anonymous": true,
-            "location": null,
-            "organization": null,
-            "region": null,
-            "country": null,
-            "city": null
+            "is_https": true,
+            "attempts": 1,
+            "https_attempts": 0,
+            "location": "32.3706,-90.1755",
+            "organization": "AS7922 Comcast Cable Communications, LLC",
+            "region": "Mississippi",
+            "country": "US",
+            "city": "Jackson"
         },
         ...
         ],
@@ -141,6 +149,27 @@ countries 无        只选取特定国家的代理，格式示例：``US``，�
         "mean": 174.3290085201
     }
 
+HTTP 正向代理服务器
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+默认情况下，Scylla 会在端口 ``8081`` 启动一个 HTTP 正向代理服务器（Forward Proxy Server）。
+这个服务器会从数据库中选择一个刚更新过的代理，并将其用作正向代理。
+每当发出 HTTP 请求时，代理服务器将随机选择一个代理。
+
+注意：目前不支持 HTTPS 请求。
+
+使用此代理服务器的 “curl” 示例如下：
+
+.. code:: shell
+
+    curl http://api.ipify.org -x http://127.0.0.1:8081
+
+你也可以在 `requests`_ 中使用这个特性：
+
+.. code:: python
+
+    requests.get('http://api.ipify.org', proxies={'http': 'http://127.0.0.1:8081'})
+
 Web 界面
 ^^^^^^^^^^^^^^^^^^
 
@@ -167,6 +196,23 @@ Web 界面
 截图：
 
 |screenshot-geo-distribution|
+
+
+其他示例
+-----------------
+
+.. toctree::
+    :maxdepth: 1
+
+    requests_integration
+
+系统设计
+-------------
+
+.. toctree::
+    :maxdepth: 1
+
+    validation_policy
 
 API 文档
 --------------
@@ -211,7 +257,7 @@ API 文档
 ----------------------
 如果您认为这个项目有帮助，不妨为它捐助一点钱？
 
-不管钱有多少，您的捐助将会鼓励作者持续开发新功能！🎉
+不管钱有多少，您的捐助将会激励作者持续开发新功能！🎉
 
 感谢您的支持！
 
@@ -243,9 +289,11 @@ Apache License 2.0. 如需了解详情，请阅读 `LICENSE`_ 这个文件。
 .. _Travis CI: https://travis-ci.org/imWildCat/scylla
 .. _Scylla: http://prisonbreak.wikia.com/wiki/Scylla
 .. _越狱: https://zh.wikipedia.org/zh-hans/%E8%B6%8A%E7%8B%B1_(%E7%94%B5%E8%A7%86%E5%89%A7)
+.. _Scrapy: https://scrapy.org
+.. _requests: http://docs.python-requests.org/
 
-.. |screenshot-geo-distribution| image:: https://user-images.githubusercontent.com/2396817/40578442-13a8491c-610c-11e8-8340-50097f29fdad.png
-.. |screenshot-proxy-list| image:: https://user-images.githubusercontent.com/2396817/40578443-13bcbbd6-610c-11e8-85d5-1a11b66bf5d4.png
+.. |screenshot-geo-distribution| image:: https://user-images.githubusercontent.com/2396817/40653599-9458b6b8-6333-11e8-8e6e-1d90271fc083.png
+.. |screenshot-proxy-list| image:: https://user-images.githubusercontent.com/2396817/40653600-946eae6e-6333-11e8-8bbd-9d2f347c5461.png
 
 .. |PayPal Donation Official| image:: https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif
    :target: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5DXFA7WGWPZBN

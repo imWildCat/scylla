@@ -23,16 +23,19 @@ def populate_proxy_ips_in_db() -> [str]:
 
     anonymous = [True, False]
 
+    https = anonymous
+
     for _ in range(0, 31):
         ip_str = gen_random_ip()
         ips.append(ip_str)
 
         country = random.choice(COUNTRIES)
         is_anonymous = random.choice(anonymous)
+        is_https = random.choice(https)
 
         ip = ProxyIP(
             ip=ip_str, port=3306, latency=200.00, stability=100.0, is_valid=True,
-            country=country, is_anonymous=is_anonymous,
+            country=country, is_anonymous=is_anonymous, is_https=is_https,
         )
         ip.save()
 
@@ -102,6 +105,40 @@ async def test_get_proxies_anonymous_false(test_cli):
 
     for p in proxies:
         assert p['is_anonymous'] == False
+
+    delete_test_ips(ips)
+
+
+async def test_get_proxies_https_true(test_cli):
+    ips = populate_proxy_ips_in_db()
+
+    resp = await test_cli.get('/api/v1/proxies?https=true')
+    assert resp.status == 200
+
+    resp_json = await resp.json()
+
+    proxies = resp_json['proxies']
+    assert len(proxies) > 0
+
+    for p in proxies:
+        assert p['is_https'] == True
+
+    delete_test_ips(ips)
+
+
+async def test_get_proxies_https_false(test_cli):
+    ips = populate_proxy_ips_in_db()
+
+    resp = await test_cli.get('/api/v1/proxies?https=false')
+    assert resp.status == 200
+
+    resp_json = await resp.json()
+
+    proxies = resp_json['proxies']
+    assert len(proxies) > 0
+
+    for p in proxies:
+        assert p['is_https'] == False
 
     delete_test_ips(ips)
 

@@ -37,6 +37,10 @@ ul.pagination {
   }
 }
 
+.button + .button {
+    margin-left: 5px;
+  }
+
 footer {
   div {
     text-align: center;

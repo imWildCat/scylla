@@ -72,6 +72,7 @@ class ProxyIP(BaseModel):
         self.region = p.region
         self.country = p.country
         self.city = p.city
+        self.updated_at = datetime.datetime.now()
 
     def __str__(self):
         return '[database.ProxyIP ip: {}, port: {}, is_valid: {}, latency: {}]' \

@@ -44,14 +44,12 @@ def fetch_ips(q: Queue, validator_queue: Queue):
                         ' {}: feed {} potential proxies into the validator queue'.format(provider_name, len(proxies))
                     )
         except (KeyboardInterrupt, InterruptedError, SystemExit):
+            worker.stop()
             logger.info('worker_process exited.')
             break
         except pyppeteer.errors.PyppeteerError as e:
-            logger.debug('pyppeteer.errors.PyppeteerError detected: {}\n'.format(e)
-                         + 'Please make sure you have installed all the dependencies for chromium correctly')
-        except Exception as e:
-            worker = Worker()  # reset worker
-            logger.warning('Unhandled exception is detected: {}'.format(e))
+            logger.debug("""pyppeteer.errors.PyppeteerError detected: %s\n
+                         'Please make sure you have installed all the dependencies for chromium correctly""", e)
 
 
 def validate_ips(validator_queue: Queue, validator_pool: ThreadPoolExecutor):
@@ -60,7 +58,7 @@ def validate_ips(validator_queue: Queue, validator_pool: ThreadPoolExecutor):
             proxy: ProxyIP = validator_queue.get()
 
             validator_pool.submit(validate_proxy_ip, p=proxy)
-        except KeyboardInterrupt:
+        except (KeyboardInterrupt, SystemExit):
             break
 
 
@@ -150,8 +148,11 @@ class Scheduler(object):
         """
         while (self.worker_process and self.worker_process.is_alive()) or (
                 self.validator_thread and self.validator_thread.is_alive()):
-            self.worker_process.join()
-            self.validator_thread.join()
+            try:
+                self.worker_process.join()
+                self.validator_thread.join()
+            except (KeyboardInterrupt, SystemExit):
+                break
 
     def feed_providers(self):
         logger.debug('feed {} providers...'.format(len(all_providers)))

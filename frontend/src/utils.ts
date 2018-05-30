@@ -19,6 +19,7 @@ export interface Proxy {
     latency: number;
     stability: number;
     is_anonymous: boolean;
+    is_https: boolean;
     location: string;
     organization: string;
     region: string;
