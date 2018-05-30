@@ -15,7 +15,7 @@
 # import os
 # sys.path.insert(0, os.path.abspath('.'))
 import sys
-from mock import Mock as MagicMock
+from unittest.mock import MagicMock
 
 # -- Project information -----------------------------------------------------
 
@@ -162,7 +162,7 @@ members_to_watch = ['function', ]
 class Mock(MagicMock):
     @classmethod
     def __getattr__(cls, name):
-        return Mock()
+        return MagicMock()
 
 
 MOCK_MODULES = ['pycurl', ]
