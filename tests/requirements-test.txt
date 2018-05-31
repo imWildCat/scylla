@@ -1,14 +1,10 @@
 codecov==2.0.15
-peewee==3.2.2
+flake8==3.5.0
 setuptools==39.0.1
-six==1.11.0
-sanic==0.7.0
-requests_html==0.9.0
 pytest==3.5.0
 pytest-cov==2.5.1
 pytest-forked==0.2
 pytest-mock==1.9.0
 pytest-sanic==0.1.9
 pytest-xdist==1.22.2
-requests==2.18.4
 typing==3.6.4

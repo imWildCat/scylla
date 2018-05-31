@@ -29,3 +29,5 @@ doc-en:
 doc-zh:
 	cd docs_zh/source && sphinx-apidoc -f -o . ../../scylla
 	cd docs_zh && PYTHONPATH=../ make html
+style-check:
+	flake8 . --count --config=.flake8.cfg --select=E901,E999,F821,F822,F823 --show-source --statistics

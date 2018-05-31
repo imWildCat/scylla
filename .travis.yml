@@ -1,14 +1,11 @@
 language: python
 python:
   - '3.6'
-# before_install:
-  # Magic fix
-  # - rm -rf /home/travis/.pyppeteer/
 install:
   - pip install -r tests/requirements-test.txt
-  - pip install -r requirements.txt
 script:
   - python setup.py install
+  - make style-check
   - pytest --cov=./scylla tests
 after_success:
   - codecov
