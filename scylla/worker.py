@@ -15,7 +15,7 @@ class Worker:
 
         self.session = HTMLSession()
 
-    def stop():
+    def stop(self):
         """Clean the session
         """
 
