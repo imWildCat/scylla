@@ -15,10 +15,10 @@ all_providers = [
     Data5uProvider,
     FreeProxyListProvider,
     HttpProxyProvider,
-    KuaidailiProvider,
+    # KuaidailiProvider,
     SpyMeProvider,
     SpysOneProvider,
-    XiciProvider
+    # XiciProvider
 ]
 
 # Provider references:
