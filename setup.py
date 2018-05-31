@@ -21,6 +21,7 @@ setup(
     packages=[
         'scylla',
         'scylla.providers',
+        'scylla.proxy',
         'scylla.web'
     ],
     entry_points={
