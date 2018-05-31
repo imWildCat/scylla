@@ -5,7 +5,7 @@ RUN apk add --update --no-cache g++ gcc libxslt-dev make build-base curl-dev ope
 RUN mkdir -p /var/www/scylla
 WORKDIR /var/www/scylla
 
-RUN pip install scylla==1.1.1
+RUN pip install scylla
 
 FROM python:3.6-alpine3.7
 
