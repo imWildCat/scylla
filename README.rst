@@ -38,7 +38,7 @@ Install directly via pip
 
    pip install scylla
    scylla --help
-   scylla # Run the cralwer and web server for JSON API
+   scylla # Run the crawler and web server for JSON API
 
 Install from source
 ^^^^^^^^^^^^^^^^^^^^^^^
