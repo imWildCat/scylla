@@ -6,8 +6,8 @@ import requests
 from .loggings import logger
 from .tcpping import ping
 
-IP_CHECKER_API = 'http://ipinfo.io'
-IP_CHECKER_API_SSL = 'https://ipinfo.io'
+IP_CHECKER_API = 'http://api.ipify.org/?format=json'
+IP_CHECKER_API_SSL = 'https://api.ipify.org/?format=json'
 
 __CURRENT_IP__ = None
 
@@ -53,6 +53,7 @@ class Validator(object):
         try:
             checking_api = IP_CHECKER_API_SSL if self._using_https else IP_CHECKER_API
 
+            # First request for checking IP
             r = requests.get(checking_api, proxies={'https': proxy_str, 'http': proxy_str}, verify=False, timeout=15)
             if r.ok:
                 j = json.loads(r.text)
@@ -61,14 +62,18 @@ class Validator(object):
                     self._anonymous = True
                 self._valid = True
 
+                # A second request for meta info
+                r2 = requests.get('https://api.ip.sb/geoip/{}'.format(j['ip']), timeout=15)
+                jresponse = r2.json()
+
                 # Load meta data
                 # TODO: better location check
                 meta = {
-                    'location': j['loc'],
-                    'organization': j['org'],
-                    'region': j['region'],
-                    'country': j['country'],
-                    'city': j['city'],
+                    'location': '{},{}'.format(jresponse['latitude'], jresponse['longitude']),
+                    'organization': jresponse['organization'] if 'organization' in jresponse else None,
+                    'region': jresponse['region'],
+                    'country': jresponse['country_code'],
+                    'city': jresponse['city'],
                 }
                 self._meta = meta
 
