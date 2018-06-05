@@ -118,3 +118,5 @@ scylla.db
 
 # node
 node_modules
+
+*.bak
