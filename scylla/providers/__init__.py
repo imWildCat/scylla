@@ -8,6 +8,7 @@ from .kuaidaili_provider import KuaidailiProvider
 from .spys_me_provider import SpyMeProvider
 from .spys_one_provider import SpysOneProvider
 from .xici_provider import XiciProvider
+from .ipaddress_provider import IpaddressProvider
 
 all_providers = [
     A2uProvider,
@@ -19,6 +20,7 @@ all_providers = [
     SpyMeProvider,
     SpysOneProvider,
     # XiciProvider
+    IpaddressProvider
 ]
 
 # Provider references:
