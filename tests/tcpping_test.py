@@ -8,9 +8,9 @@ def test_ping_class():
 
     assert p.get_maximum() >= p.get_average()
     assert p.get_minimum() <= p.get_average()
-    assert p.get_average() > 0
+    assert p.get_average() >= 0
 
-    assert p.get_success_rate() > 0.0
+    assert p.get_success_rate() >= 0.0
 
 
 def test_ping_func():

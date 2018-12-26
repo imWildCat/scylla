@@ -1,7 +1,7 @@
 import io
 import os
 
-from setuptools import setup
+from setuptools import setup, find_packages
 
 import scylla
 
@@ -18,12 +18,7 @@ setup(
     name='scylla',
     python_requires='>=3.6.0',
     # If your package is a single module, use this instead of 'packages':
-    packages=[
-        'scylla',
-        'scylla.providers',
-        'scylla.proxy',
-        'scylla.web'
-    ],
+    packages=find_packages(exclude=["*.tests", "*.tests.*", "tests.*", "tests"]),
     entry_points={
         'console_scripts': ['scylla = scylla.cli:app_main']
     },
