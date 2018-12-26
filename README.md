@@ -239,6 +239,11 @@ name of a group of memory chips in the American TV series, [Prison
 Break](https://en.wikipedia.org/wiki/Prison_Break). This project was
 named after this American TV series to pay tribute to it.
 
+Help
+======================
+[How to install Python Scylla on CentOS7](https://digcodes.com/how-to-install-python-scylla-on-centos7/)
+
+
 Donation
 ========
 
