@@ -1,9 +1,6 @@
 from typing import Union
 
-_config_data = {
-    'validation_pool': 2,
-    'chrome_path': '/usr/bin/chromium',
-}
+_config_data = {}
 
 
 def _config_data_instance():
