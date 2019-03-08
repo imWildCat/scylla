@@ -4,7 +4,7 @@ import requests
 from requests_html import HTMLSession, HTMLResponse, HTML
 
 from scylla.loggings import logger
-
+from scylla.config import get_config
 
 class Worker:
 
@@ -12,8 +12,7 @@ class Worker:
         """Initialize the worker object
 
         """
-
-        self.session = HTMLSession()
+        self.session = HTMLSession(chrome_path=get_config('chrome_path', default=None))
 
     def stop(self):
         """Clean the session
