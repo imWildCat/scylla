@@ -32,7 +32,7 @@ def main(args) -> int:
                         help='Disable the forward proxy server')
     parser.add_argument('--proxy-port', '-pp', type=int, default=8081,
                         help='The port number for the forward proxy')
-    parser.add_argument('--chrome_path', '-cp', type=str, default=None,
+    parser.add_argument('--chrome-path', '-cp', type=str, default=None,
                         help='path of chrome/chromium to be used to render js')
 
     parsed_args = parser.parse_args(args)
