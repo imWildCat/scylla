@@ -120,3 +120,5 @@ scylla.db
 node_modules
 
 *.bak
+
+package-lock.json
