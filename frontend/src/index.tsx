@@ -14,7 +14,7 @@ const AppRoute = () => (
     <Router>
         <div>
             <div className="banner">
-                <img src={ScyllaBannerImage} alt="banner" />
+                <img src={ScyllaBannerImage.replace('..', '')} alt="banner" />
             </div>
             <ul className="navigation">
                 <li><NavLink exact={true} to="/">Proxy IP List</NavLink></li>
