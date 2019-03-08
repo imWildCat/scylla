@@ -6,9 +6,7 @@ import {getBaseURL, Proxy, ResponseJSON} from '../utils';
 import * as queryString from "query-string";
 import ProxyListFilter from "./ProxyListFilter";
 
-// import * as moment from 'moment';
-const moment = require('moment')['default'];
-
+import moment from 'moment'
 
 export interface AppState {
     proxies: Proxy[];
