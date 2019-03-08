@@ -53,6 +53,16 @@ Docker 安装（推荐）
 
    python -m scylla
 
+Windows用户在安装 ``sanic`` 时假如遇到 ``uvloop does not support Windows at the moment``:
+
+.. code:: bash
+
+   export SANIC_NO_UVLOOP=true
+   export SANIC_NO_UJSON=true
+   pip3 install sanic
+
+如果仍是失败，你需要从源码安装sanic。
+
 使用
 """""""
 
