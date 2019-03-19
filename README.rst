@@ -51,9 +51,19 @@ Install from source
    pip install -r requirements.txt
 
    npm install # or yarn install
-   make build-assets
+   make assets-build
 
    python -m scylla
+
+For Windows user who fails at installing ``sanic`` due to ``uvloop does not support Windows at the moment``:
+
+.. code:: bash
+
+   export SANIC_NO_UVLOOP=true
+   export SANIC_NO_UJSON=true
+   pip3 install sanic
+
+If this also fails, yoi will need to manual install sanic from source.
 
 
 Roadmap
@@ -72,7 +82,7 @@ Development and Contribution
    pip install -r requirements.txt
 
    npm install # or `yarn install`
-   make build-assets
+   make assets-build
 
 Testing
 -------

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import axios from "axios";
 import {getBaseURL, Proxy, ResponseJSON} from "../utils";
+import ReactTooltip from "react-tooltip"
 
 const {
     ComposableMap,
@@ -10,7 +11,6 @@ const {
     Markers,
     Marker,
 } = require('react-simple-maps');
-
 
 export interface GeoDistributionProps {
 }
@@ -33,6 +33,14 @@ export default class GeoDistribution extends React.Component<GeoDistributionProp
     }
 
     render() {
+        function aa(dom) {
+            var ret = dom.state.proxies.map(p => dom.renderMarker(p));
+            ReactTooltip.rebuild();
+            setTimeout(() => {
+                ReactTooltip.rebuild()
+            }, 100)
+            return ret;
+        }
         // const position = [this.state.lat, this.state.lng];
         return (
             <div>
@@ -57,10 +65,20 @@ export default class GeoDistribution extends React.Component<GeoDistributionProp
                             )}
                         </Geographies>
                         <Markers>
-                            {this.state.proxies.map(p => this.renderMarker(p))}
+                            {
+                                ((self) => {
+                                    var ret = self.state.proxies.map(p => self.renderMarker(p));
+                                    ReactTooltip.rebuild();
+                                    setTimeout(() => {
+                                        ReactTooltip.rebuild(); // rebuild after render
+                                    }, 100)
+                                    return ret;
+                                })(this)
+                            }
                         </Markers>
                     </ZoomableGroup>
                 </ComposableMap>
+                <ReactTooltip />
             </div>
         );
     }
@@ -73,6 +91,7 @@ export default class GeoDistribution extends React.Component<GeoDistributionProp
             return (
                 <Marker
                     key={proxy.id}
+                    proxy={proxy}
                     marker={{coordinates: [locations[1], locations[0]]}}
                     style={{
                         default: {fill: this.mapProxyColor(proxy)},
@@ -80,7 +99,12 @@ export default class GeoDistribution extends React.Component<GeoDistributionProp
                         pressed: {fill: "#000"},
                     }}
                 >
-                    <circle cx={0} cy={0} r={2}/>
+                    <circle data-html={true} data-tip={ proxy.ip + ":" + proxy.port + "<br>" + 
+                                                        proxy.country + ", " + proxy.city + "<br>" + 
+                                                        "latency: " + proxy.latency + "<br>" + 
+                                                        "anonymous: " + proxy.is_anonymous + "<br>" + 
+                                                        "https: " + proxy.is_https } 
+                                                        cx={0} cy={0} r={2}/>
                 </Marker>
             );
         } else {
