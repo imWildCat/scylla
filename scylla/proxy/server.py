@@ -174,3 +174,4 @@ def start_forward_proxy_server():
 def start_forward_proxy_server_non_blocking():
     p = Process(target=start_forward_proxy_server, daemon=True)
     p.start()
+    return p
