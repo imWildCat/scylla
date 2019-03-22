@@ -52,6 +52,7 @@ def main(args) -> int:
     create_db_tables()
 
     s = Scheduler()
+    p_web, p_proxy = None, None
 
     try:
         # scheduler
@@ -74,10 +75,9 @@ def main(args) -> int:
         if s.is_alive():
             s.join()
             logger.info('scheduler done.')
-        if p_web:
+        if p_web or p_proxy:
             p_web.join()
-        if p_proxy:
-            proxy.join()
+            p_proxy.join()
 
     except (KeyboardInterrupt, SystemExit):
         logger.info('catch KeyboardInterrupt, exiting...')

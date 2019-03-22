@@ -70,13 +70,13 @@ def validate_ips(validator_queue: Queue, validator_pool: ThreadPoolExecutor, run
         except (KeyboardInterrupt, SystemExit):
             break
         except queue.Empty:
-            logger.info('validator_thread has timed out.')
+            logger.debug('validator_thread has timed out.')
             break
 
     logger.debug('validator_thread exited.')
 
     validator_pool.shutdown(wait=True)
-    logger.debug('validator_pool join\'ed!')
+    logger.debug('validator_pool exited.')
 
 
 def cron_schedule(scheduler, run_once=False):
