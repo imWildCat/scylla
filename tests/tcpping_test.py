@@ -2,7 +2,7 @@ from scylla.tcpping import Ping, ping
 
 
 def test_ping_class():
-    p = Ping('www.google.com', port=80)
+    p = Ping('www.example.com', port=80)
 
     p.ping(5, 0.01)
 
