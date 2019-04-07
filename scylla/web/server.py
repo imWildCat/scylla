@@ -1,6 +1,5 @@
 import math
 import os
-from multiprocessing import Process
 
 from playhouse.shortcuts import model_to_dict
 from sanic import Sanic
@@ -8,7 +7,6 @@ from sanic.request import Request
 from sanic.response import json
 from sanic_cors import CORS
 
-from scylla.config import get_config
 from scylla.database import ProxyIP
 from scylla.loggings import logger
 
@@ -139,12 +137,5 @@ async def api_v1_stats(request: Request):
     })
 
 
-def start_web_server(workers=1):
-    host = str(get_config('web_host', default='0.0.0.0'))
-    port = int(get_config('web_port', default='8899'))
-    app.run(host=host, port=port, workers=workers)
-
-def start_web_server_non_blocking(workers=1):
-    p = Process(target=start_web_server, daemon=True, kwargs={'workers': workers})
-    p.start()
-    return p
+def start_web_server(host='0.0.0.0', port=8899):
+    app.run(host=host, port=port)

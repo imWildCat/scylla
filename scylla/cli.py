@@ -22,8 +22,6 @@ def main(args) -> int:
                         help='The hostname for the web server')
     parser.add_argument('--skip-scheduler', action='store_true',
                         help='Prevent the scheduler from crawling')
-    parser.add_argument('--scheduler-run-once', action='store_true',
-                        help='Run all tasks in scheduler only once')
     parser.add_argument('--version', '-v', action='store_true',
                         help='Print the version of Scylla')
     parser.add_argument('--db-path', type=str, default='./scylla.db',
@@ -48,45 +46,33 @@ def main(args) -> int:
     from scylla.database import create_db_tables
     from scylla.loggings import logger
     from scylla.scheduler import Scheduler
-    from scylla.web import start_web_server_non_blocking
+    from scylla.web import start_web_server
     from scylla.proxy import start_forward_proxy_server_non_blocking
 
     create_db_tables()
 
     s = Scheduler()
-    p_web, p_proxy = None, None
 
     try:
-        # scheduler
         if not get_config('skip_scheduler'):
-            run_once = bool(get_config('scheduler_run_once'))
-            logger.info('Start scheduler, run_once=%s' % run_once)
-            s.start(run_once)
+            s.start()
 
         # forward proxy serveer
         if not get_config('no_forward_proxy_server'):
-            logger.info('Start forward proxy server')
-            p_web = start_forward_proxy_server_non_blocking()
+            start_forward_proxy_server_non_blocking()
 
         # web server
         if not get_config('no_webserver'):
-            logger.info('Start web server')
-            p_proxy = start_web_server_non_blocking(workers=1)
+            logger.info('Start the web server')
+            start_web_server(
+                host=parsed_args_dict['web_host'], port=parsed_args_dict['web_port'])
 
-        # exit
-        if s.is_alive():
-            s.join()
-            logger.info('scheduler done.')
-        if p_web or p_proxy:
-            p_web.join()
-            p_proxy.join()
-
+        s.join()
     except (KeyboardInterrupt, SystemExit):
         logger.info('catch KeyboardInterrupt, exiting...')
         s.stop()
         sys.exit(0)
 
-    logger.info('scylla exiting...')
     return 0
 
 
