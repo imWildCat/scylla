@@ -1,4 +1,5 @@
 import time
+import queue
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timedelta
 from multiprocessing import Queue, Process
@@ -16,18 +17,22 @@ from scylla.worker import Worker
 
 FEED_FROM_DB_INTERVAL_MINUTES = 30
 
-
-def fetch_ips(q: Queue, validator_queue: Queue):
-    logger.debug('fetch_ips...')
+def fetch_ips(q: Queue, validator_queue: Queue, run_once=False):
+    logger.debug('worker_process started.')
+    logger.info('fetching ips...')
     worker = Worker()
 
     while True:
         try:
+            if run_once and q.empty():
+                raise SystemExit
+                break
+
             provider: BaseProvider = q.get()
 
             provider_name = provider.__class__.__name__
 
-            logger.debug('Get a provider from the provider queue: ' + provider_name)
+            logger.info('Get a provider from the provider queue: ' + provider_name)
 
             for url in provider.urls():
 
@@ -45,28 +50,39 @@ def fetch_ips(q: Queue, validator_queue: Queue):
                     )
         except (KeyboardInterrupt, InterruptedError, SystemExit):
             worker.stop()
-            logger.info('worker_process exited.')
             break
         except pyppeteer.errors.PyppeteerError as e:
-            logger.debug("""pyppeteer.errors.PyppeteerError detected: %s\n
+            logger.error("""pyppeteer.errors.PyppeteerError detected: %s\n
                          'Please make sure you have installed all the dependencies for chromium correctly""", e)
+            break
 
+    logger.debug('worker_process exited.')
 
-def validate_ips(validator_queue: Queue, validator_pool: ThreadPoolExecutor):
+def validate_ips(validator_queue: Queue, validator_pool: ThreadPoolExecutor, run_once=False):
+    logger.debug('validator_thread started.')
+
     while True:
         try:
-            proxy: ProxyIP = validator_queue.get()
+            ## wait 5 mins for next proxy ip in run once mode
+            proxy: ProxyIP = validator_queue.get(timeout=300 if run_once else None)
 
             validator_pool.submit(validate_proxy_ip, p=proxy)
         except (KeyboardInterrupt, SystemExit):
             break
+        except queue.Empty:
+            logger.debug('validator_thread has timed out.')
+            break
+
+    logger.debug('validator_thread exited.')
+
+    validator_pool.shutdown(wait=True)
+    logger.debug('validator_pool exited.')
 
 
-def cron_schedule(scheduler, only_once=False):
+def cron_schedule(scheduler, run_once=False):
     """
-
     :param scheduler: the Scheduler instance
-    :param only_once: flag for testing
+    :param run_once: flag for testing
     """
 
     def feed():
@@ -79,7 +95,7 @@ def cron_schedule(scheduler, only_once=False):
         for p in proxies:
             scheduler.validator_queue.put(p)
 
-        logger.debug('Feed {} proxies from the database for a second time validation'.format(len(proxies)))
+        logger.info('Feed {} proxies from the database for a second time validation'.format(len(proxies)))
 
     # feed providers at the very beginning
     scheduler.feed_providers()
@@ -87,26 +103,25 @@ def cron_schedule(scheduler, only_once=False):
     schedule.every(10).minutes.do(feed)
     schedule.every(FEED_FROM_DB_INTERVAL_MINUTES).minutes.do(feed_from_db)
 
-    logger.info('Start python scheduler')
-
-    flag = True
+    logger.debug('cron_thread started.')
 
     # After 1 minute, try feed_from_db() for the first time
-    wait_time_for_feed_from_db = 1 if only_once else 60
+    wait_time_for_feed_from_db = 1 if run_once else 60
     time.sleep(wait_time_for_feed_from_db)
     feed_from_db()
 
-    while flag:
+    while True:
         try:
             schedule.run_pending()
 
-            if only_once:
-                flag = False
+            if run_once:
+                raise SystemExit
             else:
                 time.sleep(60)
-        except (KeyboardInterrupt, InterruptedError):
-            logger.info('Stopping python scheduler')
+        except (KeyboardInterrupt, InterruptedError, SystemExit):
             break
+
+    logger.debug('cron_thread exited.')
 
 
 class Scheduler(object):
@@ -119,40 +134,37 @@ class Scheduler(object):
         self.cron_thread = None
         self.validator_pool = ThreadPoolExecutor(max_workers=int(get_config('validation_pool', default='31')))
 
-    def start(self):
+    def start(self, run_once=False):
         """
         Start the scheduler with processes for worker (fetching candidate proxies from different providers),
         and validator threads for checking whether the fetched proxies are able to use.
-
+        :param daemon: if False, scheduler will run each task only once then exit when they all finish
         """
-        logger.info('Scheduler starts...')
-
-        self.cron_thread = Thread(target=cron_schedule, args=(self,), daemon=True)
-        self.worker_process = Process(target=fetch_ips, args=(self.worker_queue, self.validator_queue))
-        self.validator_thread = Thread(target=validate_ips, args=(self.validator_queue, self.validator_pool))
+        self.cron_thread = Thread(target=cron_schedule, args=(self, run_once), daemon=True)
+        self.worker_process = Process(target=fetch_ips, args=(self.worker_queue, self.validator_queue, run_once))
+        self.validator_thread = Thread(target=validate_ips, args=(self.validator_queue, self.validator_pool, run_once))
 
         self.cron_thread.daemon = True
         self.worker_process.daemon = True
         self.validator_thread.daemon = True
 
         self.cron_thread.start()
-        self.worker_process.start()  # Python will wait for all process finished
-        logger.info('worker_process started')
+        self.worker_process.start()
         self.validator_thread.start()
-        logger.info('validator_thread started')
 
     def join(self):
         """
         Wait for worker processes and validator threads
-
         """
-        while (self.worker_process and self.worker_process.is_alive()) or (
-                self.validator_thread and self.validator_thread.is_alive()):
-            try:
+        try:
+            if self.cron_thread and self.cron_thread.is_alive():
+                self.cron_thread.join()
+            if self.worker_process and self.worker_process.is_alive():
                 self.worker_process.join()
+            if self.validator_thread and self.validator_thread.is_alive():
                 self.validator_thread.join()
-            except (KeyboardInterrupt, SystemExit):
-                break
+        except (KeyboardInterrupt, SystemExit):
+            pass
 
     def feed_providers(self):
         logger.debug('feed {} providers...'.format(len(all_providers)))
@@ -165,3 +177,8 @@ class Scheduler(object):
         self.worker_process.terminate()
         # self.validator_thread.terminate() # TODO: 'terminate' the thread using a flag
         self.validator_pool.shutdown(wait=False)
+
+    def is_alive(self):
+        return (self.cron_thread and self.cron_thread.is_alive()) or \
+            (self.worker_process and self.worker_process.is_alive()) or \
+            (self.validator_thread and self.validator_thread.is_alive())

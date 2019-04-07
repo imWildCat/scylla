@@ -2,6 +2,8 @@ import json
 import math
 
 import requests
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 from .loggings import logger
 from .tcpping import ping
