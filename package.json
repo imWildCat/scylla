@@ -35,7 +35,7 @@
     "@types/react-router-dom": "^4.2.6",
     "@types/react-virtualized": "^9.18.3",
     "cross-env": "^5.1.4",
-    "parcel-bundler": "^1.7.1",
+    "parcel-bundler": "^1.10.0",
     "typescript": "^2.8.3"
   },
   "dependencies": {
