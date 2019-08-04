@@ -30,8 +30,11 @@ def fetch_ips(q: Queue, validator_queue: Queue):
             logger.debug('Get a provider from the provider queue: ' + provider_name)
 
             for url in provider.urls():
-
-                html = worker.get_html(url, render_js=provider.should_render_js())
+                try:
+                    html = worker.get_html(url, render_js=provider.should_render_js())
+                except Exception as e:
+                    logger.error("worker.get_html failed: ", e)
+                    continue
 
                 if html:
                     proxies = provider.parse(html)
