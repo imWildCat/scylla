@@ -14,6 +14,9 @@ class PlainTextProvider(BaseProvider):
     def parse(self, html: HTML) -> [ProxyIP]:
         ip_list: [ProxyIP] = []
 
+        if html is None:
+            return []
+
         text = html.raw_html.decode('utf-8')
 
         for ip_port in text.split('\n'):

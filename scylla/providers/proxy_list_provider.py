@@ -16,6 +16,9 @@ class ProxyListProvider(BaseProvider):
     def parse(self, html: HTML) -> [ProxyIP]:
         ip_list: [ProxyIP] = []
 
+        if html is None:
+            return []
+
         for ul in html.find('#proxy-table > div.table-wrap ul'):
             js_code = ul.find('li.proxy script', first=True).text
             matched = re.findall(r"Proxy\('(.+)'\)", js_code)
