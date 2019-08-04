@@ -8,8 +8,7 @@ class Data5uProvider(BaseProvider):
 
     def urls(self) -> [str]:
         return [
-            'http://www.data5u.com/free/gwgn/index.shtml',
-            'http://www.data5u.com/free/gngn/index.shtml',
+            'http://www.data5u.com',
         ]
 
     def parse(self, html: HTML) -> [ProxyIP]:
