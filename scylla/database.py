@@ -35,10 +35,14 @@ class BaseModel(Model):
 
 
 class ProxyIP(BaseModel):
+
     class Meta:
         table_name = 'proxy_ips'
+        indexes = (
+            (('ip', 'port'), True),
+        )
 
-    ip = CharField(unique=True)
+    ip = CharField()
     port = IntegerField()
     is_valid = BooleanField(default=False)
     created_at = DateTimeField(default=datetime.datetime.now)

@@ -21,4 +21,10 @@ def test_save_ip():
 
     assert count == 1
 
+    p3 = ProxyIP(ip='192.168.0.1', port=80, latency=200, stability=0.5)
+    save_ip(p3)
+    count = ProxyIP.select().where(ProxyIP.ip == '192.168.0.1').count()
+
+    assert count == 2
+
     ProxyIP.delete().execute()

@@ -5,7 +5,8 @@ from .loggings import logger
 
 
 def save_ip(p: ProxyIP):
-    basic_query = ProxyIP.select().where(ProxyIP.ip == p.ip)
+    basic_query = ProxyIP.select().where(
+        ProxyIP.ip == p.ip, ProxyIP.port == p.port)
     count = basic_query.count()
     if count == 0:
         # logger.debug('Creating new ip record: ' + p.__str__())
@@ -13,7 +14,8 @@ def save_ip(p: ProxyIP):
     else:
         # logger.debug('Update an existing ip record: ' + p.__str__())
 
-        existing_proxy: ProxyIP = ProxyIP.get(ProxyIP.ip == p.ip)
+        existing_proxy: ProxyIP = ProxyIP.get(
+            ProxyIP.ip == p.ip, ProxyIP.port == p.port)
 
         existing_proxy.assign_from(p)
 
