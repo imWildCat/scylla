@@ -1,6 +1,6 @@
-name: Python package
+name: 'Python package: Scylla'
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
   build:
