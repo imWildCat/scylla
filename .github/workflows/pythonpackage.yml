@@ -19,7 +19,7 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
-        sudo apt-get install libgnutls28-dev
+        sudo apt-get install libgnutls28-dev libcurl4-openssl-dev libssl-dev
         pip install -r tests/requirements-test.txt
         python setup.py install
     - name: Lint with flake8
