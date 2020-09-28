@@ -1,0 +1,31 @@
+
+name: 'Python package: Scylla'
+
+on: [push, pull_request]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 2
+      matrix:
+        python-version: [3.6, ]# [2.7, 3.5, 3.6, 3.7]
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v1
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        sudo apt-get install libgnutls28-dev libcurl4-openssl-dev libssl-dev
+        pip install -r tests/requirements-test.txt
+        python setup.py install
+    - name: Lint with flake8
+      run: |
+        make style-check
+    - name: Test with pytest
+      run: |
+        pytest --cov=./scylla tests
