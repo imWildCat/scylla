@@ -5,6 +5,7 @@ import requests
 
 from .loggings import logger
 from .tcpping import ping
+from .validators import *
 
 IP_CHECKER_API = 'http://api.ipify.org/?format=json'
 IP_CHECKER_API_SSL = 'https://api.ipify.org/?format=json'
@@ -83,9 +84,21 @@ class Validator(object):
             logger.debug('Catch requests.RequestException for proxy ip: {}'.format(self._host))
             logger.debug(e.__str__())
 
+    def validate_proxy_through_validators(self):
+        protocol = 'https' if self._using_https else 'http'
+        proxy_str = '{}://{}:{}'.format(protocol, self._host, self._port)
+        validators = [validator() for validator in all_validators]
+
+        is_valid = all([_validator.validate(proxy_str) for _validator in validators])
+        if is_valid:
+            self._valid = True
+        else:
+            self._valid = False
+
     def validate(self):
         self.validate_latency()
         self.validate_proxy()
+        self.validate_proxy_through_validators()
 
     @property
     def latency(self):
