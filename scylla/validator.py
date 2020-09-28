@@ -98,7 +98,8 @@ class Validator(object):
     def validate(self):
         self.validate_latency()
         self.validate_proxy()
-        self.validate_proxy_through_validators()
+        if self._valid:
+            self.validate_proxy_through_validators()
 
     @property
     def latency(self):
