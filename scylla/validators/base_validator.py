@@ -1,4 +1,5 @@
 import requests
+from ..loggings import logger
 
 
 class BaseValidator(object):
