@@ -6,6 +6,6 @@ build:
     image: latest
 
 python:
-   version: 3.6
+   version: 8
    setup_py_install: false
 
