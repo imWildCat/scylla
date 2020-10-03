@@ -1,51 +1,50 @@
+import playwright
+from playwright.sync_api import Browser
+from requests_html import HTML
 from typing import Union
+from pyquery import PyQuery
 
 import requests
-from requests_html import HTMLSession, HTMLResponse, HTML
+from playwright import sync_playwright, SyncPlaywrightContextManager
 
 from scylla.loggings import logger
 
 
 class Worker:
+    browser: Browser
 
     def __init__(self):
         """Initialize the worker object
 
         """
 
-        self.session = HTMLSession()
+        with sync_playwright() as p:
+            self.browser = p.chromium.launch()
 
     def stop(self):
         """Clean the session
         """
 
-        self.session.close()
+        self.browser.close()
 
-    def get_html(self, url: str, render_js: bool = True) -> Union[HTML, None]:
+    def get_html(self, url: str, render_js: bool = True) -> Union[PyQuery, None]:
         """Get html from a specific URL
 
         :param url: the URL
-        :param render_js: [whether to render js], defaults to True
-        :param render_js: bool, optional
         :return: [the HTML string]
         :rtype: str
         """
 
         try:
             # TODO: load config for timeout
-            response: HTMLResponse = self.session.get(url, timeout=30)
-        except requests.RequestException:
-            logger.warning('[Worker] Cannot get this url: ' + url)
+            page = self.browser.newPage()
+            page.goto(url=url, timeout=30, waitUntil='networkidle', referer=url)
+            html_content = page.content()
+            doc = PyQuery(html_content)
+            return doc
+        except playwright.TimeoutError:
+            logger.warning('[Worker] Cannot get this url (timeout): ' + url)
             return None
         except (KeyboardInterrupt, SystemExit, InterruptedError):
             self.stop()
-            return None
-
-        if response.ok:
-            if render_js:
-                logger.debug('starting render js...')
-                response.html.render(wait=1.5, timeout=10.0)
-                logger.debug('end render js...')
-            return response.html
-        else:
             return None
