@@ -55,7 +55,7 @@ def main(args) -> int:
         if not get_config('skip_scheduler'):
             s.start()
 
-        # forward proxy serveer
+        # forward proxy server
         if not get_config('no_forward_proxy_server'):
             start_forward_proxy_server_non_blocking()
 
