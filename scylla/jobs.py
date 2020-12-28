@@ -36,7 +36,7 @@ def validate_proxy_ip(p: ProxyIP):
     try:
         v.validate()
     except (KeyboardInterrupt, SystemExit):
-        logger.info('KeyboardInterrupt terminates validate_proxy_ip: ' + p.ip)
+        logger.info('KeyboardInterrupt terminates validate_proxy_ip: ', p.ip)
 
     meta = v.meta if v.meta else {}
     validated_ip = ProxyIP(ip=p.ip, port=p.port, **meta)
