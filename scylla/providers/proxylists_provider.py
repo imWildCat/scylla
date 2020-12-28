@@ -27,7 +27,7 @@ class ProxylistsProvider(BaseProvider):
         return ip_list
 
     def urls(self) -> [str]:
-        ret = set([])
+        ret = set()
         country_url = 'http://www.proxylists.net/countries.html'
         country_page = self.w.get_html(country_url, False)
         for a in country_page.find('a'):
