@@ -27,7 +27,7 @@ def fetch_ips(q: Queue, validator_queue: Queue):
 
             provider_name = provider.__class__.__name__
 
-            logger.debug('Get a provider from the provider queue: ' + provider_name)
+            logger.debug('Get a provider from the provider queue: ', provider_name)
 
             for url in provider.urls():
                 try:

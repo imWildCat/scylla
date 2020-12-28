@@ -35,7 +35,7 @@ class Worker:
             # TODO: load config for timeout
             response: HTMLResponse = self.session.get(url, timeout=30)
         except requests.RequestException:
-            logger.warning('[Worker] Cannot get this url: ' + url)
+            logger.warning('[Worker] Cannot get this url: ', url)
             return None
         except (KeyboardInterrupt, SystemExit, InterruptedError):
             self.stop()
