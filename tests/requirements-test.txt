@@ -1,5 +1,5 @@
 codecov==2.0.15
-flake8==3.5.0
+flake8==3.9.0
 setuptools==54.1.2
 pytest==6.2.2
 pytest-cov==2.11.1

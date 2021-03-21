@@ -1,5 +1,7 @@
-import pytest
 import random
+
+import pytest
+from requests import Response
 from sanic.websocket import WebSocketProtocol
 
 from scylla.web.server import app
@@ -44,16 +46,16 @@ def populate_proxy_ips_in_db() -> [str]:
 
 async def test_fixture_test_client_get(test_cli):
     resp = await test_cli.get('/api/v1/proxies')
-    assert resp.status == 200
+    assert resp.status_code == 200
 
 
 async def test_get_proxies(test_cli):
     ip_str = create_test_ip()
 
-    resp = await test_cli.get('/api/v1/proxies')
-    assert resp.status == 200
+    resp: Response = await test_cli.get('/api/v1/proxies')
+    assert resp.status_code == 200
 
-    resp_json = await resp.json()
+    resp_json = resp.json()
 
     proxies = resp_json['proxies']
     assert (len(proxies) > 0)
@@ -65,9 +67,9 @@ async def test_get_proxies_limit(test_cli):
     ip_str = create_test_ip()
 
     resp = await test_cli.get('/api/v1/proxies?limit=10')
-    assert resp.status == 200
+    assert resp.status_code == 200
 
-    resp_json = await resp.json()
+    resp_json = resp.json()
 
     proxies = resp_json['proxies']
     assert (len(proxies) > 0)
@@ -79,9 +81,9 @@ async def test_get_proxies_anonymous_true(test_cli):
     ips = populate_proxy_ips_in_db()
 
     resp = await test_cli.get('/api/v1/proxies?anonymous=true')
-    assert resp.status == 200
+    assert resp.status_code == 200
 
-    resp_json = await resp.json()
+    resp_json = resp.json()
 
     proxies = resp_json['proxies']
     assert len(proxies) > 0
@@ -96,9 +98,9 @@ async def test_get_proxies_anonymous_false(test_cli):
     ips = populate_proxy_ips_in_db()
 
     resp = await test_cli.get('/api/v1/proxies?anonymous=false')
-    assert resp.status == 200
+    assert resp.status_code == 200
 
-    resp_json = await resp.json()
+    resp_json = resp.json()
 
     proxies = resp_json['proxies']
     assert len(proxies) > 0
@@ -113,9 +115,9 @@ async def test_get_proxies_https_true(test_cli):
     ips = populate_proxy_ips_in_db()
 
     resp = await test_cli.get('/api/v1/proxies?https=true')
-    assert resp.status == 200
+    assert resp.status_code == 200
 
-    resp_json = await resp.json()
+    resp_json = resp.json()
 
     proxies = resp_json['proxies']
     assert len(proxies) > 0
@@ -130,9 +132,9 @@ async def test_get_proxies_https_false(test_cli):
     ips = populate_proxy_ips_in_db()
 
     resp = await test_cli.get('/api/v1/proxies?https=false')
-    assert resp.status == 200
+    assert resp.status_code == 200
 
-    resp_json = await resp.json()
+    resp_json = resp.json()
 
     proxies = resp_json['proxies']
     assert len(proxies) > 0
@@ -147,9 +149,9 @@ async def test_get_proxies_filtering_countries(test_cli):
     ips = populate_proxy_ips_in_db()
 
     resp = await test_cli.get('/api/v1/proxies?countries=CN')
-    assert resp.status == 200
+    assert resp.status_code == 200
 
-    resp_json = await resp.json()
+    resp_json = resp.json()
 
     proxies = resp_json['proxies']
 
@@ -163,9 +165,9 @@ async def test_get_proxies_filtering_multi_countries(test_cli):
     ips = populate_proxy_ips_in_db()
 
     resp = await test_cli.get('/api/v1/proxies?countries=CN,US')
-    assert resp.status == 200
+    assert resp.status_code == 200
 
-    resp_json = await resp.json()
+    resp_json = resp.json()
 
     proxies = resp_json['proxies']
 
@@ -179,9 +181,9 @@ async def test_get_proxies_page(test_cli):
     ips = populate_proxy_ips_in_db()
 
     resp = await test_cli.get('/api/v1/proxies?page=2')
-    assert resp.status == 200
+    assert resp.status_code == 200
 
-    resp_json = await resp.json()
+    resp_json = resp.json()
 
     proxies = resp_json['proxies']
     assert len(proxies) > 0
@@ -193,9 +195,9 @@ async def test_get_proxies_page_invalid(test_cli):
     ip_str = create_test_ip()
 
     resp = await test_cli.get('/api/v1/proxies?page=invalid')
-    assert resp.status == 200
+    assert resp.status_code == 200
 
-    resp_json = await resp.json()
+    resp_json = resp.json()
 
     proxies = resp_json['proxies']
     assert len(proxies) > 0
@@ -207,9 +209,9 @@ async def test_get_stats(test_cli):
     ip_str = create_test_ip()
 
     resp = await test_cli.get('/api/v1/stats')
-    assert resp.status == 200
+    assert resp.status_code == 200
 
-    resp_json = await resp.json()
+    resp_json = resp.json()
 
     assert resp_json['median']
     assert resp_json['mean']

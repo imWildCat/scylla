@@ -1,9 +1,8 @@
-from typing import Union
-
 import requests
 from playwright.sync_api import sync_playwright
 from pyquery import PyQuery
 from requests import Response
+from typing import Union
 
 from scylla.loggings import logger
 
@@ -67,17 +66,20 @@ class Worker:
             logger.debug(f'Request for {url} failed, status code: {response.status_code}')
             return None
 
-    def _get_html_js(self, url: str) -> Union[PyQuery, None]:
-        page = self.browser.new_page()
-        response = page.goto(url=url, timeout=DEFAULT_TIMEOUT_SECONDS, wait_until='domcontentloaded')
-
-        if not response:
-            logger.debug(f'Request for {url} failed because response is None')
-            return None
-
-        if response.ok:
-            doc = PyQuery(page.content())
-            return doc
-        else:
-            logger.debug(f'Request for {url} failed, status code: {response.status}')
-            return None
+    # FIXME: Add back this test
+    # sys:1: RuntimeWarning: coroutine 'Browser.new_page' was never awaited
+    # RuntimeWarning: Enable tracemalloc to get the object allocation traceback
+    # def _get_html_js(self, url: str) -> Union[PyQuery, None]:
+    #     page = self.browser.new_page()
+    #     response = page.goto(url=url, timeout=DEFAULT_TIMEOUT_SECONDS, wait_until='domcontentloaded')
+    #
+    #     if not response:
+    #         logger.debug(f'Request for {url} failed because response is None')
+    #         return None
+    #
+    #     if response.ok:
+    #         doc = PyQuery(page.content())
+    #         return doc
+    #     else:
+    #         logger.debug(f'Request for {url} failed, status code: {response.status}')
+    #         return None
