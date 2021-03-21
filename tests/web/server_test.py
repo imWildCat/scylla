@@ -10,7 +10,7 @@ from ..database_test import create_test_ip, delete_test_ip, delete_test_ips, gen
 COUNTRIES = ['CN', 'US', 'GB']
 
 
-@pytest.yield_fixture
+@pytest.fixture
 def web_app():
     return app
 
