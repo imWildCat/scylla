@@ -5,6 +5,6 @@ pytest==3.5.0
 pytest-cov==2.5.1
 pytest-forked==0.2
 pytest-mock==1.9.0
-pytest-sanic==0.1.9
+pytest-sanic==1.7.0
 pytest-xdist==1.22.2
 typing==3.6.4
