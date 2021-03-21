@@ -23,6 +23,7 @@ jobs:
         pip install -r tests/requirements-test.txt
         python setup.py install
         sudo chmod +x /opt/hostedtoolcache/Python/3.9.2/x64/lib/python3.9/site-packages/playwright-1.9.2-py3.9-linux-x86_64.egg/playwright/driver/playwright.sh
+        sudo chmod +x /opt/hostedtoolcache/Python/3.9.2/x64/lib/python3.9/site-packages/playwright-1.9.2-py3.9-linux-x86_64.egg/playwright/driver/node
         python -m playwright install
     - name: Lint with flake8
       run: |
