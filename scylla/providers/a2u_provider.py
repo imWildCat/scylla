@@ -1,6 +1,6 @@
 import re
 
-from requests_html import HTML
+from pyquery import PyQuery
 
 from scylla.database import ProxyIP
 from .base_provider import BaseProvider
@@ -13,12 +13,12 @@ class A2uProvider(BaseProvider):
             'https://raw.githubusercontent.com/a2u/free-proxy-list/master/free-proxy-list.txt',
         ]
 
-    def parse(self, html: HTML) -> [ProxyIP]:
+    def parse(self, document: PyQuery) -> [ProxyIP]:
         ip_list: [ProxyIP] = []
 
-        text = html.raw_html
+        raw_html = document.html()
 
-        ip_port_str_list = re.findall(r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}:\d{2,5}', text.decode('utf-8'))
+        ip_port_str_list = re.findall(r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}:\d{2,5}', raw_html)
 
         for ip_port in ip_port_str_list:
 

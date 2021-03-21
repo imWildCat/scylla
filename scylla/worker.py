@@ -1,7 +1,8 @@
 from typing import Union
 
 import requests
-from requests_html import HTMLSession, HTMLResponse, HTML
+from pyquery import PyQuery
+from requests_html import HTMLSession, HTMLResponse
 
 from scylla.loggings import logger
 
@@ -21,7 +22,7 @@ class Worker:
 
         self.session.close()
 
-    def get_html(self, url: str, render_js: bool = True) -> Union[HTML, None]:
+    def get_html(self, url: str, render_js: bool = True) -> Union[PyQuery, None]:
         """Get html from a specific URL
 
         :param url: the URL
@@ -46,6 +47,7 @@ class Worker:
                 logger.debug('starting render js...')
                 response.html.render(wait=1.5, timeout=10.0)
                 logger.debug('end render js...')
-            return response.html
+            doc = PyQuery(response.html.html)
+            return doc
         else:
             return None

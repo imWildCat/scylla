@@ -1,6 +1,6 @@
 import re
 
-from requests_html import HTML
+from pyquery import PyQuery
 
 from scylla.database import ProxyIP
 from .base_provider import BaseProvider
@@ -8,19 +8,19 @@ from .base_provider import BaseProvider
 
 class HttpProxyProvider(BaseProvider):
 
-    def parse(self, html: HTML) -> [ProxyIP]:
+    def parse(self, document: PyQuery) -> [ProxyIP]:
         ip_list: [ProxyIP] = []
 
-        for ip_row in html.find('table.proxytbl tr'):
-
-            ip_element = ip_row.find('td:nth-child(1)', first=True)
-            port_element = ip_row.find('td:nth-child(2)', first=True)
+        for ip_row in document.find('table.proxytbl tr'):
+            ip_row: PyQuery = ip_row
+            ip_element = ip_row.find('td:nth-child(1)')
+            port_element = ip_row.find('td:nth-child(2)')
 
             try:
                 if ip_element and port_element:
-                    port_str = re.search(r'//]]> (\d+)', port_element.text).group(1)
+                    port_str = re.search(r'//]]> (\d+)', port_element.text()).group(1)
 
-                    p = ProxyIP(ip=ip_element.text, port=port_str)
+                    p = ProxyIP(ip=ip_element.text(), port=port_str)
 
                     ip_list.append(p)
             except AttributeError:
