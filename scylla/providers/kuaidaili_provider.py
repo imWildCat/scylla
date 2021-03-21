@@ -1,4 +1,4 @@
-from requests_html import HTML
+from pyquery import PyQuery
 
 from scylla.database import ProxyIP
 from scylla.providers import BaseProvider
@@ -12,16 +12,16 @@ class KuaidailiProvider(BaseProvider):
             'https://www.kuaidaili.com/free/inha/2/',
         ]
 
-    def parse(self, html: HTML) -> [ProxyIP]:
+    def parse(self, document: PyQuery) -> [ProxyIP]:
         ip_list: [ProxyIP] = []
 
-        for ip_row in html.find('#list table tr'):
-
-            ip_element = ip_row.find('td[data-title="IP"]', first=True)
-            port_element = ip_row.find('td[data-title="PORT"]', first=True)
+        for ip_row in document.find('#list table tr'):
+            ip_row: PyQuery = ip_row
+            ip_element = ip_row.find('td[data-title="IP"]')
+            port_element = ip_row.find('td[data-title="PORT"]')
 
             if ip_element and port_element:
-                p = ProxyIP(ip=ip_element.text, port=port_element.text)
+                p = ProxyIP(ip=ip_element.text(), port=port_element.text())
                 ip_list.append(p)
 
         return ip_list

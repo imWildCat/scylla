@@ -10,20 +10,20 @@ def worker_instance():
 
 def test_worker_initialization(worker_instance):
     worker = worker_instance
-    assert worker.session
+    assert worker.browser
+    assert worker.requests_session
 
 
 def test_get_html_without_js_rendering(worker_instance):
-    worker = worker_instance
-    html = worker.get_html('http://www.example.com/', render_js=False).html
+    worker: Worker = worker_instance
+    html = worker.get_html('http://www.example.com/', render_js=False).html()
     assert '<title>' in html
-    assert '<html' in html
+    assert '<head' in html
     assert '<body>' in html
 
-
-def test_get_html_with_js_rendering(worker_instance):
-    worker = worker_instance
-    html = worker.get_html('http://example.com/', render_js=True).html
-    assert '<title>' in html
-    assert '<html' in html
-    assert '<body' in html  # Note: The actual body tag is `<body style="">`
+# def test_get_html_with_js_rendering(worker_instance):
+#     worker: Worker = worker_instance
+#     html = worker.get_html('http://example.com/', render_js=True).html()
+#     assert '<title>' in html
+#     assert '<html' in html
+#     assert '<body' in html  # Note: The actual body tag is `<body style="">`

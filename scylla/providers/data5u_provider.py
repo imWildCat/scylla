@@ -1,4 +1,4 @@
-from requests_html import HTML
+from pyquery import PyQuery
 
 from scylla.database import ProxyIP
 from scylla.providers import BaseProvider
@@ -11,16 +11,16 @@ class Data5uProvider(BaseProvider):
             'http://www.data5u.com',
         ]
 
-    def parse(self, html: HTML) -> [ProxyIP]:
+    def parse(self, document: PyQuery) -> [ProxyIP]:
         ip_list: [ProxyIP] = []
 
-        for ip_row in html.find('.wlist > ul > li:nth-child(2) .l2'):
-
-            ip_element = ip_row.find('span:nth-child(1)', first=True)
-            port_element = ip_row.find('span:nth-child(2)', first=True)
+        for ip_row in document.find('.wlist > ul > li:nth-child(2) .l2'):
+            ip_row: PyQuery = ip_row
+            ip_element = ip_row.find('span:nth-child(1)')
+            port_element = ip_row.find('span:nth-child(2)')
 
             if ip_element and port_element:
-                p = ProxyIP(ip=ip_element.text, port=port_element.text)
+                p = ProxyIP(ip=ip_element.text(), port=port_element.text())
                 ip_list.append(p)
 
         return ip_list

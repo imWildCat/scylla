@@ -1,7 +1,7 @@
 import base64
 import re
 
-from requests_html import HTML
+from pyquery import PyQuery
 
 from scylla.database import ProxyIP
 from scylla.worker import Worker
@@ -11,16 +11,17 @@ from .base_provider import BaseProvider
 class ProxyListProvider(BaseProvider):
 
     def __init__(self):
+        super().__init__()
         self.w = Worker()
 
-    def parse(self, html: HTML) -> [ProxyIP]:
+    def parse(self, document: PyQuery) -> [ProxyIP]:
         ip_list: [ProxyIP] = []
 
-        if html is None:
+        if document is None:
             return []
 
-        for ul in html.find('#proxy-table > div.table-wrap ul'):
-            js_code = ul.find('li.proxy script', first=True).text
+        for ul in document.find('#proxy-table > div.table-wrap ul'):
+            js_code = ul.find('li.proxy script').text()
             matched = re.findall(r"Proxy\('(.+)'\)", js_code)
             if matched and len(matched) > 0:
                 encoded = matched[0]

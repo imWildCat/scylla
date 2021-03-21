@@ -1,6 +1,6 @@
 import re
 
-from requests_html import HTML
+from pyquery import PyQuery
 
 from scylla.database import ProxyIP
 from .base_provider import BaseProvider
@@ -11,13 +11,13 @@ class PlainTextProvider(BaseProvider):
     def urls(self) -> [str]:
         return []
 
-    def parse(self, html: HTML) -> [ProxyIP]:
+    def parse(self, document: PyQuery) -> [ProxyIP]:
         ip_list: [ProxyIP] = []
 
-        if html is None:
+        if document is None:
             return []
 
-        text = html.raw_html.decode('utf-8')
+        text = document.html()
 
         for ip_port in text.split('\n'):
             if ip_port.strip() == '' or not re.match(r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}:(\d{2,5})', ip_port):

@@ -114,7 +114,7 @@ venv.bak/
 
 out/
 
-scylla.db
+*.db
 
 # node
 node_modules

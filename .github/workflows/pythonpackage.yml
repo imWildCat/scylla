@@ -9,7 +9,7 @@ jobs:
     strategy:
       max-parallel: 2
       matrix:
-        python-version: [3.6, ]# [2.7, 3.5, 3.6, 3.7]
+        python-version: [ 3.9 ]
 
     steps:
     - uses: actions/checkout@v1
@@ -22,6 +22,9 @@ jobs:
         sudo apt-get install libgnutls28-dev libcurl4-openssl-dev libssl-dev
         pip install -r tests/requirements-test.txt
         python setup.py install
+        sudo chmod +x /opt/hostedtoolcache/Python/3.9.2/x64/lib/python3.9/site-packages/playwright-1.9.2-py3.9-linux-x86_64.egg/playwright/driver/playwright.sh
+        sudo chmod +x /opt/hostedtoolcache/Python/3.9.2/x64/lib/python3.9/site-packages/playwright-1.9.2-py3.9-linux-x86_64.egg/playwright/driver/node
+        python -m playwright install
     - name: Lint with flake8
       run: |
         make style-check

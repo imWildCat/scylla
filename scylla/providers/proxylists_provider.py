@@ -1,6 +1,6 @@
 import re
 
-from requests_html import HTML
+from pyquery import PyQuery
 
 from scylla.database import ProxyIP
 from scylla.worker import Worker
@@ -10,15 +10,17 @@ from .base_provider import BaseProvider
 class ProxylistsProvider(BaseProvider):
 
     def __init__(self):
+        super().__init__()
         self.w = Worker()
         self.country_patten = re.compile('^/(.+)_0.html$')
 
-    def parse(self, html: HTML) -> [ProxyIP]:
+    def parse(self, document: PyQuery) -> [ProxyIP]:
         ip_list: [ProxyIP] = []
 
-        for tr in html.find('table table tr'):
-            ip_element = tr.find('td:nth-of-type(1)', first=True)
-            port_element = tr.find('td:nth-of-type(2)', first=True)
+        for tr in document.find('table table tr'):
+            tr: PyQuery = tr
+            ip_element = tr.find('td:nth-of-type(1)')
+            port_element = tr.find('td:nth-of-type(2)')
             if ip_element and port_element:
                 ip = re.search(r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}', ip_element.text).group(0)
                 port = re.search(r'\d{2,5}', port_element.text).group(0)

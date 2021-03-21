@@ -1,4 +1,4 @@
-from requests_html import HTML
+from pyquery import PyQuery
 
 from scylla.database import ProxyIP
 from scylla.providers import BaseProvider
@@ -12,16 +12,16 @@ class XiciProvider(BaseProvider):
             'http://www.xicidaili.com/wn',
         ]
 
-    def parse(self, html: HTML) -> [ProxyIP]:
+    def parse(self, document: PyQuery) -> [ProxyIP]:
         ip_list: [ProxyIP] = []
 
-        for ip_row in html.find('#ip_list tr'):
-
-            ip_element = ip_row.find('td:nth-child(2)', first=True)
-            port_element = ip_row.find('td:nth-child(3)', first=True)
+        for ip_row in document.find('#ip_list tr'):
+            ip_row: PyQuery = ip_row
+            ip_element = ip_row.find('td:nth-child(2)')
+            port_element = ip_row.find('td:nth-child(3)')
 
             if ip_element and port_element:
-                p = ProxyIP(ip=ip_element.text, port=port_element.text)
+                p = ProxyIP(ip=ip_element.text(), port=port_element.text())
                 ip_list.append(p)
 
         return ip_list
