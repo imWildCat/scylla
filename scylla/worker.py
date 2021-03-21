@@ -1,10 +1,16 @@
 from typing import Union
 
 import requests
+from playwright.sync_api import sync_playwright
 from pyquery import PyQuery
-from requests_html import HTMLSession, HTMLResponse
+from requests import Response
 
 from scylla.loggings import logger
+
+DEFAULT_TIMEOUT_SECONDS = 30
+
+DEFAULT_USER_AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_2_3) AppleWebKit/537.36 (KHTML, like Gecko) ' \
+                     'Chrome/89.0.4389.90 Safari/537.36 '
 
 
 class Worker:
@@ -14,13 +20,19 @@ class Worker:
 
         """
 
-        self.session = HTMLSession()
+        with sync_playwright() as p:
+            self.browser = p.chromium.launch()
+
+        self.requests_session = requests.Session()
+        self.requests_session.headers['User-Agent'] = DEFAULT_USER_AGENT
 
     def stop(self):
         """Clean the session
         """
 
-        self.session.close()
+        self.browser.close()
+
+        self.requests_session.close()
 
     def get_html(self, url: str, render_js: bool = True) -> Union[PyQuery, None]:
         """Get html from a specific URL
@@ -32,9 +44,15 @@ class Worker:
         :rtype: str
         """
 
+        if render_js:
+            return self._get_html_js(url)
+        else:
+            return self._get_html_no_js(url)
+
+    def _get_html_no_js(self, url: str) -> Union[PyQuery, None]:
         try:
             # TODO: load config for timeout
-            response: HTMLResponse = self.session.get(url, timeout=30)
+            response: Response = self.requests_session.get(url, timeout=DEFAULT_TIMEOUT_SECONDS)
         except requests.RequestException:
             logger.warning('[Worker] Cannot get this url: ' + url)
             return None
@@ -43,11 +61,23 @@ class Worker:
             return None
 
         if response.ok:
-            if render_js:
-                logger.debug('starting render js...')
-                response.html.render(wait=1.5, timeout=10.0)
-                logger.debug('end render js...')
-            doc = PyQuery(response.html.html)
+            doc = PyQuery(response.text)
             return doc
         else:
+            logger.debug(f'Request for {url} failed, status code: {response.status_code}')
+            return None
+
+    def _get_html_js(self, url: str) -> Union[PyQuery, None]:
+        page = self.browser.new_page()
+        response = page.goto(url=url, timeout=DEFAULT_TIMEOUT_SECONDS, wait_until='domcontentloaded')
+
+        if not response:
+            logger.debug(f'Request for {url} failed because response is None')
+            return None
+
+        if response.ok:
+            doc = PyQuery(page.content())
+            return doc
+        else:
+            logger.debug(f'Request for {url} failed, status code: {response.status}')
             return None
