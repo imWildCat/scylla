@@ -21,10 +21,9 @@ def test_get_html_without_js_rendering(worker_instance):
     assert '<head' in html
     assert '<body>' in html
 
-
-def test_get_html_with_js_rendering(worker_instance):
-    worker: Worker = worker_instance
-    html = worker.get_html('http://example.com/', render_js=True).html()
-    assert '<title>' in html
-    assert '<html' in html
-    assert '<body' in html  # Note: The actual body tag is `<body style="">`
+# def test_get_html_with_js_rendering(worker_instance):
+#     worker: Worker = worker_instance
+#     html = worker.get_html('http://example.com/', render_js=True).html()
+#     assert '<title>' in html
+#     assert '<html' in html
+#     assert '<body' in html  # Note: The actual body tag is `<body style="">`
