@@ -1,4 +1,4 @@
-FROM python:3.6.5-slim as build
+FROM python:3.9-slim as build
 
 RUN apt-get update && apt-get install -y g++ gcc libxslt-dev make libcurl4-openssl-dev build-essential
 
@@ -9,7 +9,7 @@ WORKDIR /var/www/scylla
 
 RUN pip install scylla
 
-FROM python:3.6.5-slim
+FROM python:3.9-slim
 
 LABEL maintainer="WildCat <wildcat.name@gmail.com>"
 
