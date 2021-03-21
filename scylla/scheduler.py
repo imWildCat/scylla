@@ -4,7 +4,6 @@ from datetime import datetime, timedelta
 from multiprocessing import Queue, Process
 from threading import Thread
 
-import pyppeteer
 import schedule
 
 from scylla.config import get_config
@@ -50,9 +49,6 @@ def fetch_ips(q: Queue, validator_queue: Queue):
             worker.stop()
             logger.info('worker_process exited.')
             break
-        except pyppeteer.errors.PyppeteerError as e:
-            logger.debug("""pyppeteer.errors.PyppeteerError detected: %s\n
-                         'Please make sure you have installed all the dependencies for chromium correctly""", e)
 
 
 def validate_ips(validator_queue: Queue, validator_pool: ThreadPoolExecutor):
