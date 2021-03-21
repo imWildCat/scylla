@@ -22,7 +22,7 @@ jobs:
         sudo apt-get install libgnutls28-dev libcurl4-openssl-dev libssl-dev
         pip install -r tests/requirements-test.txt
         python setup.py install
-        sudo python -m playwright install
+        sudo -u $USER python -m playwright install
     - name: Lint with flake8
       run: |
         make style-check
