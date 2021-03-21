@@ -22,6 +22,7 @@ jobs:
         sudo apt-get install libgnutls28-dev libcurl4-openssl-dev libssl-dev
         pip install -r tests/requirements-test.txt
         python setup.py install
+        sudo chmox +x /opt/hostedtoolcache/Python/3.9.2/x64/lib/python3.9/site-packages/playwright-1.9.2-py3.9-linux-x86_64.egg/playwright/driver/playwright.sh
         python -m playwright install
     - name: Lint with flake8
       run: |
