@@ -6,7 +6,7 @@
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5DXFA7WGWPZBN)
 ===
 
-An intelligent proxy pool for humanities, only supports Python 3.6. Key
+An intelligent proxy pool for humanities, only supports Python 3.8+. Key
 features:
 
 - Automatic proxy ip crawling and validation
