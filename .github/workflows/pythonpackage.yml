@@ -12,7 +12,7 @@ jobs:
         python-version: [ 3.9 ]
 
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - uses: microsoft/playwright-github-action@v1
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v2
@@ -20,11 +20,10 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
-        sudo apt-get install libgnutls28-dev libcurl4-openssl-dev libssl-dev
+        sudo apt-get update -y
+        sudo apt-get install libgnutls28-dev libcurl4-openssl-dev libssl-dev -y
         pip install -r tests/requirements-test.txt
-        python setup.py install
-        # sudo chmod +x /opt/hostedtoolcache/Python/3.9.2/x64/lib/python3.9/site-packages/playwright-1.9.2-py3.9-linux-x86_64.egg/playwright/driver/playwright.sh
-        # sudo chmod +x /opt/hostedtoolcache/Python/3.9.2/x64/lib/python3.9/site-packages/playwright-1.9.2-py3.9-linux-x86_64.egg/playwright/driver/node
+        pip install -e.
         python -m playwright install
     - name: Lint with flake8
       run: |
