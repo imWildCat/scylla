@@ -1,6 +1,6 @@
 import re
 
-from requests_html import HTML
+from pyquery import PyQuery
 
 from scylla.database import ProxyIP
 from scylla.providers import BaseProvider
@@ -15,14 +15,14 @@ class SpysOneProvider(BaseProvider):
             # 'http://spys.one/en/https-ssl-proxy/',
         ]
 
-    def parse(self, html: HTML) -> [ProxyIP]:
+    def parse(self, document: PyQuery) -> [ProxyIP]:
         ip_list: [ProxyIP] = []
-        for ip_row in html.find('table tr[onmouseover]'):
-
-            ip_port_text_elem = ip_row.find('.spy14', first=True)
+        for ip_row in document.find('table tr[onmouseover]'):
+            ip_row: PyQuery = ip_row
+            ip_port_text_elem = ip_row.find('.spy14')
 
             if ip_port_text_elem:
-                ip_port_text = ip_port_text_elem.text
+                ip_port_text = ip_port_text_elem.text()
 
                 ip = re.search(r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}', ip_port_text).group(0)
                 port = re.search(r':\n(\d{2,5})', ip_port_text).group(1)

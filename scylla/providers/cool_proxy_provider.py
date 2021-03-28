@@ -1,6 +1,6 @@
 import re
 
-from requests_html import HTML
+from pyquery import PyQuery
 
 from scylla.database import ProxyIP
 from .base_provider import BaseProvider
@@ -8,16 +8,16 @@ from .base_provider import BaseProvider
 
 class CoolProxyProvider(BaseProvider):
 
-    def parse(self, html: HTML) -> [ProxyIP]:
+    def parse(self, document: PyQuery) -> [ProxyIP]:
         ip_list: [ProxyIP] = []
 
-        for ip_row in html.find('table tr'):
-
-            ip_element = ip_row.find('td:nth-child(1)', first=True)
-            port_element = ip_row.find('td:nth-child(2)', first=True)
+        for ip_row in document.find('table tr'):
+            ip_row: PyQuery = ip_row
+            ip_element: PyQuery = ip_row.find('td:nth-child(1)')
+            port_element: PyQuery = ip_row.find('td:nth-child(2)')
 
             if ip_element and port_element:
-                p = ProxyIP(ip=re.sub(r'document\.write\(.+\)', '', ip_element.text), port=port_element.text)
+                p = ProxyIP(ip=re.sub(r'document\.write\(.+\)', '', ip_element.text()), port=port_element.text())
 
                 ip_list.append(p)
 

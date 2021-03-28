@@ -1,6 +1,6 @@
 import json
 
-from requests_html import HTML
+from pyquery import PyQuery
 
 from scylla.database import ProxyIP
 from .base_provider import BaseProvider
@@ -11,15 +11,15 @@ class ProxyScraperProvider(BaseProvider):
     def urls(self) -> [str]:
         return ['https://raw.githubusercontent.com/sunny9577/proxy-scraper/master/proxies.json']
 
-    def parse(self, html: HTML) -> [ProxyIP]:
+    def parse(self, document: PyQuery) -> [ProxyIP]:
         ip_list: [ProxyIP] = []
 
-        text = html.raw_html.decode('utf-8')
-        obj = json.loads(text)
-        if not obj or type(obj['usproxy']) != list:
+        text = document.html()
+        json_object = json.load(text)
+        if not json_object or type(json_object['usproxy']) != list:
             return ip_list
 
-        for ip_port in obj['usproxy']:
+        for ip_port in json_object['usproxy']:
             p = ProxyIP(ip=ip_port['ip'], port=ip_port['port'])
             ip_list.append(p)
 

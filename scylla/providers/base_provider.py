@@ -1,4 +1,4 @@
-from requests_html import HTML
+from pyquery import PyQuery
 
 from ..database import ProxyIP
 
@@ -33,10 +33,10 @@ class BaseProvider(object):
 
         raise NotImplementedError
 
-    def parse(self, html: HTML) -> [ProxyIP]:
+    def parse(self, document: PyQuery) -> [ProxyIP]:
         """Parse the document in order to get a list of proxies
 
-        :param html: the HTML object from requests-html
+        :param document: the HTML object from requests-html
         :return: a list of proxy ips
         """
 

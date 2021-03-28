@@ -10,7 +10,7 @@ from sanic_cors import CORS
 from scylla.database import ProxyIP
 from scylla.loggings import logger
 
-app = Sanic()
+app = Sanic(name='Scylla', )
 
 CORS(app)
 
@@ -35,7 +35,7 @@ def _get_valid_proxies_query():
 
 @app.route('/api/v1/proxies')
 async def api_v1_proxies(request: Request):
-    args = request.raw_args
+    args = request.args
 
     limit = 20
 
@@ -44,15 +44,15 @@ async def api_v1_proxies(request: Request):
     is_anonymous = 2  # 0: no, 1: yes, 2: any
 
     if 'limit' in args:
-        int_limit = _parse_str_to_int(args['limit'])
+        int_limit = _parse_str_to_int(args.get('limit'))
         limit = int_limit if int_limit else 20
 
     if 'page' in args:
-        int_page = _parse_str_to_int(args['page'])
+        int_page = _parse_str_to_int(args.get('page'))
         page = int_page if int_page > 0 else 1
 
     if 'anonymous' in args:
-        str_anonymous = args['anonymous']
+        str_anonymous = args.get('anonymous')
         if str_anonymous == 'true':
             is_anonymous = 1
         elif str_anonymous == 'false':
@@ -62,11 +62,11 @@ async def api_v1_proxies(request: Request):
 
     str_https = None
     if 'https' in args:
-        str_https = args['https']
+        str_https = args.get('https')
 
     country_list = []
     if 'countries' in args:
-        countries = args['countries']
+        countries = args.get('countries')
         country_list = countries.split(',')
 
     proxy_initial_query = _get_valid_proxies_query()
@@ -97,7 +97,12 @@ async def api_v1_proxies(request: Request):
     proxy_list = []
 
     for p in proxies:
-        proxy_list.append(model_to_dict(p))
+        dict_model = model_to_dict(p)
+        dict_model['created_at'] = dict_model['created_at'].isoformat()
+        dict_model['updated_at'] = dict_model['updated_at'].isoformat()
+        proxy_list.append(
+            dict_model
+        )
 
     return json({
         'proxies': proxy_list,

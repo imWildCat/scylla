@@ -1,4 +1,4 @@
-FROM python:3.6-alpine3.7 as build
+FROM python:3.9-alpine as build
 
 RUN apk add --update --no-cache g++ gcc libxslt-dev make build-base curl-dev openssl-dev
 
@@ -7,7 +7,7 @@ WORKDIR /var/www/scylla
 
 RUN pip install scylla
 
-FROM python:3.6-alpine3.7
+FROM python:3.9-alpine
 
 LABEL maintainer="WildCat <wildcat.name@gmail.com>"
 
