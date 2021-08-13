@@ -18,7 +18,7 @@ class SpyMeProvider(BaseProvider):
 
         text = document.html()
 
-        ip_port_str_list = re.findall(r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}:\d{2,5}', text.decode('utf-8'))
+        ip_port_str_list = re.findall(r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}:\d{2,5}', text)
 
         for ip_port in ip_port_str_list:
 
