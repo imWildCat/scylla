@@ -34,7 +34,7 @@ class ProxylistsProvider(BaseProvider):
         country_page = self.w.get_html(country_url, False)
         if country_page:
             for a in country_page.find('a'):
-                relative_path = a.attrs['href']
+                relative_path = a.attrib['href']
                 if self.country_patten.match(relative_path) :
                     ret.update(self.gen_url_for_country(self.country_patten.findall(relative_path)[0]))
                     break
