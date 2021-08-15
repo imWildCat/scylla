@@ -1,7 +1,7 @@
 FROM node:lts-buster as node-build
 WORKDIR /root
 COPY package.json .
-RUN npm --registry https://registry.npm.taobao.org install
+RUN npm install
 COPY . .
 RUN make assets-build
 
@@ -13,7 +13,7 @@ WORKDIR /root
 
 COPY --from=node-build /root/scylla/assets ./scylla/assets
 COPY requirements.txt .
-RUN pip install -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple/
+RUN pip install -r requirements.txt
 RUN python -m playwright install
 COPY . .
 RUN python setup.py install
