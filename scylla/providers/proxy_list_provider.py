@@ -35,7 +35,6 @@ class ProxyListProvider(BaseProvider):
     def urls(self) -> [str]:
         ret = []
         first_url = 'http://proxy-list.org/english/index.php?p=1'
-        # sub = first_url[0:first_url.rfind('/')] # http://proxy-list.org/english
         first_page = self.w.get_html(first_url, False)
         if first_page:
             ret.append(first_url)
