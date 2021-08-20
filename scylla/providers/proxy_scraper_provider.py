@@ -15,7 +15,7 @@ class ProxyScraperProvider(BaseProvider):
         ip_list: [ProxyIP] = []
 
         text = document.html()
-        json_object = json.load(text)
+        json_object = json.loads(text)
         if not json_object or type(json_object['usproxy']) != list:
             return ip_list
 

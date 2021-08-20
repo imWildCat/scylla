@@ -6,7 +6,7 @@ from pyquery import PyQuery
 from scylla.database import ProxyIP
 from scylla.worker import Worker
 from .base_provider import BaseProvider
-
+import urllib.parse
 
 class ProxyListProvider(BaseProvider):
 
@@ -35,14 +35,13 @@ class ProxyListProvider(BaseProvider):
     def urls(self) -> [str]:
         ret = []
         first_url = 'http://proxy-list.org/english/index.php?p=1'
-        sub = first_url[0:first_url.rfind('/')] # http://proxy-list.org/english
         first_page = self.w.get_html(first_url, False)
-
-        ret.append(first_url)
-        for a in first_page.find('#content div.content div.table-menu a.item'):
-            relative_path = a.attrs['href']
-            absolute_url = sub + relative_path[relative_path.find('/'):]
-            ret.append(absolute_url)
+        if first_page:
+            ret.append(first_url)
+            for a in first_page.find('#content div.content div.table-menu a.item'):
+                relative_path = a.attrib['href']
+                absolute_url = urllib.parse.urljoin(first_url, relative_path)
+                ret.append(absolute_url)
         return ret
 
 

@@ -22,7 +22,7 @@ def fetch_ips(q: Queue, validator_queue: Queue):
 
     while True:
         try:
-            provider: BaseProvider = q.get()
+            provider: BaseProvider = q.get()()
 
             provider_name = provider.__class__.__name__
 
@@ -32,7 +32,7 @@ def fetch_ips(q: Queue, validator_queue: Queue):
                 try:
                     html = worker.get_html(url, render_js=provider.should_render_js())
                 except Exception as e:
-                    logger.error("worker.get_html failed: ", e)
+                    logger.error("worker.get_html failed: %s", e)
                     continue
 
                 if html:
@@ -157,7 +157,7 @@ class Scheduler(object):
         logger.debug('feed {} providers...'.format(len(all_providers)))
 
         for provider in all_providers:
-            self.worker_queue.put(provider())
+            self.worker_queue.put(provider)
 
     def stop(self):
         self.worker_queue.close()
