@@ -23,7 +23,7 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
-        sudo apt-get install libgnutls28-dev libcurl4-openssl-dev libssl-dev
+        make install-dependencies-ubuntu
         pip install -r tests/requirements-test.txt
         python setup.py install
         sudo chmod +x /opt/hostedtoolcache/Python/3.9.2/x64/lib/python3.9/site-packages/playwright-1.9.2-py3.9-linux-x86_64.egg/playwright/driver/playwright.sh
