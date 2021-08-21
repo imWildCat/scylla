@@ -16,7 +16,7 @@ CORS(app)
 
 base_path = os.path.abspath(os.path.join(__file__, os.pardir, os.pardir))
 
-app.static('/assets/*', base_path + '/assets')
+app.static('/assets', base_path + '/assets')
 app.static('/', base_path + '/assets/index.html')
 app.static('/*', base_path + '/assets/index.html')
 

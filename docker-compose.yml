@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  scylla:
+    build:
+      context: .
+      target: prod
+    volumes:
+      - /var/www/scylla:/var/www/scylla
+    ports:
+      - "8899:8899"
+      - "8081:8081"

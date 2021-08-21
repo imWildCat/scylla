@@ -109,6 +109,9 @@ venv.bak/
 # idea
 .idea/
 
+# vscode
+.vscode
+
 out/
 
 *.db

@@ -1,3 +1,4 @@
+import typing
 import pytest
 
 from scylla.worker import Worker
@@ -16,7 +17,13 @@ def test_worker_initialization(worker_instance):
 
 def test_get_html_without_js_rendering(worker_instance):
     worker: Worker = worker_instance
-    html = worker.get_html('http://www.example.com/', render_js=False).html()
+    result = worker.get_html('http://www.example.com/', render_js=False)
+
+    if not result:
+        assert False
+    
+    html: str = typing.cast(str, result.html())
+
     assert '<title>' in html
     assert '<head' in html
     assert '<body>' in html

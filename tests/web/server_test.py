@@ -3,12 +3,14 @@ import random
 import pytest
 from requests import Response
 from sanic.websocket import WebSocketProtocol
+from sanic import Sanic
 
 from scylla.web.server import app
 from ..database_test import create_test_ip, delete_test_ip, delete_test_ips, gen_random_ip, ProxyIP
 
 COUNTRIES = ['CN', 'US', 'GB']
 
+Sanic.test_mode = True
 
 @pytest.fixture
 def web_app():

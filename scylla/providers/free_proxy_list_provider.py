@@ -10,7 +10,7 @@ class FreeProxyListProvider(BaseProvider):
         ip_list: [ProxyIP] = []
 
         for ip_row in document.find('#proxylisttable tbody tr'):
-            ip_row: PyQuery = ip_row
+            ip_row: PyQuery = PyQuery(ip_row)
             ip_address: str = ip_row.find('td:nth-child(1)').text()
             port: str = ip_row.find('td:nth-child(2)').text()
 
