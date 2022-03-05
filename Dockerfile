@@ -16,7 +16,7 @@ COPY requirements.txt .
 RUN pip install -r requirements.txt
 RUN python -m playwright install
 COPY . .
-RUN python setup.py install
+RUN python setup.py install chromium
 
 FROM python:3.9-slim as prod
 
