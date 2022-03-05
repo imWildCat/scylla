@@ -14,9 +14,9 @@ WORKDIR /root
 COPY --from=node-build /root/scylla/assets ./scylla/assets
 COPY requirements.txt .
 RUN pip install -r requirements.txt
-RUN python -m playwright install
+RUN python -m playwright install chromium
 COPY . .
-RUN python setup.py install chromium
+RUN python setup.py install
 
 FROM python:3.9-slim as prod
 
