@@ -2,7 +2,7 @@
 [![codecov](https://codecov.io/gh/imWildCat/scylla/branch/master/graph/badge.svg)](https://codecov.io/gh/imWildCat/scylla)
 [![Documentation Status](https://readthedocs.org/projects/scylla-py/badge/?version=latest)](https://scylla.wildcat.io/en/latest/?badge=latest)
 [![PyPI version](https://badge.fury.io/py/scylla.svg)](https://badge.fury.io/py/scylla)
-[![Docker Build Status](https://img.shields.io/docker/build/wildcat/scylla.svg)](https://hub.docker.com/r/wildcat/scylla/)
+[![Docker Pull](https://img.shields.io/docker/pulls/wildcat/scylla.svg)](https://hub.docker.com/r/wildcat/scylla/)
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5DXFA7WGWPZBN)
 ===
 
