@@ -116,6 +116,8 @@ out/
 # node
 node_modules
 
+.parcel-cache
+
 *.bak
 
 package-lock.json
