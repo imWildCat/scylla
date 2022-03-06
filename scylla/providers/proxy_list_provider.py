@@ -1,5 +1,6 @@
 import base64
 import re
+from typing import List
 
 from pyquery import PyQuery
 
@@ -14,14 +15,19 @@ class ProxyListProvider(BaseProvider):
         super().__init__()
         self.w = Worker()
 
-    def parse(self, document: PyQuery) -> [ProxyIP]:
-        ip_list: [ProxyIP] = []
+    def parse(self, document: PyQuery) -> List[ProxyIP]:
+        ip_list: List[ProxyIP] = []
 
         if document is None:
             return []
 
         for ul in document.find('#proxy-table > div.table-wrap ul'):
-            js_code = ul.find('li.proxy script').text()
+            js_code_element = ul.find('li.proxy script')
+
+            if not js_code_element:
+                return []
+
+            js_code = js_code_element.text()
             matched = re.findall(r"Proxy\('(.+)'\)", js_code)
             if matched and len(matched) > 0:
                 encoded = matched[0]
@@ -32,7 +38,7 @@ class ProxyListProvider(BaseProvider):
 
         return ip_list
 
-    def urls(self) -> [str]:
+    def urls(self) -> List[str]:
         ret = []
         first_url = 'http://proxy-list.org/english/index.php?p=1'
         first_page = self.w.get_html(first_url, False)

@@ -1,36 +1,44 @@
 FROM node:lts-buster as node-build
+
 WORKDIR /root
+
 COPY package.json .
 RUN yarn install
 COPY . .
 RUN make assets-build
 
+FROM ubuntu:focal as python-build
 
-FROM python:3.9-slim as python-build
-RUN apt-get update && apt-get install -y g++ gcc libxslt-dev make libcurl4-openssl-dev build-essential
-RUN apt-get install -y libssl-dev
-WORKDIR /root
+ENV DEBIAN_FRONTEND=noninteractive
+ENV TZ=America/Los_Angeles
+
+RUN apt-get update && \
+    apt-get install -y python3 python3-distutils libpython3.8-dev curl g++ gcc libxslt-dev make libcurl4-openssl-dev build-essential libssl-dev && \
+    update-alternatives --install /usr/bin/python python /usr/bin/python3 1 && \
+    curl -sSL https://bootstrap.pypa.io/get-pip.py -o get-pip.py && \
+    python get-pip.py && \
+    rm get-pip.py && \
+    # Feature-parity with node.js base images.
+    apt-get install -y --no-install-recommends git openssh-client && \
+    # clean apt cache
+    rm -rf /var/lib/apt/lists/* && \
+    # Create the pwuser
+    adduser pwuser
+
+WORKDIR /app
 
 COPY --from=node-build /root/scylla/assets ./scylla/assets
 COPY requirements.txt .
-RUN pip install -r requirements.txt
-RUN python -m playwright install chromium
+RUN pip3 install -r requirements.txt
 COPY . .
-RUN python setup.py install
+RUN python3 setup.py install
 
-FROM python:3.9-slim as prod
-
-LABEL maintainer="WildCat <wildcat.name@gmail.com>"
-
-RUN apt-get update && apt-get install -y libxslt-dev libssl-dev libcurl4-openssl-dev
-
-COPY --from=python-build /usr/local/lib/python3.9/site-packages/ /usr/local/lib/python3.9/site-packages/
-COPY --from=python-build /root/.cache/ms-playwright /root/.cache/ms-playwright
-
-WORKDIR /var/www/scylla
+RUN mkdir -p /var/www/scylla
 VOLUME /var/www/scylla
+
+RUN python3 -m playwright install chromium --with-deps
 
 EXPOSE 8899
 EXPOSE 8081
 
-CMD python -m scylla
+CMD python3 -m scylla --db-path /var/www/scylla/scylla.db
