@@ -1,6 +1,6 @@
 tornado==5.1.1
 peewee==3.14.4
-requests==2.26.0
+requests==2.27.1
 pycurl==7.44.1
 sanic==21.6.2
 sanic-cors
