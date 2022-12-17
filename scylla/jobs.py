@@ -5,8 +5,12 @@ from .loggings import logger
 
 
 def save_ip(p: ProxyIP):
-    basic_query = ProxyIP.select().where(
-        ProxyIP.ip == p.ip, ProxyIP.port == p.port)
+    """
+    Save a ProxyIP object into database
+
+    :param p: ProxyIP object
+    """
+    basic_query = ProxyIP.select().where(ProxyIP.ip == p.ip, ProxyIP.port == p.port)
     count = basic_query.count()
     if count == 0:
         # logger.debug('Creating new ip record: ' + p.__str__())
@@ -15,7 +19,8 @@ def save_ip(p: ProxyIP):
         # logger.debug('Update an existing ip record: ' + p.__str__())
 
         existing_proxy: ProxyIP = ProxyIP.get(
-            ProxyIP.ip == p.ip, ProxyIP.port == p.port)
+            ProxyIP.ip == p.ip, ProxyIP.port == p.port
+        )
 
         existing_proxy.assign_from(p)
 
@@ -25,7 +30,12 @@ def save_ip(p: ProxyIP):
 
 
 def validate_proxy_ip(p: ProxyIP):
-    # logger.debug('Validating ip: {}'.format(p.ip))
+    """
+    Validate a ProxyIP object
+
+    Args:
+        p (ProxyIP): ProxyIP object
+    """
     policy = ValidationPolicy(proxy_ip=p)
 
     if not policy.should_validate():
@@ -36,7 +46,7 @@ def validate_proxy_ip(p: ProxyIP):
     try:
         v.validate()
     except (KeyboardInterrupt, SystemExit):
-        logger.info('KeyboardInterrupt terminates validate_proxy_ip: ' + p.ip)
+        logger.info("KeyboardInterrupt terminates validate_proxy_ip: " + p.ip)
 
     meta = v.meta if v.meta else {}
     validated_ip = ProxyIP(ip=p.ip, port=p.port, **meta)
