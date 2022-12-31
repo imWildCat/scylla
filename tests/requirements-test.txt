@@ -1,4 +1,4 @@
-codecov==2.0.15
+codecov==2.0.16
 flake8==3.9.0
 setuptools==65.5.1
 pytest==6.2.2
