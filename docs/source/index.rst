@@ -13,8 +13,6 @@ features:
 -  `Scrapy`_ and `requests`_ integration with only 1 line of code minimally
 -  Headless browser crawling
 
-对于偏好中文的用户，请阅读 `中文文档`_\ 。For those who prefer to use Chinese, please read the `Chinese Documentation`_
-
 
 Get started
 -----------
