@@ -5,6 +5,8 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 
 from playhouse.shortcuts import model_to_dict
+import uvicorn
+import sys
 
 from scylla.database import ProxyIP
 from scylla.loggings import logger
@@ -45,7 +47,6 @@ async def api_v1_proxies(limit: int = 20, page: int = 1, anonymous: str = 'any',
     else:
         is_anonymous = 2
 
-  
     country_list = []
     if countries:
         country_list = countries.split(',')
@@ -56,9 +57,11 @@ async def api_v1_proxies(limit: int = 20, page: int = 1, anonymous: str = 'any',
 
     if is_anonymous != 2:
         if is_anonymous == 1:
-            proxy_query = proxy_initial_query.where(ProxyIP.is_anonymous == True)
+            proxy_query = proxy_initial_query.where(
+                ProxyIP.is_anonymous == True)
         elif is_anonymous == 0:
-            proxy_query = proxy_initial_query.where(ProxyIP.is_anonymous == False)
+            proxy_query = proxy_initial_query.where(
+                ProxyIP.is_anonymous == False)
 
     if https:
         if https == 'true':
@@ -71,7 +74,8 @@ async def api_v1_proxies(limit: int = 20, page: int = 1, anonymous: str = 'any',
 
     count = proxy_query.count()  # count before sorting
 
-    proxies = proxy_query.order_by(ProxyIP.updated_at.desc(), ProxyIP.latency).offset((page - 1) * limit).limit(limit)
+    proxies = proxy_query.order_by(ProxyIP.updated_at.desc(
+    ), ProxyIP.latency).offset((page - 1) * limit).limit(limit)
 
     logger.debug(f'Perform SQL query: {proxy_query.sql()}')
 
@@ -124,4 +128,11 @@ async def api_v1_stats():
 
 
 def start_web_server(host='0.0.0.0', port=8899):
-    app.run(host=host, port=port)
+    app_dir = "."
+    sys.path.insert(0, app_dir)
+    sys.exit(
+        uvicorn.run(
+            'main:app', host=host, port=port, reload=False,
+            workers=4
+        )
+    )
