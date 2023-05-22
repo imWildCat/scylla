@@ -1,10 +1,9 @@
-tornado==5.1.1
 peewee==3.14.4
-requests==2.27.1
+requests>=2.31.0
 pycurl==7.44.1
-sanic==21.6.2
-sanic-cors
 schedule==1.1.0
 six==1.16.0
-playwright==1.19.1
+playwright>=1.33.0
 pyquery==1.4.3
+fastapi==0.95.2
+uvicorn[standard]==0.22.0
