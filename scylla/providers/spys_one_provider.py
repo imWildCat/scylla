@@ -11,16 +11,15 @@ class SpysOneProvider(BaseProvider):
     def urls(self) -> [str]:
         return [
             'http://spys.one/en/anonymous-proxy-list/',
-            # 'http://spys.one/en/http-proxy-list/',
-            # 'http://spys.one/en/https-ssl-proxy/',
+            'http://spys.one/en/http-proxy-list/',
+            'http://spys.one/en/https-ssl-proxy/',
         ]
 
     def parse(self, document: PyQuery) -> [ProxyIP]:
         ip_list: [ProxyIP] = []
-        for ip_row in document.find('table tr[onmouseover]'):
+        for ip_row in document('table tr[onmouseover]').items():
             ip_row: PyQuery = ip_row
             ip_port_text_elem = ip_row.find('.spy14')
-
             if ip_port_text_elem:
                 ip_port_text = ip_port_text_elem.text()
 

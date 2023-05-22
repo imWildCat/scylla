@@ -1,10 +1,9 @@
-version: '3.8'
+version: '3.3'
 
 services:
   scylla:
     build:
       context: .
-      target: prod
     volumes:
       - /var/www/scylla:/var/www/scylla
     ports:

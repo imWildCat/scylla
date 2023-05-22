@@ -1,15 +1,15 @@
+from typing import Union
+
 import requests
 from playwright.sync_api import sync_playwright
 from pyquery import PyQuery
 from requests import Response
-from typing import Union
 
 from scylla.loggings import logger
 
-DEFAULT_TIMEOUT_SECONDS = 30
+DEFAULT_TIMEOUT_SECONDS = 200
 
-DEFAULT_USER_AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_2_3) AppleWebKit/537.36 (KHTML, like Gecko) ' \
-                     'Chrome/89.0.4389.90 Safari/537.36 '
+DEFAULT_USER_AGENT = """Mozilla/5.0 (iPhone; CPU iPhone OS 10_0_2 like Mac OS X) AppleWebKit/602.1.50 (KHTML, like Gecko) Mobile/14A456 YaBrowser/19.5.2.38.10 YaApp_iOS/28.00 YaApp_iOS_Browser/28.00 Safari/602.1"""
 
 
 class Worker:

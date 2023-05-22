@@ -21,7 +21,7 @@ class ProxyListProvider(BaseProvider):
         if document is None:
             return []
 
-        for ul in document.find('#proxy-table > div.table-wrap ul'):
+        for ul in document('#proxy-table > div.table-wrap ul').items():
             js_code_element = ul.find('li.proxy script')
 
             if not js_code_element:

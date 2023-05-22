@@ -13,10 +13,10 @@ def save_ip(p: ProxyIP):
     basic_query = ProxyIP.select().where(ProxyIP.ip == p.ip, ProxyIP.port == p.port)
     count = basic_query.count()
     if count == 0:
-        # logger.debug('Creating new ip record: ' + p.__str__())
+        logger.debug('Creating new ip record: ' + p.__str__())
         p.save()
     else:
-        # logger.debug('Update an existing ip record: ' + p.__str__())
+        logger.debug('Update an existing ip record: ' + p.__str__())
 
         existing_proxy: ProxyIP = ProxyIP.get(
             ProxyIP.ip == p.ip, ProxyIP.port == p.port
@@ -26,7 +26,7 @@ def save_ip(p: ProxyIP):
 
         existing_proxy.save()
 
-        # logger.debug('Saved: ' + existing_proxy.__str__())
+        logger.debug('Saved: ' + existing_proxy.__str__())
 
 
 def validate_proxy_ip(p: ProxyIP):
@@ -64,8 +64,8 @@ def validate_proxy_ip(p: ProxyIP):
     if v.valid:
         validated_ip.is_https = v.using_https
 
-    # logger.debug('Save valid ip into database: \n' + validated_ip.__str__())
+    logger.debug('Save valid ip into database: \n' + validated_ip.__str__())
 
     save_ip(validated_ip)
 
-    # logger.debug('Finish validating ip: {}'.format(validated_ip.ip))
+    logger.debug('Finish validating ip: {}'.format(validated_ip.ip))

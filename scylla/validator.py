@@ -1,10 +1,12 @@
 import json
 import math
+import time
 
 import requests
 
 from .loggings import logger
 from .tcpping import ping
+from .worker import DEFAULT_USER_AGENT, DEFAULT_TIMEOUT_SECONDS
 
 IP_CHECKER_API = 'http://api.ipify.org/?format=json'
 IP_CHECKER_API_SSL = 'https://api.ipify.org/?format=json'
@@ -50,11 +52,14 @@ class Validator(object):
     def validate_proxy(self):
         protocol = 'https' if self._using_https else 'http'
         proxy_str = '{}://{}:{}'.format(protocol, self._host, self._port)
+        time.sleep(3)
         try:
             checking_api = IP_CHECKER_API_SSL if self._using_https else IP_CHECKER_API
 
             # First request for checking IP
-            r = requests.get(checking_api, proxies={'https': proxy_str, 'http': proxy_str}, verify=False, timeout=15)
+            r = requests.get(checking_api, headers={'user-agent': DEFAULT_USER_AGENT},
+                             proxies={'https': proxy_str, 'http': proxy_str}, verify=False,
+                             timeout=DEFAULT_TIMEOUT_SECONDS)
             if r.ok:
                 j = json.loads(r.text)
 
@@ -63,7 +68,9 @@ class Validator(object):
                 self._valid = True
 
                 # A second request for meta info
-                r2 = requests.get('https://api.ip.sb/geoip/{}'.format(j['ip']), timeout=15)
+                r2 = requests.get('https://api.ip.sb/geoip/{}'.format(j['ip']),
+                                  headers={'user-agent': DEFAULT_USER_AGENT}, verify=False,
+                                  timeout=DEFAULT_TIMEOUT_SECONDS)
                 jresponse = r2.json()
 
                 # Load meta data

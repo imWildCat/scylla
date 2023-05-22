@@ -8,3 +8,5 @@ schedule==1.1.0
 six==1.16.0
 playwright==1.19.1
 pyquery==1.4.3
+js2py
+beautifulsoup4
