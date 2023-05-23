@@ -20,9 +20,10 @@ base_path = os.path.abspath(os.path.join(__file__, os.pardir, os.pardir))
 # app.static('/', base_path + '/assets/index.html')
 # app.static('/*', base_path + '/assets/index.html')
 
-app.mount("/assets", StaticFiles(directory=base_path + '/assets'), name="assets")
-app.mount("/", StaticFiles(directory=base_path + '/assets'), name="index")
-app.mount("/*", StaticFiles(directory=base_path + '/assets'), name="index")
+app.mount("/assets", StaticFiles(directory=base_path + '/assets', html=True), name="assets")
+
+# app.mount("/", StaticFiles(directory=base_path + '/assets'), name="index")
+# app.mount("/*", StaticFiles(directory=base_path + '/assets'), name="index")
 
 
 def _parse_str_to_int(s: str) -> int:
@@ -37,7 +38,7 @@ def _get_valid_proxies_query():
         .where(ProxyIP.is_valid == True)
 
 
-@app.route('/api/v1/proxies')
+@app.get('/api/v1/proxies')
 async def api_v1_proxies(limit: int = 20, page: int = 1, anonymous: str = 'any', https: str = 'true', countries: Optional[str] = None):
     is_anonymous = 2  # 0: no, 1: yes, 2: any
     if anonymous == 'true':
@@ -98,7 +99,7 @@ async def api_v1_proxies(limit: int = 20, page: int = 1, anonymous: str = 'any',
     }
 
 
-@app.route('/api/v1/stats')
+@app.get('/api/v1/stats')
 async def api_v1_stats():
     median_query: ProxyIP = ProxyIP.raw("""SELECT latency
                                 FROM proxy_ips
