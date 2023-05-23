@@ -128,11 +128,14 @@ async def api_v1_stats():
 
 
 def start_web_server(host='0.0.0.0', port=8899):
-    app_dir = "."
+    # parent dir of the current file
+    app_dir = os.path.abspath(os.path.join(__file__, os.pardir, os.pardir))
+    logger.debug(f'App dir: {app_dir}')
     sys.path.insert(0, app_dir)
+    # https://www.uvicorn.org/deployment/#running-programmatically
     sys.exit(
         uvicorn.run(
-            'web.server:app', host=host, port=port, reload=False,
+            'scylla.web.server:app', host=host, port=port, reload=False,
             workers=4
         )
     )
