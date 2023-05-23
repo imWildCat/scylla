@@ -1,3 +1,4 @@
+from typing import List
 from pyquery import PyQuery
 
 from scylla.database import ProxyIP
@@ -6,8 +7,8 @@ from .base_provider import BaseProvider
 
 class IpaddressProvider(BaseProvider):
 
-    def parse(self, document: PyQuery) -> [ProxyIP]:
-        ip_list: [ProxyIP] = []
+    def parse(self, document: PyQuery) -> List[ProxyIP]:
+        ip_list: List[ProxyIP] = []
 
         for ip_row in document.find('.proxylist tbody tr'):
             ip_row: PyQuery = PyQuery(ip_row)
@@ -20,7 +21,7 @@ class IpaddressProvider(BaseProvider):
 
         return ip_list
 
-    def urls(self) -> [str]:
+    def urls(self) -> List[str]:
         return [
             'https://www.ipaddress.com/proxy-list/'
         ]
