@@ -132,7 +132,7 @@ def start_web_server(host='0.0.0.0', port=8899):
     sys.path.insert(0, app_dir)
     sys.exit(
         uvicorn.run(
-            'main:app', host=host, port=port, reload=False,
+            'web.server:app', host=host, port=port, reload=False,
             workers=4
         )
     )
