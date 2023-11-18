@@ -3,7 +3,7 @@ import axios from 'axios';
 import {Link} from 'react-router-dom';
 
 import {getBaseURL, Proxy, ResponseJSON} from '../utils';
-import * as queryString from "query-string";
+import queryString from "query-string";
 import ProxyListFilter from "./ProxyListFilter";
 
 import moment from 'moment'
@@ -87,6 +87,7 @@ export default class ProxyIPList extends React.Component<Props, AppState> {
     }
 
     async loadData(props: any) {
+
         const parsed = queryString.parse(props.location.search);
 
         const page = parsed['page'] || 1;
@@ -141,11 +142,10 @@ export default class ProxyIPList extends React.Component<Props, AppState> {
 
     private renderPageLink(pageNumber: number, label: string): JSX.Element {
         const parsed = queryString.parse(this.props.location.search);
-
-        parsed['page'] = pageNumber;
+        
 
         return (
-            <li key={`page-nav-${pageNumber}`}><Link to={`/?${queryString.stringify(parsed)}`}>{label}</Link></li>
+            <li key={`page-nav-${pageNumber}`}><Link to={`/?${queryString.stringify(parsed)}&{page=${pageNumber}}`}>{label}</Link></li>
         );
     }
 

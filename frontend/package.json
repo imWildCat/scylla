@@ -11,6 +11,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "axios": "^1.6.2",
+    "milligram": "^1.4.1",
+    "moment": "^2.29.4",
+    "query-string": "^8.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router": "^6.19.0",
@@ -19,6 +23,7 @@
     "react-tooltip": "^5.23.0"
   },
   "devDependencies": {
+    "@types/node": "^20.9.1",
     "@types/react": "^18.2.37",
     "@types/react-dom": "^18.2.15",
     "@types/react-simple-maps": "^3.0.3",
@@ -28,6 +33,7 @@
     "eslint": "^8.53.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.4",
+    "sass": "^1.69.5",
     "typescript": "^5.2.2",
     "vite": "^5.0.0"
   }
