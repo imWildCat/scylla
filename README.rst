@@ -80,7 +80,7 @@ Development and Contribution
 
    pip install -r requirements.txt
 
-   npm install # or `yarn install`
+   npm install
    make assets-build
 
 Testing

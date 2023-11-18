@@ -1,5 +1,3 @@
-import * as React from "react";
-import * as ReactDOM from "react-dom";
 import 'milligram';
 import "./index.scss";
 import ScyllaBannerImage from './assets/scylla_banner.png';

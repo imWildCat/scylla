@@ -1,10 +1,10 @@
-FROM node:lts-buster as node-build
+FROM node:lts as node-build
 
 WORKDIR /root
 
-COPY package.json .
-RUN yarn install
 COPY . .
+RUN npm install
+RUN cd frontend && npm install
 RUN make assets-build
 
 FROM ubuntu:focal as python-build

@@ -45,7 +45,7 @@ Install from source
 
    pip install -r requirements.txt
 
-   npm install # or yarn install
+   npm install
    make build-assets
 
    python -m scylla
@@ -241,7 +241,7 @@ Development and Contribution
 
    pip install -r requirements.txt
 
-   npm install # or `yarn install`
+   npm install
    make build-assets
 
 Testing
