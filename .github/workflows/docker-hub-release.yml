@@ -4,7 +4,7 @@
 # documentation.
 # Source: https://docs.github.com/en/actions/publishing-packages/publishing-docker-images
 
-name: Publish image to Docker Hub
+name: Docker Hub
 
 on:
   workflow_dispatch:
