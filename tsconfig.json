@@ -19,7 +19,7 @@
     "noFallthroughCasesInSwitch": true
   },
   "include": [
-    "frontend/src/**/*"
+    "frontend_legacy/src/**/*"
   ],
   "exclude": [
     ".git",

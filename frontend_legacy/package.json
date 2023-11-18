@@ -1,5 +1,5 @@
 {
-  "name": "scylla",
+  "name": "scylla-frontend",
   "version": "0.1.2",
   "description": "A small but powerful proxy ip crawler",
   "main": "null",
@@ -38,7 +38,8 @@
     "node-gyp": "^10.0.1",
     "parcel-bundler": "^1.12.5",
     "sass": "^1.49.9",
-    "typescript": "^2.8.3"
+    "typescript": "^2.8.3",
+    "vite": "^5.0.0"
   },
   "dependencies": {
     "axios": "^1.6.2",
