@@ -20,7 +20,7 @@
   },
   "include": [
     "frontend_legacy/src/**/*"
-  ],
+, "frontend/src/LegacyApp.tsx"  ],
   "exclude": [
     ".git",
     "node_modules",

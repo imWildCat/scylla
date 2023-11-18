@@ -1,7 +1,7 @@
 import * as React from 'react';
 import axios from "axios";
 import {getBaseURL, Proxy, ResponseJSON} from "../utils";
-import ReactTooltip from "react-tooltip"
+import {Tooltip} from "react-tooltip"
 
 const {
     ComposableMap,
@@ -33,14 +33,6 @@ export default class GeoDistribution extends React.Component<GeoDistributionProp
     }
 
     render() {
-        function aa(dom) {
-            var ret = dom.state.proxies.map(p => dom.renderMarker(p));
-            ReactTooltip.rebuild();
-            setTimeout(() => {
-                ReactTooltip.rebuild()
-            }, 100)
-            return ret;
-        }
         // const position = [this.state.lat, this.state.lng];
         return (
             <div>
@@ -64,21 +56,10 @@ export default class GeoDistribution extends React.Component<GeoDistributionProp
                                 }
                             )}
                         </Geographies>
-                        <Markers>
-                            {
-                                ((self) => {
-                                    var ret = self.state.proxies.map(p => self.renderMarker(p));
-                                    ReactTooltip.rebuild();
-                                    setTimeout(() => {
-                                        ReactTooltip.rebuild(); // rebuild after render
-                                    }, 100)
-                                    return ret;
-                                })(this)
-                            }
-                        </Markers>
+                      
                     </ZoomableGroup>
                 </ComposableMap>
-                <ReactTooltip />
+                <Tooltip />
             </div>
         );
     }
@@ -99,7 +80,7 @@ export default class GeoDistribution extends React.Component<GeoDistributionProp
                         pressed: {fill: "#000"},
                     }}
                 >
-                    <circle data-html={true} data-tip={ proxy.ip + ":" + proxy.port + "<br>" + 
+                    <circle data-html={true} data-tooltip-id={proxy.id} data-tooltip-content={ proxy.ip + ":" + proxy.port + "<br>" + 
                                                         proxy.country + ", " + proxy.city + "<br>" + 
                                                         "latency: " + proxy.latency + "<br>" + 
                                                         "anonymous: " + proxy.is_anonymous + "<br>" + 
