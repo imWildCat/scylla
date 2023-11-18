@@ -48,7 +48,10 @@ cd scylla
 
 pip install -r requirements.txt
 
-yarn install
+cd frontend
+npm install
+cd ..
+
 make assets-build
 
 python -m scylla

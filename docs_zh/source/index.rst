@@ -244,7 +244,7 @@ API 文档
 
    pip install -r requirements.txt
 
-   npm install # 或 `yarn install`
+   npm install
    make build-assets
 
 测试
