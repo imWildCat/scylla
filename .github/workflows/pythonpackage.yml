@@ -9,11 +9,10 @@ jobs:
     strategy:
       max-parallel: 2
       matrix:
-        python-version: [ 3.9 ]
+        python-version: [ 3.11 ]
 
     steps:
     - uses: actions/checkout@v2
-    - uses: microsoft/playwright-github-action@v1
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v2
       with:
@@ -23,8 +22,14 @@ jobs:
         sudo apt-get update -y
         sudo apt-get install libgnutls28-dev libcurl4-openssl-dev libssl-dev -y
         pip install -r tests/requirements-test.txt
-        pip install -e.
+        pip install -e .
+        python -m playwright install-deps
         python -m playwright install
+    - name: Build web
+      run: |
+        cd frontend
+        npm install
+        npm run build:scylla:prod
     - name: Lint with flake8
       run: |
         make style-check

@@ -1,10 +1,9 @@
-FROM node:lts-buster as node-build
+FROM node:lts as node-build
 
 WORKDIR /root
 
-COPY package.json .
-RUN yarn install
 COPY . .
+RUN cd frontend && npm install
 RUN make assets-build
 
 FROM ubuntu:focal as python-build
@@ -13,7 +12,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=America/Los_Angeles
 
 RUN apt-get update && \
-    apt-get install -y python3 python3-distutils libpython3.8-dev curl g++ gcc libxslt-dev make libcurl4-openssl-dev build-essential libssl-dev && \
+    apt-get install -y python3 python3-distutils libpython3-dev curl g++ gcc libxslt-dev make libcurl4-openssl-dev build-essential libssl-dev && \
     update-alternatives --install /usr/bin/python python /usr/bin/python3 1 && \
     curl -sSL https://bootstrap.pypa.io/get-pip.py -o get-pip.py && \
     python get-pip.py && \

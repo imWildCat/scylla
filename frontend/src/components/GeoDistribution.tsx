@@ -1,16 +1,15 @@
 import * as React from 'react';
 import axios from "axios";
 import {getBaseURL, Proxy, ResponseJSON} from "../utils";
-import ReactTooltip from "react-tooltip"
+import {Tooltip} from "react-tooltip"
 
-const {
+import {
     ComposableMap,
     ZoomableGroup,
     Geographies,
     Geography,
-    Markers,
     Marker,
-} = require('react-simple-maps');
+} from 'react-simple-maps';
 
 export interface GeoDistributionProps {
 }
@@ -31,80 +30,42 @@ export default class GeoDistribution extends React.Component<GeoDistributionProp
     componentDidMount() {
         this.loadData();
     }
-
     render() {
-        function aa(dom) {
-            var ret = dom.state.proxies.map(p => dom.renderMarker(p));
-            ReactTooltip.rebuild();
-            setTimeout(() => {
-                ReactTooltip.rebuild()
-            }, 100)
-            return ret;
-        }
-        // const position = [this.state.lat, this.state.lng];
         return (
             <div>
                 <ComposableMap style={{width: "100%"}}>
                     <ZoomableGroup>
-                        <Geographies
-                            geography={'https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-50m-simplified.json'}>
-                            {(geographies: any, projection: any) => geographies.map((geography: any) => {
-                                    return (
-                                        <Geography
-                                            key={geography.properties.ISO_A3 + '_' + geography.properties.NAME}
-                                            geography={geography}
-                                            projection={projection}
-                                            style={{
-                                                default: {fill: "#D8D8D8"},
-                                                hover: {fill: "#D8D8D8"},
-                                                pressed: {fill: "#D8D8D8"},
-                                            }}
-                                        />
-                                    );
-                                }
-                            )}
+                        <Geographies geography={'https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-50m-simplified.json'}>
+                            {({ geographies }) => geographies.map((geography) => (
+                                <Geography
+                                    key={geography.properties.ISO_A3 + '_' + geography.properties.NAME}
+                                    geography={geography}
+                                    style={{
+                                        default: {fill: "#D8D8D8"},
+                                        hover: {fill: "#D8D8D8"},
+                                        pressed: {fill: "#D8D8D8"},
+                                    }}
+                                />
+                            ))}
                         </Geographies>
-                        <Markers>
-                            {
-                                ((self) => {
-                                    var ret = self.state.proxies.map(p => self.renderMarker(p));
-                                    ReactTooltip.rebuild();
-                                    setTimeout(() => {
-                                        ReactTooltip.rebuild(); // rebuild after render
-                                    }, 100)
-                                    return ret;
-                                })(this)
-                            }
-                        </Markers>
+                        {/* Render markers here */}
                     </ZoomableGroup>
                 </ComposableMap>
-                <ReactTooltip />
+                <Tooltip />
             </div>
         );
     }
-
     renderMarker(proxy: Proxy): JSX.Element | null {
         const locationStr = proxy.location;
         if (locationStr) {
-            const locations = locationStr.split(',');
+            const locations = locationStr.split(',').map(coord => parseFloat(coord));
 
             return (
                 <Marker
                     key={proxy.id}
-                    proxy={proxy}
-                    marker={{coordinates: [locations[1], locations[0]]}}
-                    style={{
-                        default: {fill: this.mapProxyColor(proxy)},
-                        hover: {fill: "#999"},
-                        pressed: {fill: "#000"},
-                    }}
+                    coordinates={[locations[1], locations[0]]}
                 >
-                    <circle data-html={true} data-tip={ proxy.ip + ":" + proxy.port + "<br>" + 
-                                                        proxy.country + ", " + proxy.city + "<br>" + 
-                                                        "latency: " + proxy.latency + "<br>" + 
-                                                        "anonymous: " + proxy.is_anonymous + "<br>" + 
-                                                        "https: " + proxy.is_https } 
-                                                        cx={0} cy={0} r={2}/>
+                    {/* ... */}
                 </Marker>
             );
         } else {

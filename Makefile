@@ -13,9 +13,9 @@ delete-tag:
 	git tag --delete $(TAG); git push --delete origin $(TAG)
 assets-build:
 	make assets-clean
-	NODE_ENV=production node_modules/.bin/parcel build --public-url='/assets' -d scylla/assets frontend/src/index.html
+	cd frontend && NODE_ENV=production npm run build:scylla:prod
 assets-dev:
-	node_modules/.bin/parcel --public-url='/assets' frontend/src/index.html
+	cd frontend && npm run dev
 assets-clean:
 	rm -rf scylla/assets
 	rm -rf build/lib/scylla/assets

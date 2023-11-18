@@ -3,8 +3,9 @@ import sys
 import socket
 import traceback
 from multiprocessing import Process
+from typing import List
 
-from tornado import httpclient, web, ioloop, iostream
+from tornado import httpclient, web, ioloop, iostream, gen
 from tornado.httpclient import HTTPResponse
 
 from scylla.config import get_config
@@ -16,7 +17,7 @@ httpclient.AsyncHTTPClient.configure("tornado.curl_httpclient.CurlAsyncHTTPClien
 
 
 def get_proxy(https=False) -> ProxyIP:
-    proxies: [ProxyIP] = ProxyIP.select().where(ProxyIP.is_valid == True).where(ProxyIP.stability >= 0.9)
+    proxies: List[ProxyIP] = ProxyIP.select().where(ProxyIP.is_valid == True).where(ProxyIP.stability >= 0.9)
 
     if https:
         proxies = proxies.where(ProxyIP.is_https == True)
@@ -52,15 +53,15 @@ class ForwardingRequestHandler(web.RequestHandler):
             proxy = get_proxy(https=https)
             self.forward(host=proxy.ip, port=proxy.port)
 
-    @web.asynchronous
+    @gen.coroutine
     def get(self, *args, **kwargs):
         self.get_proxy_and_forward()
 
-    @web.asynchronous
+    @gen.coroutine
     def post(self, *args, **kwargs):
         self.get_proxy_and_forward()
 
-    @web.asynchronous
+    @gen.coroutine
     def connect(self):
         def read_from_client(data):
             upstream.write(data)
@@ -84,7 +85,7 @@ class ForwardingRequestHandler(web.RequestHandler):
 
         def start_tunnel():
             client.read_until_close(client_close, read_from_client)
-            upstream.read_until_close(upstream_close, read_from_upstream)
+            upstream.read_until_close()
             client.write(b'HTTP/1.1 200 Connection established\r\n\r\n')
 
         def on_connect(data=None):

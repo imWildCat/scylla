@@ -19,7 +19,6 @@ features:
     minimally
 - Headless browser crawling
 
-对于偏好中文的用户，请阅读 [中文文档](https://scylla.wildcat.io/zh/latest/)。For those who prefer to use Chinese, please read the [Chinese Documentation](https://scylla.wildcat.io/zh/latest/).
 
 Get started
 ===========
@@ -49,7 +48,10 @@ cd scylla
 
 pip install -r requirements.txt
 
-yarn install
+cd frontend
+npm install
+cd ..
+
 make assets-build
 
 python -m scylla
@@ -223,7 +225,7 @@ cd scylla
 
 pip install -r requirements.txt
 
-npm install # or `yarn install`
+npm install
 make assets-build
 ```
 

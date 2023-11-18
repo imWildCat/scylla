@@ -19,8 +19,8 @@
     "noFallthroughCasesInSwitch": true
   },
   "include": [
-    "frontend/src/**/*"
-  ],
+    "frontend_legacy/src/**/*"
+, "frontend/src/LegacyApp.tsx"  ],
   "exclude": [
     ".git",
     "node_modules",
