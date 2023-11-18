@@ -14,11 +14,13 @@
     "react-dom": "^18.2.0",
     "react-router": "^6.19.0",
     "react-router-dom": "^6.19.0",
+    "react-simple-maps": "^3.0.0",
     "react-tooltip": "^5.23.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.37",
     "@types/react-dom": "^18.2.15",
+    "@types/react-simple-maps": "^3.0.3",
     "@typescript-eslint/eslint-plugin": "^6.10.0",
     "@typescript-eslint/parser": "^6.10.0",
     "@vitejs/plugin-react-swc": "^3.5.0",
