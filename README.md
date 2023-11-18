@@ -59,15 +59,6 @@ make assets-build
 python -m scylla
 ```
 
-##### For Windows user who fails at installing `sanic` due to `uvloop does not support Windows at the moment`:
-
-```bash
-export SANIC_NO_UVLOOP=true
-export SANIC_NO_UJSON=true
-pip3 install sanic
-```
-If this also fails, yoi will need to manual install sanic from source.
-
 Usage
 -----
 
@@ -268,15 +259,18 @@ to develop new features continuously! 🎉 Thank you!
 
 The ways for donation are shown below:
 
+GitHub Sponsor
+------
+
+I super appreciate if you can join my sponsors here.
+
+<https://github.com/sponsors/imWildCat>
+
 PayPal
 ------
 
 [![paypal_donation](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5DXFA7WGWPZBN)
 
-Alipay or WeChat Pay
---------------------
-
-[![Alipay And WeChat Donation]][Alipay and WeChat Donation]
 
 License
 =======
