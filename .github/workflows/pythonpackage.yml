@@ -25,6 +25,11 @@ jobs:
         pip install -e .
         python -m playwright install-deps
         python -m playwright install
+    - name: Build web
+      run: |
+        cd frontend
+        npm install
+        npm run build:scylla:prod
     - name: Lint with flake8
       run: |
         make style-check
