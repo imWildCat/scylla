@@ -8,8 +8,9 @@
 
 # Scylla
 
-An intelligent proxy pool for humanities, only supports Python 3.8+. Key
-features:
+An intelligent proxy pool for humanities, to extract content from the internet and build your own Large Language Models in this new AI era.
+
+Key features:
 
 - Automatic proxy ip crawling and validation
 - Easy-to-use JSON API
