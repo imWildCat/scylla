@@ -1,6 +1,6 @@
 tornado==6.3.3
 peewee==3.2.2
-requests==2.31.0
+requests==2.32.0
 pycurl==7.43.0.1
 schedule==0.5.0
 six==1.11.0
