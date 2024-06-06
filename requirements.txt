@@ -7,4 +7,4 @@ playwright>=1.33.0
 pyquery==1.4.3
 fastapi==0.109.1
 uvicorn[standard]==0.22.0
-tornado==6.3.3
+tornado==6.4.1

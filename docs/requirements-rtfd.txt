@@ -1,4 +1,4 @@
-tornado==6.3.3
+tornado==6.4.1
 peewee==3.2.2
 requests==2.31.0
 pycurl==7.43.0.1
