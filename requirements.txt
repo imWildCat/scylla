@@ -1,10 +1,10 @@
 peewee==3.14.4
-requests>=2.31.0
-pycurl==7.44.1
+requests>=2.32.3
+pycurl==7.45.3
 schedule==1.1.0
 six==1.16.0
 playwright>=1.33.0
-pyquery==1.4.3
-fastapi==0.109.1
-uvicorn[standard]==0.22.0
-tornado==6.3.3
+pyquery==2.0.0
+fastapi==0.111.1
+uvicorn[standard]==0.30.3
+tornado==6.4.1
