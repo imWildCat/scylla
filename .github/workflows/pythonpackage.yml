@@ -23,8 +23,7 @@ jobs:
         sudo apt-get install libgnutls28-dev libcurl4-openssl-dev libssl-dev -y
         pip install -r tests/requirements-test.txt
         pip install -e .
-        python -m playwright install-deps
-        python -m playwright install
+        python -m playwright install --with-deps chromium
     - name: Build web
       run: |
         cd frontend

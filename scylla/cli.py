@@ -53,6 +53,7 @@ def main(args) -> int:
 
     try:
         if not get_config('skip_scheduler'):
+            logger.info('Start the scheduler')
             s.start()
 
         # forward proxy server

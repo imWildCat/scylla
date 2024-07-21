@@ -29,6 +29,7 @@ WORKDIR /app
 COPY --from=node-build /root/scylla/assets ./scylla/assets
 COPY requirements.txt .
 RUN pip3 install -r requirements.txt
+RUN python3 -m playwright install --with-deps chromium
 COPY . .
 RUN python3 setup.py install
 
