@@ -16,10 +16,10 @@ class ProxyScraperProvider(BaseProvider):
 
         text = document.html()
         json_object = json.loads(text)
-        if not json_object or type(json_object['proxynova']) != list:
+        if not json_object or type(json_object) != list:
             return ip_list
 
-        for ip_port in json_object['proxynova']:
+        for ip_port in json_object:
             p = ProxyIP(ip=ip_port['ip'], port=ip_port['port'])
             ip_list.append(p)
 
