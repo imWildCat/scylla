@@ -58,6 +58,20 @@ class ProxyIP(BaseModel):
     region = CharField(null=True)
     country = CharField(null=True)
     city = CharField(null=True)
+    asn = CharField(null=True)
+    isp = CharField(null=True)
+    state = CharField(null=True)
+    zipcode = CharField(null=True)
+    latitude = FloatField(null=True)
+    longitude = FloatField(null=True)
+    timezone = CharField(null=True)
+    localtime = DateTimeField(null=True)
+    is_mobile = BooleanField(default=False)
+    is_vpn = BooleanField(default=False)
+    is_tor = BooleanField(default=False)
+    is_proxy = BooleanField(default=False)
+    is_datacenter = BooleanField(default=False)
+    risk_score = IntegerField(null=True)
 
     def assign_from(self, p):
         self.ip = p.ip
@@ -76,6 +90,20 @@ class ProxyIP(BaseModel):
         self.region = p.region
         self.country = p.country
         self.city = p.city
+        self.asn = p.asn
+        self.isp = p.isp
+        self.state = p.state
+        self.zipcode = p.zipcode
+        self.latitude = p.latitude
+        self.longitude = p.longitude
+        self.timezone = p.timezone
+        self.localtime = p.localtime
+        self.is_mobile = p.is_mobile
+        self.is_vpn = p.is_vpn
+        self.is_tor = p.is_tor
+        self.is_proxy = p.is_proxy
+        self.is_datacenter = p.is_datacenter
+        self.risk_score = p.risk_score
         self.updated_at = datetime.datetime.now()
 
     def __str__(self):

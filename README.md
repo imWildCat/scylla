@@ -199,6 +199,31 @@ Screenshot:
 
 ![screenshot-geo-distribution](https://user-images.githubusercontent.com/2396817/40653599-9458b6b8-6333-11e8-8e6e-1d90271fc083.png)
 
+### Configuration
+
+Scylla allows you to configure various settings through command-line arguments. One of the new configuration options is to select the GeoIP API to use. You can choose between `ip.sb` and `ipquery.io` using the `--geoip-api` argument.
+
+#### Command-line Arguments
+
+| Argument            | Description                                                                 |
+|---------------------|-----------------------------------------------------------------------------|
+| `--no-webserver`    | Prevent starting a web server for JSON API                                  |
+| `--web-port`        | The port number for the web server                                          |
+| `--web-host`        | The hostname for the web server                                             |
+| `--skip-scheduler`  | Prevent the scheduler from crawling                                         |
+| `--version`         | Print the version of Scylla                                                 |
+| `--db-path`         | The sqlite database file location                                           |
+| `--validation-pool` | The validation pool size (i.e. the limit of concurrent validation tasks for proxies) |
+| `--no-forward-proxy-server` | Disable the forward proxy server                                    |
+| `--proxy-port`      | The port number for the forward proxy                                       |
+| `--geoip-api`       | Select the GeoIP API to use (`ip.sb` or `ipquery.io`)                        |
+
+Example usage:
+
+```bash
+scylla --geoip-api ipquery.io
+```
+
 API Documentation
 =================
 

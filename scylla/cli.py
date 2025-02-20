@@ -1,7 +1,7 @@
 import argparse
 import sys
 
-from scylla.config import batch_set_config, get_config
+from scylla.config import batch_set_config, get_config, GeoIPAPI
 from ._version import __version__
 
 CMD_DESCRIPTION = """Scylla command line mode
@@ -32,6 +32,8 @@ def main(args) -> int:
                         help='Disable the forward proxy server')
     parser.add_argument('--proxy-port', '-pp', type=int, default=8081,
                         help='The port number for the forward proxy')
+    parser.add_argument('--geoip-api', type=GeoIPAPI, choices=list(GeoIPAPI),
+                        default=GeoIPAPI.IPSB, help='Select the GeoIP API to use')
 
     parsed_args = parser.parse_args(args)
 

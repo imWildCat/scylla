@@ -25,6 +25,20 @@ export interface Proxy {
     region: string;
     country: string;
     city: string;
+    asn: string;
+    isp: string;
+    state: string;
+    zipcode: string;
+    latitude: number;
+    longitude: number;
+    timezone: string;
+    localtime: string;
+    is_mobile: boolean;
+    is_vpn: boolean;
+    is_tor: boolean;
+    is_proxy: boolean;
+    is_datacenter: boolean;
+    risk_score: number;
 }
 
 export interface ResponseJSON {
