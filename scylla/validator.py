@@ -5,6 +5,7 @@ import requests
 
 from .loggings import logger
 from .tcpping import ping
+from .config import get_config, GeoIPAPI
 
 IP_CHECKER_API = 'http://api.ipify.org/?format=json'
 IP_CHECKER_API_SSL = 'https://api.ipify.org/?format=json'
@@ -62,19 +63,62 @@ class Validator(object):
                     self._anonymous = True
                 self._valid = True
 
+                geoip_api = get_config('geoip_api', GeoIPAPI.IPSB)
+
+                if geoip_api == GeoIPAPI.IPSB:
+                    geoip_url = 'https://api.ip.sb/geoip/{}'.format(j['ip'])
+                else:
+                    geoip_url = 'https://api.ipquery.io/?format=json&ip={}'.format(j['ip'])
+
                 # A second request for meta info
-                r2 = requests.get('https://api.ip.sb/geoip/{}'.format(j['ip']), timeout=15)
+                r2 = requests.get(geoip_url, timeout=15)
                 jresponse = r2.json()
 
-                # Load meta data
-                # TODO: better location check
-                meta = {
-                    'location': '{},{}'.format(jresponse['latitude'], jresponse['longitude']),
-                    'organization': jresponse['organization'] if 'organization' in jresponse else None,
-                    'region': jresponse['region'],
-                    'country': jresponse['country_code'],
-                    'city': jresponse['city'],
-                }
+                if geoip_api == GeoIPAPI.IPSB:
+                    meta = {
+                        'asn': jresponse['asn'],
+                        'isp': jresponse['isp'],
+                        'state': jresponse['region'],
+                        'zipcode': None,
+                        'latitude': jresponse['latitude'],
+                        'longitude': jresponse['longitude'],
+                        'timezone': jresponse['timezone'],
+                        'localtime': None,
+                        'is_mobile': None,
+                        'is_vpn': None,
+                        'is_tor': None,
+                        'is_proxy': None,
+                        'is_datacenter': None,
+                        'risk_score': None,
+                        'location': '{},{}'.format(jresponse['latitude'], jresponse['longitude']),
+                        'organization': jresponse['organization'],
+                        'region': jresponse['region'],
+                        'country': jresponse['country_code'],
+                        'city': jresponse['city'],
+                    }
+                else:
+                    meta = {
+                        'asn': jresponse['isp']['asn'],
+                        'isp': jresponse['isp']['isp'],
+                        'state': jresponse['location']['state'],
+                        'zipcode': jresponse['location']['zipcode'],
+                        'latitude': jresponse['location']['latitude'],
+                        'longitude': jresponse['location']['longitude'],
+                        'timezone': jresponse['location']['timezone'],
+                        'localtime': jresponse['location']['localtime'],
+                        'is_mobile': jresponse['risk']['is_mobile'],
+                        'is_vpn': jresponse['risk']['is_vpn'],
+                        'is_tor': jresponse['risk']['is_tor'],
+                        'is_proxy': jresponse['risk']['is_proxy'],
+                        'is_datacenter': jresponse['risk']['is_datacenter'],
+                        'risk_score': jresponse['risk']['risk_score'],
+                        'location': '{},{}'.format(jresponse['location']['latitude'], jresponse['location']['longitude']),
+                        'organization': jresponse['isp']['org'],
+                        'region': jresponse['location']['state'],
+                        'country': jresponse['location']['country_code'],
+                        'city': jresponse['location']['city'],
+                    }
+
                 self._meta = meta
 
         except requests.Timeout:
