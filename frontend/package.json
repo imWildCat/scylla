@@ -11,30 +11,30 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "axios": "^1.6.2",
+    "axios": "^1.9.0",
     "milligram": "^1.4.1",
-    "moment": "^2.29.4",
-    "query-string": "^8.1.0",
+    "moment": "^2.30.1",
+    "query-string": "^9.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router": "^6.19.0",
-    "react-router-dom": "^6.19.0",
+    "react-router": "^7.6.2",
+    "react-router-dom": "^7.6.2",
     "react-simple-maps": "^3.0.0",
-    "react-tooltip": "^5.23.0"
+    "react-tooltip": "^5.28.1"
   },
   "devDependencies": {
-    "@types/node": "^20.9.1",
-    "@types/react": "^18.2.37",
-    "@types/react-dom": "^18.2.15",
-    "@types/react-simple-maps": "^3.0.3",
-    "@typescript-eslint/eslint-plugin": "^6.10.0",
-    "@typescript-eslint/parser": "^6.10.0",
-    "@vitejs/plugin-react-swc": "^3.5.0",
-    "eslint": "^8.53.0",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-react-refresh": "^0.4.4",
-    "sass": "^1.69.5",
-    "typescript": "^5.2.2",
-    "vite": "^5.0.0"
+    "@types/node": "^22.15.30",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "@types/react-simple-maps": "^3.0.6",
+    "@typescript-eslint/eslint-plugin": "^8.33.1",
+    "@typescript-eslint/parser": "^8.33.1",
+    "@vitejs/plugin-react-swc": "^3.10.1",
+    "eslint": "^9.28.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.20",
+    "sass": "^1.89.1",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.5"
   }
 }
