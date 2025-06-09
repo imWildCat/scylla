@@ -1,8 +1,8 @@
 codecov==2.1.13
-flake8==6.1.0
-setuptools==70.0.0
-pytest==7.4.3
-pytest-cov==4.1.0
+flake8==7.2.0
+setuptools==80.9.0
+pytest==8.4.0
+pytest-cov==6.1.1
 pytest-forked==1.6.0
-pytest-mock==3.12.0
-pytest-xdist==3.4.0
+pytest-mock==3.14.1
+pytest-xdist==3.7.0
